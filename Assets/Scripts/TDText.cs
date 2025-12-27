@@ -8,3 +8,5 @@ public class TDText : TDObject
         tmp.rectTransform.position = _pos + MyUtils.offset;
     }
 }
+
+// 이것은 테스트입니다
