@@ -1,0 +1,41 @@
+
+spine.png
+size: 1100,615
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+Eye
+  rotate: true
+  xy: 906, 232
+  size: 381, 192
+  orig: 388, 192
+  offset: 0, 0
+  index: -1
+Face
+  rotate: false
+  xy: 2, 2
+  size: 611, 611
+  orig: 611, 611
+  offset: 0, 0
+  index: -1
+LWing
+  rotate: false
+  xy: 615, 314
+  size: 289, 299
+  orig: 289, 300
+  offset: 0, 1
+  index: -1
+Pupil
+  rotate: false
+  xy: 809, 83
+  size: 166, 147
+  orig: 166, 147
+  offset: 0, 0
+  index: -1
+RWing
+  rotate: false
+  xy: 615, 39
+  size: 192, 273
+  orig: 193, 279
+  offset: 1, 2
+  index: -1
