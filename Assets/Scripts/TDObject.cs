@@ -11,9 +11,6 @@ public class TDObject : MonoBehaviour
     {
         pos = _pos;
         gameObject.transform.position = _pos + MyUtils.offset;
-
-        canvas = gameObject.transform.GetChild(0).GetComponent<Canvas>();
-        tmp = canvas.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         tmp.text = str;
     }
 }
