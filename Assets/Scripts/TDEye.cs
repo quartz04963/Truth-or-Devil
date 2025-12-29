@@ -1,10 +1,9 @@
-using System.Collections;
 using UnityEngine;
 
 public class TDEye : TDObject
 {
-    public int trueID;
-    public int guessedID = ToD.Null;
+    public ToD trueID;
+    public ToD guessedID = ToD.Null;
     public int spriteNumber = 0;
     public bool isMarked;
     public Sprite defaultSprite, angelSprite, devilSprite;

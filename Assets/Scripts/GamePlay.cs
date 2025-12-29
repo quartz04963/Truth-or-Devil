@@ -31,9 +31,9 @@ public class GamePlay : MonoBehaviour
 
     void Start()
     {
-        redData = RedData.Default;
-        blueData = BlueData.Default;
-        greenData = GreenData.Default;
+        redData = MyUtils.RedDataNull;
+        blueData =  MyUtils.BlueDataNull;
+        greenData = MyUtils.GreenDataNull;
         player.gameObject.SetActive(true);
     }
 
@@ -69,7 +69,7 @@ public class GamePlay : MonoBehaviour
         if (idx == -1) return false;
 
         TDData nextTile = MapManager.instance.tileList[idx];
-        if (nextTile.color != TileColor.White || nextTile.data[0] != WhiteData.Gate) return true;
+        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return true;
 
         foreach (TDObject obj in MapManager.instance.objectList)
         {
@@ -81,8 +81,8 @@ public class GamePlay : MonoBehaviour
 
     public bool CheckQuestion(List<int> redData, List<int> blueData, List<int> greenData)
     {
-        if (redData[0] == RedData.Gate && blueData[0] == BlueData.Color && greenData[0] != GreenData.Null) return true;
-        if (redData[0] == RedData.Map && blueData[0] == BlueData.Eye && greenData[0] != GreenData.Null) return true;
+        if (redData[0] == (int)RedData.Gate && blueData[0] == (int)BlueData.Color && greenData[0] != (int)GreenData.Null) return true;
+        if (redData[0] == (int)RedData.Map && blueData[0] == (int)BlueData.Eye && greenData[0] != (int)GreenData.Null) return true;
 
         return false;
     }
@@ -97,12 +97,12 @@ public class GamePlay : MonoBehaviour
             case TileColor.Blue: blueData = tile.data; break;
             case TileColor.Green: greenData = tile.data; break;
             case TileColor.White:
-                if(tile.data[0] == WhiteData.Eye && CheckQuestion(redData, blueData, greenData))
+                if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redData, blueData, greenData))
                 {
                     Answer(tile.data[1], tile.data[2]);
-                    redData = RedData.Default;
-                    blueData = BlueData.Default;
-                    greenData = GreenData.Default;
+                    redData = MyUtils.RedDataNull;
+                    blueData = MyUtils.BlueDataNull;
+                    greenData = MyUtils.GreenDataNull;
                 }
                 break;
         }
@@ -116,9 +116,9 @@ public class GamePlay : MonoBehaviour
     {
         questionCount++;
         char answer = '?';
-        if (redData[0] == RedData.Gate && blueData[0] == BlueData.Color)
+        if (redData[0] == (int)RedData.Gate && blueData[0] == (int)BlueData.Color)
         {
-            switch (greenData[0])
+            switch ((GreenData)greenData[0])
             {
                 case GreenData.Equal: answer = MapManager.instance.gateColorCount[blueData[1]] == greenData[1] ? 'O' : 'X'; break;
                 case GreenData.NotEqual: answer = MapManager.instance.gateColorCount[blueData[1]] != greenData[1] ? 'O' : 'X'; break;
@@ -128,9 +128,9 @@ public class GamePlay : MonoBehaviour
                 case GreenData.LessOrEqual: answer = MapManager.instance.gateColorCount[blueData[1]] <= greenData[1] ? 'O' : 'X'; break;
             }
         }
-        else if (redData[0] == RedData.Map && blueData[0] == BlueData.Eye)
+        else if (redData[0] == (int)RedData.Map && blueData[0] == (int)BlueData.Eye)
         {
-            switch (greenData[0])
+            switch ((GreenData)greenData[0])
             {
                 case GreenData.Equal: answer = MapManager.instance.mapEyeCount[blueData[1]] == greenData[1] ? 'O' : 'X'; break;
                 case GreenData.NotEqual: answer = MapManager.instance.mapEyeCount[blueData[1]] != greenData[1] ? 'O' : 'X'; break;
@@ -140,7 +140,7 @@ public class GamePlay : MonoBehaviour
                 case GreenData.LessOrEqual: answer = MapManager.instance.mapEyeCount[blueData[1]] <= greenData[1] ? 'O' : 'X'; break;
             }
         }
-        if (id == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
+        if (id == (int)ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
 
         TextMeshProUGUI answerLog = Instantiate(answerLogPrf, content).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
         answerLog.text = $"Q{questionCount}. {redBox.text} {blueBox.text} {greenBox.text}\n" + $"   A. Eye {(char)('A' + code)} : {answer}";
@@ -173,7 +173,7 @@ public class GamePlay : MonoBehaviour
     bool CheckStageClear()
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
-        if (tile.color == TileColor.White && tile.data[0] == WhiteData.Gate && tile.data[1] == ToD.Truth) {
+        if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth) {
             foreach(TDObject obj in MapManager.instance.objectList)
             {
                 if (obj is TDEye eye && eye.trueID != eye.guessedID) return false;
@@ -193,9 +193,9 @@ public class GamePlay : MonoBehaviour
     bool CheckGameOver()
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
-        if (tile.color != TileColor.White || tile.data[0] != WhiteData.Gate) return false;
+        if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return false;
 
-        if(tile.data[1] == ToD.Devil) return true;
+        if(tile.data[1] == (int)ToD.Devil) return true;
         
         foreach(TDObject obj in MapManager.instance.objectList)
         {
