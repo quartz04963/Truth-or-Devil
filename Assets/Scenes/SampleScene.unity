@@ -281,7 +281,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 52044214}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999963
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -492,7 +492,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.0000381, y: -283}
+  m_AnchoredPosition: {x: 0.000045776367, y: -283}
   m_SizeDelta: {x: -2.000002, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &397913073
@@ -2188,14 +2188,15 @@ MonoBehaviour:
   redData: 
   blueData: 
   greenData: 
-  redBox: {fileID: 0}
-  blueBox: {fileID: 0}
-  greenBox: {fileID: 0}
+  redBox: {fileID: 1337712012}
+  blueBox: {fileID: 478587020}
+  greenBox: {fileID: 876422829}
   scrollRect: {fileID: 1644708701}
   scrollView: {fileID: 1644708699}
   answerLogPrf: {fileID: 730093037749108487, guid: b2748a02eb20314449f383ae91adeaf5, type: 3}
   content: {fileID: 397913072}
   showLogButton: {fileID: 1999539358}
+  showLogButtonTMP: {fileID: 2050823554}
 --- !u!4 &1834676764
 Transform:
   m_ObjectHideFlags: 0
