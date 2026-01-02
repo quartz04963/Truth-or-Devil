@@ -39,12 +39,23 @@ public class MyUtils : MonoBehaviour
     public static List<int> BlueDataNull = new List<int>{(int)BlueData.Null, 0};
     public static List<int> GreenDataNull = new List<int>{(int)GreenData.Null, 0};
     public static List<TDData>[] stageList = new List<TDData>[10];
-
+    
     void Awake()
     {
         InitStageList();
     }
 
+    public static Color GetColorFromTileColor(TileColor tileColor)
+    {
+        switch (tileColor)
+        {
+            case TileColor.Red: return Color.red;
+            case TileColor.Blue: return Color.blue;
+            case TileColor.Green: return Color.green;
+            case TileColor.White: return Color.white;
+            default: return Color.black;
+        }
+    }
     public static string GetTextFromData(TileColor color, List<int> data)
     {
         switch (color)
@@ -156,6 +167,49 @@ public class MyUtils : MonoBehaviour
             new TDData(new Vector3Int(3, 2, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
             new TDData(new Vector3Int(4, 2, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
             new TDData(new Vector3Int(5, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 0}), 
+        };
+
+        stageList[4] = new List<TDData>
+        {
+            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
+            new TDData(new Vector3Int(3, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
+            new TDData(new Vector3Int(4, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 0}),
+            new TDData(new Vector3Int(5, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
+            new TDData(new Vector3Int(2, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 0}),
+            new TDData(new Vector3Int(3, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
+            new TDData(new Vector3Int(4, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 1}),
+            new TDData(new Vector3Int(5, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}),
+            new TDData(new Vector3Int(6, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 2}),
+            new TDData(new Vector3Int(3, 3, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 3}),
+            new TDData(new Vector3Int(4, 3, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
+            new TDData(new Vector3Int(5, 3, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
+            new TDData(new Vector3Int(6, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 3}),
+            new TDData(new Vector3Int(2, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 4}),
+            new TDData(new Vector3Int(3, 2, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2}),
+            new TDData(new Vector3Int(4, 2, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
+            new TDData(new Vector3Int(5, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Devil, 1}),
+            new TDData(new Vector3Int(6, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 5}),
+        };
+
+        stageList[8] = new List<TDData>
+        {
+            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 0}),
+            new TDData(new Vector3Int(4, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
+            new TDData(new Vector3Int(2, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2}),
+            new TDData(new Vector3Int(3, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Devil, 0}),
+            new TDData(new Vector3Int(4, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 0}),
+            new TDData(new Vector3Int(5, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 1}),
+            new TDData(new Vector3Int(6, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
+            new TDData(new Vector3Int(2, 3, 0), TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth}),
+            new TDData(new Vector3Int(3, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 2}),
+            new TDData(new Vector3Int(4, 3, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}),
+            new TDData(new Vector3Int(5, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 1}),
+            new TDData(new Vector3Int(6, 3, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
+            new TDData(new Vector3Int(2, 2, 0), TileColor.Red, new List<int>{(int)RedData.Map}),
+            new TDData(new Vector3Int(3, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 2}),
+            new TDData(new Vector3Int(4, 2, 0), TileColor.Red, new List<int>{(int)RedData.Map}),
+            new TDData(new Vector3Int(5, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 3}),
+            new TDData(new Vector3Int(6, 2, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
         };
     }
 }

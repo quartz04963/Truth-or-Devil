@@ -466,10 +466,11 @@ MonoBehaviour:
   pos: {x: 0, y: 0, z: 0}
   canvas: {fileID: 8361929698498751210}
   tmp: {fileID: 1935916540915218287}
+  trueID: 0
   guessedID: 0
   spriteNumber: 0
   isMarked: 0
   defaultSprite: {fileID: 21300000, guid: c84dc20f825e5d34789870b6a0bf09cd, type: 3}
   angelSprite: {fileID: 21300000, guid: 5e0d9b6e190a7db44ad2285d3e137e71, type: 3}
-  devilSprite: {fileID: 21300000, guid: c1a7812b3a83c804ea7c640a3b9724be, type: 3}
+  devilSprite: {fileID: 21300000, guid: eda5cd5e8977e16459da8f71089dcec2, type: 3}
   spriteRenderer: {fileID: 5864236004777094925}

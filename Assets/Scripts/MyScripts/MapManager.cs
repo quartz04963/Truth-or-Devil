@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
-using Cysharp.Text;
 
 [Serializable]
 public struct TDData
@@ -24,7 +23,7 @@ public class MapManager : MonoBehaviour
     public static MapManager instance;
     
     public List<TDData> tileList;
-    public List<TDObject> objectList;
+    public List<TDObject> objectList = new List<TDObject>();
     public Tilemap map;
 
     public Tile RedTile;
@@ -38,23 +37,15 @@ public class MapManager : MonoBehaviour
     public int[] gateColorCount;
     public int[] mapEyeCount;
 
-    public int stageNumber;
-
     void Awake()
     {
         if (instance == null) instance = this;
         else DontDestroyOnLoad(gameObject);
     }
 
-    void Start()
+    public void InitMap(int stageNumber)
     {
         tileList = MyUtils.stageList[stageNumber];
-        InitMap();
-    }
-
-    public void InitMap()
-    {
-        objectList = new List<TDObject>();
 
         foreach(TDData tile in tileList)
         {
@@ -83,13 +74,13 @@ public class MapManager : MonoBehaviour
                 case TileColor.White:
                     if (tile.data[0] == (int)WhiteData.Eye) {
                         TDEye TDeye = Instantiate(TDEyePrf).GetComponent<TDEye>();
-                        TDeye.Init(tile.pos, ZString.Format("{0}", (char)('A' + tile.data[2])));
+                        TDeye.Init(tile.pos, tile.data[2]);
                         TDeye.trueID = (ToD)tile.data[1];
                         objectList.Add(TDeye);
                     }
                     else if (tile.data[0] == (int)WhiteData.Gate) {
                         TDGate TDgate = Instantiate(TDGatePrf).GetComponent<TDGate>();
-                        TDgate.Init(tile.pos, ZString.Format("{0}", (char)('A' + tile.data[2])));
+                        TDgate.Init(tile.pos, tile.data[2]);
                         objectList.Add(TDgate);
                     }
                     break;

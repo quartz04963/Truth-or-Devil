@@ -11,18 +11,26 @@ public class GamePlay : MonoBehaviour
 {
     public static GamePlay instance;
 
+    public int stageNumber;
     public int questionCount = 0;
     public bool isRunning = true;
     public bool isLogShowing = true;
     public GameObject player;
     public Vector3Int posOnMap;
-    public List<int> redData, blueData, greenData;
-    public TextMeshProUGUI redBox, blueBox, greenBox;
 
+    [Header("질문 상자 관련")]
+    public List<int> redBoxData, blueBoxData, greenBoxData;
+    public TextMeshProUGUI redBoxText, blueBoxText, greenBoxText;
+
+    [Header("답변 관련")]
+    public Image eyeBoxImage;
+    public Sprite defaultSprite, angelSprite, devilSprite;
+    public TextMeshProUGUI eyeIndexText;
+    public TextMeshProUGUI answerBoxText;
+
+    [Header("로그 관련")]
     public ScrollRect scrollRect;
     public GameObject scrollView;
-    public GameObject answerLogPrf;
-    public RectTransform content;
     public RectTransform showLogButton;
     public TextMeshProUGUI showLogButtonTMP;
 
@@ -33,9 +41,18 @@ public class GamePlay : MonoBehaviour
 
     void Start()
     {
-        redData = MyUtils.RedDataNull;
-        blueData =  MyUtils.BlueDataNull;
-        greenData = MyUtils.GreenDataNull;
+        Init();
+        MapManager.instance.InitMap(stageNumber);
+        LogManager.instance.InitEmptyCategoryLogs();
+        ScenarioManager.instance.SetBaseScenario();
+    }
+
+    void Init()
+    {
+        redBoxData = MyUtils.RedDataNull;
+        blueBoxData =  MyUtils.BlueDataNull;
+        greenBoxData = MyUtils.GreenDataNull;
+        eyeBoxImage.enabled = false;
         player.gameObject.SetActive(true);
     }
 
@@ -56,7 +73,7 @@ public class GamePlay : MonoBehaviour
             posOnMap += dir;
             Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
             
-            DataUpdate();
+            DataBoxUpdate();
         }
 
         if(CheckGameOver()) GameOver();
@@ -89,66 +106,75 @@ public class GamePlay : MonoBehaviour
         return false;
     }
 
-    void DataUpdate()
+    void DataBoxUpdate()
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
 
         switch (tile.color)
         {
-            case TileColor.Red: redData = tile.data; break;
-            case TileColor.Blue: blueData = tile.data; break;
-            case TileColor.Green: greenData = tile.data; break;
+            case TileColor.Red: redBoxData = tile.data; break;
+            case TileColor.Blue: blueBoxData = tile.data; break;
+            case TileColor.Green: greenBoxData = tile.data; break;
             case TileColor.White:
-                if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redData, blueData, greenData))
+                if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
                 {
-                    Answer(tile.data[1], tile.data[2]);
-                    redData = MyUtils.RedDataNull;
-                    blueData = MyUtils.BlueDataNull;
-                    greenData = MyUtils.GreenDataNull;
+                    Answer((TDEye)MapManager.instance.objectList.Find(eye => eye.pos == posOnMap));
+                    redBoxData = MyUtils.RedDataNull;
+                    blueBoxData = MyUtils.BlueDataNull;
+                    greenBoxData = MyUtils.GreenDataNull;
                 }
                 break;
         }
 
-        redBox.SetText(MyUtils.GetTextFromData(TileColor.Red, redData));
-        blueBox.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueData));
-        greenBox.SetText(MyUtils.GetTextFromData(TileColor.Green, greenData));
+        redBoxText.SetText(MyUtils.GetTextFromData(TileColor.Red, redBoxData));
+        blueBoxText.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueBoxData));
+        greenBoxText.SetText(MyUtils.GetTextFromData(TileColor.Green, greenBoxData));
+
+        if (tile.color != TileColor.White || tile.data[0] != (int) WhiteData.Eye) {
+            eyeBoxImage.enabled = false;
+            eyeIndexText.SetText("");
+            answerBoxText.SetText("");
+        }
     }
 
-    void Answer(int id, int code)
+    void Answer(TDEye eye)
     {
         questionCount++;
         char answer = '?';
-        if (redData[0] == (int)RedData.Gate && blueData[0] == (int)BlueData.Color)
+        if (redBoxData[0] == (int)RedData.Gate && blueBoxData[0] == (int)BlueData.Color)
         {
-            switch ((GreenData)greenData[0])
+            switch ((GreenData)greenBoxData[0])
             {
-                case GreenData.Equal: answer = MapManager.instance.gateColorCount[blueData[1]] == greenData[1] ? 'O' : 'X'; break;
-                case GreenData.NotEqual: answer = MapManager.instance.gateColorCount[blueData[1]] != greenData[1] ? 'O' : 'X'; break;
-                case GreenData.Greater: answer = MapManager.instance.gateColorCount[blueData[1]] > greenData[1] ? 'O' : 'X'; break;
-                case GreenData.Less: answer = MapManager.instance.gateColorCount[blueData[1]] < greenData[1] ? 'O' : 'X'; break;
-                case GreenData.GreaterOrEqual: answer = MapManager.instance.gateColorCount[blueData[1]] >= greenData[1] ? 'O' : 'X'; break;
-                case GreenData.LessOrEqual: answer = MapManager.instance.gateColorCount[blueData[1]] <= greenData[1] ? 'O' : 'X'; break;
+                case GreenData.Equal: answer = MapManager.instance.gateColorCount[blueBoxData[1]] == greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.NotEqual: answer = MapManager.instance.gateColorCount[blueBoxData[1]] != greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.Greater: answer = MapManager.instance.gateColorCount[blueBoxData[1]] > greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.Less: answer = MapManager.instance.gateColorCount[blueBoxData[1]] < greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.GreaterOrEqual: answer = MapManager.instance.gateColorCount[blueBoxData[1]] >= greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.LessOrEqual: answer = MapManager.instance.gateColorCount[blueBoxData[1]] <= greenBoxData[1] ? 'O' : 'X'; break;
             }
         }
-        else if (redData[0] == (int)RedData.Map && blueData[0] == (int)BlueData.Eye)
+        else if (redBoxData[0] == (int)RedData.Map && blueBoxData[0] == (int)BlueData.Eye)
         {
-            switch ((GreenData)greenData[0])
+            switch ((GreenData)greenBoxData[0])
             {
-                case GreenData.Equal: answer = MapManager.instance.mapEyeCount[blueData[1]] == greenData[1] ? 'O' : 'X'; break;
-                case GreenData.NotEqual: answer = MapManager.instance.mapEyeCount[blueData[1]] != greenData[1] ? 'O' : 'X'; break;
-                case GreenData.Greater: answer = MapManager.instance.mapEyeCount[blueData[1]] > greenData[1] ? 'O' : 'X'; break;
-                case GreenData.Less: answer = MapManager.instance.mapEyeCount[blueData[1]] < greenData[1] ? 'O' : 'X'; break;
-                case GreenData.GreaterOrEqual: answer = MapManager.instance.mapEyeCount[blueData[1]] >= greenData[1] ? 'O' : 'X'; break;
-                case GreenData.LessOrEqual: answer = MapManager.instance.mapEyeCount[blueData[1]] <= greenData[1] ? 'O' : 'X'; break;
+                case GreenData.Equal: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] == greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.NotEqual: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] != greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.Greater: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] > greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.Less: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] < greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.GreaterOrEqual: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] >= greenBoxData[1] ? 'O' : 'X'; break;
+                case GreenData.LessOrEqual: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] <= greenBoxData[1] ? 'O' : 'X'; break;
             }
         }
-        if (id == (int)ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
+        if (eye.trueID == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
+        
+        eyeBoxImage.enabled = true;
+        eyeBoxImage.sprite = eye.guessedID == ToD.Null ? defaultSprite : eye.guessedID == ToD.Truth ? angelSprite : devilSprite;
+        eyeIndexText.SetText((char)('A' + eye.index));
+        answerBoxText.SetText(answer);
 
-        TextMeshProUGUI answerLog = Instantiate(answerLogPrf, content).transform.GetChild(0).GetComponent<TextMeshProUGUI>();
-        answerLog.SetText(
-            ZString.Format("Q{0}. {1} {2} {3}\n   A. Eye {4} : {5}", questionCount, redBox.text, blueBox.text, greenBox.text, (char)('A' + code), answer)
-        );
+        LogManager.instance.AddLog(redBoxData, blueBoxData, greenBoxData, eye, answer);
         StartCoroutine(ScrollToBottom());
+        StartCoroutine(WaitForSeconds(1f));
     }
 
     IEnumerator ScrollToBottom()
@@ -161,12 +187,12 @@ public class GamePlay : MonoBehaviour
     {
         if (isLogShowing)
         {
-            showLogButton.anchoredPosition = new Vector3(-20, 0, 0);
+            showLogButton.anchoredPosition = new Vector3(-10, 30, 0);
             showLogButtonTMP.SetText("<");
         }
         else
         {
-            showLogButton.anchoredPosition = new Vector3(-154, 0, 0);
+            showLogButton.anchoredPosition = new Vector3(-190, 30, 0);
             showLogButtonTMP.SetText(">");
         }
 
@@ -213,5 +239,12 @@ public class GamePlay : MonoBehaviour
     {
         Debug.Log("Game Over.");
         isRunning = false;
+    }
+
+    IEnumerator WaitForSeconds(float dur)
+    {
+        isRunning = false;
+        yield return new WaitForSeconds(dur);
+        isRunning = true;
     }
 }
