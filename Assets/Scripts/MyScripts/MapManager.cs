@@ -22,9 +22,11 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager instance;
     
+     public Tilemap map;
     public List<TDData> tileList;
-    public List<TDObject> objectList = new List<TDObject>();
-    public Tilemap map;
+    public List<TDObject> objectList;
+    public List<TDEye> eyeList;
+    public List<TDGate> gateList;
 
     public Tile RedTile;
     public Tile BlueTile;
@@ -36,6 +38,10 @@ public class MapManager : MonoBehaviour
  
     public int[] gateColorCount;
     public int[] mapEyeCount;
+    public bool canAskRed;
+    public bool canAskBlue;
+    public bool canAskGreen;
+    public bool canAskWhite;
 
     void Awake()
     {
@@ -46,7 +52,31 @@ public class MapManager : MonoBehaviour
     public void InitMap(int stageNumber)
     {
         tileList = MyUtils.stageList[stageNumber];
+        objectList = new List<TDObject>();
+        eyeList = new List<TDEye>();
+        gateList = new List<TDGate>();
 
+        canAskRed = canAskBlue = canAskGreen = canAskWhite = false;
+        foreach(TDData tile in tileList)
+        {
+            if (tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color)
+            {
+                switch ((TileColor)tile.data[1])
+                {
+                    case TileColor.Red: canAskRed = true; break;
+                    case TileColor.Blue: canAskBlue = true; break;
+                    case TileColor.Green: canAskGreen = true; break;
+                    case TileColor.White: canAskWhite = true; break;
+                }
+            }
+        }
+        
+        CreateTilesAndObjects();
+        SetAnswer();
+    }
+
+    public void CreateTilesAndObjects()
+    {
         foreach(TDData tile in tileList)
         {
             if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Blank && tile.data[1] == 1)
@@ -66,28 +96,28 @@ public class MapManager : MonoBehaviour
             switch (tile.color)
             {
                 case TileColor.Red: case TileColor.Blue: case TileColor.Green:
-                    TDText TDtext = Instantiate(TDTextPrf).GetComponent<TDText>();
-                    TDtext.Init(tile.pos, MyUtils.GetTextFromData(tile.color, tile.data));
-                    objectList.Add(TDtext);
+                    TDText tdText = Instantiate(TDTextPrf).GetComponent<TDText>();
+                    tdText.Init(tile.pos, MyUtils.GetTextFromData(tile.color, tile.data));
+                    objectList.Add(tdText);
                     break;
              
                 case TileColor.White:
                     if (tile.data[0] == (int)WhiteData.Eye) {
-                        TDEye TDeye = Instantiate(TDEyePrf).GetComponent<TDEye>();
-                        TDeye.Init(tile.pos, tile.data[2]);
-                        TDeye.trueID = (ToD)tile.data[1];
-                        objectList.Add(TDeye);
+                        TDEye tdEye = Instantiate(TDEyePrf).GetComponent<TDEye>();
+                        tdEye.Init(tile.pos, tile.data[2]);
+                        tdEye.trueID = (ToD)tile.data[1];
+                        objectList.Add(tdEye);
+                        eyeList.Add(tdEye);
                     }
                     else if (tile.data[0] == (int)WhiteData.Gate) {
-                        TDGate TDgate = Instantiate(TDGatePrf).GetComponent<TDGate>();
-                        TDgate.Init(tile.pos, tile.data[2]);
-                        objectList.Add(TDgate);
+                        TDGate tdGate = Instantiate(TDGatePrf).GetComponent<TDGate>();
+                        tdGate.Init(tile.pos, tile.data[2]);
+                        objectList.Add(tdGate);
+                        gateList.Add(tdGate);
                     }
                     break;
             }
         }
-
-        SetAnswer();
     }
 
     public void SetAnswer()

@@ -1,17 +1,25 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LogManager : MonoBehaviour
 {
     public static LogManager instance;
 
-    public List<AnswerLog> logList = new List<AnswerLog>();
+    public List<AnswerLog> logList;
     public GameObject answerLogPrf;
     public RectTransform content;
     public TMP_Dropdown dropdown;
+
+    public bool isLogShowing = true;
+    public ScrollRect LogScrollRect;
+    public GameObject LogScrollView;
+    public RectTransform showLogButton;
+    public TextMeshProUGUI showLogButtonTMP;
 
     void Awake()
     {
@@ -20,12 +28,14 @@ public class LogManager : MonoBehaviour
 
     public void InitEmptyCategoryLogs()
     {
-        TDEye defaultEye = (TDEye)MapManager.instance.objectList.Find(obj => obj is TDEye eye && eye.index == 0);
+        logList = new List<AnswerLog>();
+        
+        TDEye defaultEye = MapManager.instance.eyeList.Find(eye => eye.index == 0);
 
         for (int i = 0; i < MapManager.instance.mapEyeCount.Sum(); i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TDEye tdEye = (TDEye)MapManager.instance.objectList.Find(obj => obj is TDEye eye && eye.index == i);
+            TDEye tdEye = MapManager.instance.eyeList.Find(eye => eye.index == i);
             log.Init(MyUtils.RedDataNull, MyUtils.BlueDataNull, MyUtils.GreenDataNull, tdEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
@@ -64,6 +74,7 @@ public class LogManager : MonoBehaviour
         logList.Add(answerlog);
 
         OnDropdownChanged();
+        StartCoroutine(ScrollToBottom());
     }
 
     public void OnDropdownChanged()
@@ -135,5 +146,28 @@ public class LogManager : MonoBehaviour
                 }
                 break;
         }
+    }
+
+    IEnumerator ScrollToBottom()
+    {
+        yield return null;
+        LogScrollRect.verticalNormalizedPosition = 0f;
+    }
+
+    public void OnShowLogClicked()
+    {
+        if (isLogShowing)
+        {
+            showLogButton.anchoredPosition = new Vector3(-15, 50, 0);
+            showLogButtonTMP.SetText("<");
+        }
+        else
+        {
+            showLogButton.anchoredPosition = new Vector3(-395, 50, 0);
+            showLogButtonTMP.SetText(">");
+        }
+
+        isLogShowing = !isLogShowing;
+        LogScrollView.SetActive(isLogShowing);
     }
 }

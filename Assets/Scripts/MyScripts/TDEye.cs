@@ -1,42 +1,43 @@
 using UnityEngine;
 using Cysharp.Text;
+using UnityEngine.UI;
 
 public class TDEye : TDObject
 {
+    public int index;
+    public bool isMarked;
     public ToD trueID;
     public ToD guessedID = ToD.Null;
-    public int index;
-    public int spriteNumber = 0;
-    public bool isMarked;
-    public Sprite defaultSprite, angelSprite, devilSprite;
     public SpriteRenderer spriteRenderer;
+    public Sprite defaultSprite, angelSprite, devilSprite;
+    public Button button;
 
     public void Init(Vector3Int _pos, int _index)
     {
         index = _index;
-        base.Init(_pos, ZString.Format("{0}", (char)('A' + index)));
+        base.Init(_pos, ZString.Format("{0}", (char)('A' + _index)));
         tmp.rectTransform.position = _pos + MyUtils.offset + new Vector3(0.3f, -0.3f, 0);
     }
 
-    public void OnSwitchClicked()
+    public static void SetTDEyeState(TDEye eye, ToD _guessedID)
     {
-        spriteNumber = (++spriteNumber) % 3;
-        SetState(this, spriteNumber);
-    }
-
-    public static void SetState(TDEye eye, int _spriteNumber)
-    {
-        eye.spriteNumber = _spriteNumber;
-        switch (eye.spriteNumber)
+        eye.guessedID = _guessedID;
+        switch (_guessedID)
         {
-            case 0: eye.isMarked = false; eye.guessedID = ToD.Null; eye.spriteRenderer.sprite = eye.defaultSprite; break;
-            case 1: eye.isMarked = true; eye.guessedID = ToD.Truth; eye.spriteRenderer.sprite = eye.angelSprite; break;
-            case 2: eye.isMarked = true; eye.guessedID = ToD.Devil; eye.spriteRenderer.sprite = eye.devilSprite; break;
+            case ToD.Null: eye.isMarked = false; eye.spriteRenderer.sprite = eye.defaultSprite; break;
+            case ToD.Truth: eye.isMarked = true; eye.spriteRenderer.sprite = eye.angelSprite; break;
+            case ToD.Devil: eye.isMarked = true; eye.spriteRenderer.sprite = eye.devilSprite; break;
         }
 
         foreach (AnswerLog log in LogManager.instance.logList)
         {
             if (log.tdEye == eye) log.UpdateEyeImage();
         }
+    }
+    
+    public void OnClicked()
+    {
+        guessedID = (ToD)(((int)guessedID + 1) % 3);
+        SetTDEyeState(this, guessedID);
     }
 }
