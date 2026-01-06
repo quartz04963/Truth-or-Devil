@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class ScenarioEye : MonoBehaviour
 {
-    public int spriteNumber;
-    public TDEye tDEye;
+    public ToD guessedID;
+    public TDEye tdEye;
     public Image image;
     public Sprite defaultSprite, angelSprite, devilSprite;
     public TextMeshProUGUI tmp;
@@ -14,22 +14,21 @@ public class ScenarioEye : MonoBehaviour
 
     public void Init(TDEye _tdEye)
     {
-        tDEye = _tdEye;
-        tDEye.guessedID = ToD.Null;
-        tDEye.spriteNumber = spriteNumber = 0;
+        tdEye = _tdEye;
+        tdEye.guessedID = ToD.Null;
         image.sprite = defaultSprite;
-        tmp.SetText((char)('A' + tDEye.index));
+        tmp.SetText((char)('A' + tdEye.index));
     }
 
-    public void OnSwitchClicked()
+    public void OnClicked()
     {
-        spriteNumber = (++spriteNumber) % 3;
-        switch (spriteNumber)
+       guessedID = (ToD)(((int)guessedID + 1) % 3);
+        switch (guessedID)
         {
-            case 0: image.sprite = defaultSprite; break;
-            case 1: image.sprite = angelSprite; break;
-            case 2: image.sprite = devilSprite; break;
+            case ToD.Null: image.sprite = defaultSprite; break;
+            case ToD.Truth: image.sprite = angelSprite; break;
+            case ToD.Devil: image.sprite = devilSprite; break;
         }
-        TDEye.SetState(tDEye, spriteNumber);
+        TDEye.SetTDEyeState(tdEye, guessedID);
     }
 }

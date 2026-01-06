@@ -6,7 +6,7 @@ using Cysharp.Text;
 
 public class AnswerLog : MonoBehaviour
 {
-    public bool isEmptyCategory = false;
+    public bool isEmptyCategory;
     public TDEye tdEye;
     public List<int> redTileData, blueTileData, greenTileData;
     public GameObject category;
@@ -35,7 +35,8 @@ public class AnswerLog : MonoBehaviour
 
     public void UpdateEyeImage()
     {
-        eyeDataImage.sprite = tdEye.guessedID == ToD.Null ? defaultSprite : tdEye.guessedID == ToD.Truth ? angelSprite : devilSprite;
+        eyeDataImage.sprite = defaultSprite;
+        //eyeDataImage.sprite = tdEye.guessedID == ToD.Null ? defaultSprite : tdEye.guessedID == ToD.Truth ? angelSprite : devilSprite;
     }
 
     public void UpdateByDropdown(int value)

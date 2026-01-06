@@ -6,40 +6,61 @@ using UnityEngine.UI;
 
 public class ScenarioTab : MonoBehaviour
 {
-    public Image backgroundImg;
-    public GameObject row1, row2;
-    public Button button1, button2, deleteButton;
-    public GameObject scenarioEyePrf;
-    public List<ScenarioEye> scenarioEyeList = new List<ScenarioEye>();
+    public bool isActive;
+    public Image rimImage;
+    public GameObject eyeRow1, eyeRow2, gateRow;
+    public Button button1, button2, button3, deleteButton;
+    public GameObject scenarioEyePrf, scenarioGatePrf;
+    public List<ScenarioEye> scenarioEyeList;
+    public List<ScenarioGate> scenarioGateList;
 
     public void Init()
     {
-        int eyeCount = MapManager.instance.mapEyeCount.Sum();
-
-        if (eyeCount > 4) row2.SetActive(true);
-
+        int eyeCount = MapManager.instance.eyeList.Count;
+        if (eyeCount > 4) {
+            eyeRow2.SetActive(true);
+            rimImage.rectTransform.sizeDelta = new Vector2(512, 360);
+        }
         for (int i = 0; i < eyeCount; i++)
         {
             ScenarioEye eye = i < 4 ?
-                Instantiate(scenarioEyePrf, row1.transform).GetComponent<ScenarioEye>() : Instantiate(scenarioEyePrf, row2.transform).GetComponent<ScenarioEye>();
-            eye.Init((TDEye)MapManager.instance.objectList.Find(obj => obj is TDEye eye && eye.index == i));
+                Instantiate(scenarioEyePrf, eyeRow1.transform).GetComponent<ScenarioEye>() : Instantiate(scenarioEyePrf, eyeRow2.transform).GetComponent<ScenarioEye>();
+            eye.Init(MapManager.instance.eyeList.Find(eye => eye.index == i));
             scenarioEyeList.Add(eye);
+        }
+
+        int gateCount = MapManager.instance.gateList.Count;
+        for (int i = 0; i < gateCount; i++)
+        {
+            ScenarioGate gate = Instantiate(scenarioGatePrf, gateRow.transform).GetComponent<ScenarioGate>();
+            gate.Init(MapManager.instance.gateList.Find(gate => gate.index == i));
+            scenarioGateList.Add(gate);
         }
 
         button1.gameObject.transform.SetAsLastSibling();
         if (eyeCount > 4) button2.gameObject.transform.SetAsLastSibling();
+        button3.gameObject.transform.SetAsLastSibling();
 
-        OnClicked();
+        ScenarioManager.instance.scenarioList.ForEach(scenario => scenario.Activate(false));
+        Activate(true);
     }
 
     public void Activate(bool b)
     {
         button1.gameObject.SetActive(!b);
         button2.gameObject.SetActive(!b);
-        scenarioEyeList.ForEach(sEye => sEye.button.gameObject.SetActive(b)); 
-        if (b) scenarioEyeList.ForEach(sEye => TDEye.SetState(sEye.tDEye, sEye.spriteNumber));
+        button3.gameObject.SetActive(!b);
+        scenarioEyeList.ForEach(sEye => sEye.button.enabled = b); 
+        scenarioGateList.ForEach(sGate => sGate.button.enabled = b);
 
-        backgroundImg.color = b? new Color(1,1,1) : new Color(0,0,0);
+        rimImage.enabled = b;
+
+        if (b) {
+            scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
+            scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.guessedID));
+        }
+        
+        isActive = b;
     }
 
     public void OnClicked()
@@ -50,8 +71,8 @@ public class ScenarioTab : MonoBehaviour
 
     public void OnDeleteClicked()
     {
+        if (isActive) ScenarioManager.instance.scenarioList[ScenarioManager.instance.scenarioList.Count - 2].Activate(true);
         ScenarioManager.instance.scenarioList.Remove(this);
-        ScenarioManager.instance.scenarioList[ScenarioManager.instance.scenarioList.Count - 1].Activate(true);
         Destroy(gameObject);
     }
 }

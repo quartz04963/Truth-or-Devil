@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Text;
+using System.Collections;
 
 public enum TileColor
 {
@@ -108,108 +109,205 @@ public class MyUtils : MonoBehaviour
         }
     }
 
+    public static TDData ConstructTDData(int x, int y, string str)
+    {
+        Vector3Int pos = new Vector3Int(x, y, 0);
+        switch (str)
+        {
+            case "GATE": return new TDData(pos, TileColor.Red, new List<int>{(int)RedData.Gate});
+            case "MAP": return new TDData(pos, TileColor.Red, new List<int>{(int)RedData.Map});
+            case "RED": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red});
+            case "BLUE": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Blue});
+            case "GREEN": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Green});
+            case "WHITE": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White});
+            case "ANGEL": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth});
+            case "DEVIL": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Devil});
+            case "0" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 0});
+            case "1" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1});
+            case "2" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2});
+            case "3" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 3});
+            case "4" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 4});
+            case "5" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 5});
+            case "6" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 6});
+            case "7" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 7});
+            case "8" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 8});
+            default: return new TDData(Vector3Int.zero, TileColor.Red, RedDataNull);
+        }
+    }
+
+    public static TDData ConstructTDData(int x, int y, WhiteData whitedata, ToD toD, int index)
+    {
+        Vector3Int pos = new Vector3Int(x, y, 0);
+        switch (whitedata)
+        {
+            case WhiteData.Blank: return new TDData(pos, TileColor.White, new List<int>{(int)WhiteData.Blank, index});
+            case WhiteData.Eye: return new TDData(pos, TileColor.White, new List<int>{(int)WhiteData.Eye, (int)toD, index});
+            case WhiteData.Gate: return new TDData(pos, TileColor.White, new List<int>{(int)WhiteData.Gate, (int)toD, index});
+            default: return new TDData(Vector3Int.zero, TileColor.Red, RedDataNull);
+        }
+    }
+
     public void InitStageList()
     {
         stageList[0] = new List<TDData>{
-            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
-            new TDData(new Vector3Int(3, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(4, 5, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}),
-            new TDData(new Vector3Int(5, 5, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(4, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 0}),
-            new TDData(new Vector3Int(5, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Devil, 0}),
-            new TDData(new Vector3Int(5, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 1})
+            ConstructTDData(0, 2, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 2, "GATE"),
+            ConstructTDData(2, 2, "RED"),
+            ConstructTDData(3, 2, "1"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Truth, 1),
         };
 
         stageList[1] = new List<TDData>
         {
-            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
-            new TDData(new Vector3Int(3, 5, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(4, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(5, 5, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
-            new TDData(new Vector3Int(2, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 0}),
-            new TDData(new Vector3Int(3, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2}),
-            new TDData(new Vector3Int(4, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Green}),
-            new TDData(new Vector3Int(5, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 0}),
-            new TDData(new Vector3Int(3, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 1}),
-            new TDData(new Vector3Int(4, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 2}),
-            new TDData(new Vector3Int(5, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 3}),
+            ConstructTDData(0, 2, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 2, "1"),
+            ConstructTDData(2, 2, "GATE"),
+            ConstructTDData(3, 2, "WHITE"),
+            ConstructTDData(0, 1, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 1, "2"),
+            ConstructTDData(2, 1, "GREEN"),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(1, 0, WhiteData.Gate, ToD.Truth, 1),
+            ConstructTDData(2, 0, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 3),
         };
 
         stageList[2] = new List<TDData>
         {
-            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 0}),
-            new TDData(new Vector3Int(3, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(4, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 0}),
-            new TDData(new Vector3Int(5, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(2, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 0}),
-            new TDData(new Vector3Int(3, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}),
-            new TDData(new Vector3Int(4, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 1}),
-            new TDData(new Vector3Int(5, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
-            new TDData(new Vector3Int(6, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(2, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
-            new TDData(new Vector3Int(3, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 2}),
-            new TDData(new Vector3Int(5, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 3}),
+            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 2, "GATE"),
+            ConstructTDData(2, 2, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(3, 2, "GATE"),
+            ConstructTDData(0, 1, "0"),
+            ConstructTDData(1, 1, "RED"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 1, "WHITE"),
+            ConstructTDData(4, 1, "1"),
+            ConstructTDData(0, 0, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 0, WhiteData.Gate, ToD.Truth, 2),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 3),
         };
 
         stageList[3] = new List<TDData>
         {
-            new TDData(new Vector3Int(4, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 0}),
-            new TDData(new Vector3Int(3, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
-            new TDData(new Vector3Int(4, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Blue}),
-            new TDData(new Vector3Int(5, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 0}),
-            new TDData(new Vector3Int(6, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 0}),
-            new TDData(new Vector3Int(2, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 1}),
-            new TDData(new Vector3Int(3, 3, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(4, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 2}),
-            new TDData(new Vector3Int(5, 3, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(6, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 3}),
-            new TDData(new Vector3Int(2, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 1}),
-            new TDData(new Vector3Int(3, 2, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
-            new TDData(new Vector3Int(4, 2, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(5, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 0}), 
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(1, 2, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(2, 2, "BLUE"),
+            ConstructTDData(3, 2, "0"),
+            ConstructTDData(4, 2, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(0, 1, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(1, 1, "GATE"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(3, 1, "GATE"),
+            ConstructTDData(4, 1, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(0, 0, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(1, 0, "WHITE"),
+            ConstructTDData(2, 0, "1"),
+            ConstructTDData(3, 0, WhiteData.Blank, ToD.Null, 0),
         };
 
         stageList[4] = new List<TDData>
         {
-            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
-            new TDData(new Vector3Int(3, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(4, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 0}),
-            new TDData(new Vector3Int(5, 5, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(2, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 0}),
-            new TDData(new Vector3Int(3, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
-            new TDData(new Vector3Int(4, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 1}),
-            new TDData(new Vector3Int(5, 4, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}),
-            new TDData(new Vector3Int(6, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 2}),
-            new TDData(new Vector3Int(3, 3, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 3}),
-            new TDData(new Vector3Int(4, 3, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(5, 3, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(6, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 3}),
-            new TDData(new Vector3Int(2, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 4}),
-            new TDData(new Vector3Int(3, 2, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2}),
-            new TDData(new Vector3Int(4, 2, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
-            new TDData(new Vector3Int(5, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Devil, 1}),
-            new TDData(new Vector3Int(6, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 5}),
+            ConstructTDData(0, 3, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 3, "GATE"),
+            ConstructTDData(2, 3, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(3, 3, "GATE"),
+            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 2, "WHITE"),
+            ConstructTDData(2, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 2, "RED"),
+            ConstructTDData(4, 2, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(1, 1, "3"),
+            ConstructTDData(2, 1, "1"),
+            ConstructTDData(3, 1, "1"),
+            ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 3),
+            ConstructTDData(0, 0, WhiteData.Gate, ToD.Devil, 4),
+            ConstructTDData(1, 0, "2"),
+            ConstructTDData(2, 0, "GATE"),
+            ConstructTDData(3, 0, WhiteData.Eye, ToD.Devil, 1),
+            ConstructTDData(4, 0, WhiteData.Gate, ToD.Devil, 5),
+        };
+
+        stageList[5] = new List<TDData>
+        {
+            ConstructTDData(0, 5, "0"),
+            ConstructTDData(1, 5, "GREEN"),
+            ConstructTDData(2, 5, "GATE"),
+            ConstructTDData(0, 4, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(2, 4, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(0, 3, "GATE"),
+            ConstructTDData(1, 3, "WHITE"),
+            ConstructTDData(2, 3, "2"),
+            ConstructTDData(3, 3, WhiteData.Blank, ToD.Null, 0),
+            ConstructTDData(4, 3, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(5, 3, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 1),
+            ConstructTDData(2, 2, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(3, 2, "GATE"),
+            ConstructTDData(4, 2, WhiteData.Eye, ToD.Devil, 2),
+            ConstructTDData(5, 2, "0"),
+            ConstructTDData(3, 1, "GREEN"),
+            ConstructTDData(5, 1, "RED"),
+            ConstructTDData(3, 0, "1"),
+            ConstructTDData(4, 0, WhiteData.Eye, ToD.Truth, 3),
+            ConstructTDData(5, 0, "GATE"),
+        };
+
+        stageList[6] = new List<TDData>
+        {
+            ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(2, 2, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 1, "MAP"),
+            ConstructTDData(2, 1, "ANGEL"),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(1, 0, "GATE"),
+            ConstructTDData(2, 0, "1"),
+            ConstructTDData(3, 0, "RED"),
+        };
+
+        stageList[7] = new List<TDData>
+        {
+            ConstructTDData(0, 3, "MAP"),
+            ConstructTDData(1, 3, "BLUE"),
+            ConstructTDData(2, 3, "GATE"),
+            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 2, "DEVIL"),
+            ConstructTDData(2, 2, "2"),
+            ConstructTDData(3, 2, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 1, "GATE"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 1, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(0, 0, WhiteData.Gate, ToD.Truth, 3),
+            ConstructTDData(1, 0, "WHITE"),
+            ConstructTDData(2, 0, "1"),
+            ConstructTDData(3, 0, WhiteData.Eye, ToD.Truth, 1),
         };
 
         stageList[8] = new List<TDData>
         {
-            new TDData(new Vector3Int(2, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Truth, 0}),
-            new TDData(new Vector3Int(4, 5, 0), TileColor.White, new List<int>{(int)WhiteData.Blank, 1}),
-            new TDData(new Vector3Int(2, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2}),
-            new TDData(new Vector3Int(3, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Devil, 0}),
-            new TDData(new Vector3Int(4, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 0}),
-            new TDData(new Vector3Int(5, 4, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 1}),
-            new TDData(new Vector3Int(6, 4, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1}),
-            new TDData(new Vector3Int(2, 3, 0), TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth}),
-            new TDData(new Vector3Int(3, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 2}),
-            new TDData(new Vector3Int(4, 3, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}),
-            new TDData(new Vector3Int(5, 3, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 1}),
-            new TDData(new Vector3Int(6, 3, 0), TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}),
-            new TDData(new Vector3Int(2, 2, 0), TileColor.Red, new List<int>{(int)RedData.Map}),
-            new TDData(new Vector3Int(3, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Eye, (int)ToD.Truth, 2}),
-            new TDData(new Vector3Int(4, 2, 0), TileColor.Red, new List<int>{(int)RedData.Map}),
-            new TDData(new Vector3Int(5, 2, 0), TileColor.White, new List<int>{(int)WhiteData.Gate, (int)ToD.Devil, 3}),
-            new TDData(new Vector3Int(6, 2, 0), TileColor.Red, new List<int>{(int)RedData.Gate}),
+            ConstructTDData(0, 3, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(2, 3, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(0, 2, "2"),
+            ConstructTDData(1, 2, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(2, 2, "0"),
+            ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(4, 2, "1"),
+            ConstructTDData(0, 1, "ANGEL"),
+            ConstructTDData(1, 1, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(2, 1, "RED"),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(4, 1, "WHITE"),
+            ConstructTDData(0, 0, "MAP"),
+            ConstructTDData(1, 0, WhiteData.Eye, ToD.Truth, 2),
+            ConstructTDData(2, 0, "MAP"),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(4, 0, "GATE"),
         };
     }
 }

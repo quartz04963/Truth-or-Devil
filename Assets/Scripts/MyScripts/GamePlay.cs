@@ -12,9 +12,8 @@ public class GamePlay : MonoBehaviour
     public static GamePlay instance;
 
     public int stageNumber;
-    public int questionCount = 0;
-    public bool isRunning = true;
-    public bool isLogShowing = true;
+    public int questionCount;
+    public bool isRunning;
     public GameObject player;
     public Vector3Int posOnMap;
 
@@ -28,15 +27,13 @@ public class GamePlay : MonoBehaviour
     public TextMeshProUGUI eyeIndexText;
     public TextMeshProUGUI answerBoxText;
 
-    [Header("로그 관련")]
-    public ScrollRect scrollRect;
-    public GameObject scrollView;
-    public RectTransform showLogButton;
-    public TextMeshProUGUI showLogButtonTMP;
+    [Header("임시 추가")]
+    public TMP_InputField inputField;
 
     void Awake()
     {
         if (instance == null) instance = this;
+        else DontDestroyOnLoad(gameObject);
     }
 
     void Start()
@@ -44,7 +41,9 @@ public class GamePlay : MonoBehaviour
         Init();
         MapManager.instance.InitMap(stageNumber);
         LogManager.instance.InitEmptyCategoryLogs();
-        ScenarioManager.instance.SetBaseScenario();
+        ScenarioManager.instance.ActivateScenarios(true);
+        ScenarioManager.instance.InitBaseScenario();
+        MyCamera.instance.SetOSizeByMap();
     }
 
     void Init()
@@ -54,6 +53,16 @@ public class GamePlay : MonoBehaviour
         greenBoxData = MyUtils.GreenDataNull;
         eyeBoxImage.enabled = false;
         player.gameObject.SetActive(true);
+
+        // 아래 코드는 임시
+        redBoxText.SetText("");
+        blueBoxText.SetText("");
+        greenBoxText.SetText("");
+        eyeIndexText.SetText("");
+        answerBoxText.SetText("");
+        if (stageNumber == 0) Debug.Log("튜토리얼 - 눈알 A는 악마입니다.");
+        else if (stageNumber == 1) Debug.Log("튜토리얼 - 눈알 A는 천사입니다.");
+        else Debug.Log("");
     }
 
     void Update()
@@ -90,11 +99,11 @@ public class GamePlay : MonoBehaviour
         TDData nextTile = MapManager.instance.tileList[idx];
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return true;
 
-        foreach (TDObject obj in MapManager.instance.objectList)
+        if (MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir).guessedID == ToD.Devil) return false;
+        foreach (TDEye eye in MapManager.instance.eyeList)
         {
-            if (obj is TDEye eye && !eye.isMarked) return false;
+            if (!eye.isMarked) return false;
         }
-
         return true;
     }
 
@@ -118,7 +127,7 @@ public class GamePlay : MonoBehaviour
             case TileColor.White:
                 if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
                 {
-                    Answer((TDEye)MapManager.instance.objectList.Find(eye => eye.pos == posOnMap));
+                    Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
                     redBoxData = MyUtils.RedDataNull;
                     blueBoxData = MyUtils.BlueDataNull;
                     greenBoxData = MyUtils.GreenDataNull;
@@ -173,40 +182,17 @@ public class GamePlay : MonoBehaviour
         answerBoxText.SetText(answer);
 
         LogManager.instance.AddLog(redBoxData, blueBoxData, greenBoxData, eye, answer);
-        StartCoroutine(ScrollToBottom());
+
         StartCoroutine(WaitForSeconds(1f));
-    }
-
-    IEnumerator ScrollToBottom()
-    {
-        yield return null;
-        scrollRect.verticalNormalizedPosition = 0f;
-    }
-
-    public void OnShowLogClicked()
-    {
-        if (isLogShowing)
-        {
-            showLogButton.anchoredPosition = new Vector3(-10, 30, 0);
-            showLogButtonTMP.SetText("<");
-        }
-        else
-        {
-            showLogButton.anchoredPosition = new Vector3(-190, 30, 0);
-            showLogButtonTMP.SetText(">");
-        }
-
-        isLogShowing = !isLogShowing;
-        scrollView.SetActive(isLogShowing);
     }
 
     bool CheckStageClear()
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
         if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth) {
-            foreach(TDObject obj in MapManager.instance.objectList)
+            foreach(TDEye eye in MapManager.instance.eyeList)
             {
-                if (obj is TDEye eye && eye.trueID != eye.guessedID) return false;
+                if (eye.trueID != eye.guessedID) return false;
             }
             return true;
         }
@@ -227,9 +213,9 @@ public class GamePlay : MonoBehaviour
 
         if(tile.data[1] == (int)ToD.Devil) return true;
         
-        foreach(TDObject obj in MapManager.instance.objectList)
+        foreach(TDEye eye in MapManager.instance.eyeList)
         {
-            if (obj is TDEye eye && eye.trueID != eye.guessedID) return true;
+            if (eye.trueID != eye.guessedID) return true;
         }
 
         return false;
@@ -246,5 +232,26 @@ public class GamePlay : MonoBehaviour
         isRunning = false;
         yield return new WaitForSeconds(dur);
         isRunning = true;
+    }
+
+    public void OnInputSubmit()
+    {
+        if (!Input.GetKeyDown(KeyCode.Return) && !Input.GetKeyDown(KeyCode.KeypadEnter)) return;
+        
+        if (int.TryParse(inputField.text, out int num))
+        {
+            if (1 <= num && num <= 9) {
+                stageNumber = num - 1;
+                MapManager.instance.tileList.ForEach(tile => MapManager.instance.map.SetTile(tile.pos, null));
+                MapManager.instance.objectList.ForEach(obj => Destroy(obj.gameObject));
+                LogManager.instance.logList.ForEach(log => Destroy(log.gameObject));
+                ScenarioManager.instance.scenarioList.ForEach(scenario => Destroy(scenario.gameObject));
+                Start();
+                isRunning = true;
+            }
+            else Debug.Log("스테이지는 1번부터 9번까지 있습니다.");
+        }
+        else Debug.Log("숫자를 올바르게 입력하세요.");
+        inputField.SetTextWithoutNotify("");
     }
 }
