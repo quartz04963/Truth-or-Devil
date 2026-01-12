@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Text;
-using System.Collections;
 
 public enum TileColor
 {
@@ -39,7 +38,7 @@ public class MyUtils : MonoBehaviour
     public static List<int> RedDataNull = new List<int>{(int)RedData.Null};
     public static List<int> BlueDataNull = new List<int>{(int)BlueData.Null, 0};
     public static List<int> GreenDataNull = new List<int>{(int)GreenData.Null, 0};
-    public static List<TDData>[] stageList = new List<TDData>[10];
+    public static List<TDData>[] stageList = new List<TDData>[15];
     
     void Awake()
     {
@@ -149,7 +148,8 @@ public class MyUtils : MonoBehaviour
 
     public void InitStageList()
     {
-        stageList[0] = new List<TDData>{
+        stageList[0] = new List<TDData>
+        {
             ConstructTDData(0, 2, WhiteData.Blank, ToD.Null, 1),
             ConstructTDData(1, 2, "GATE"),
             ConstructTDData(2, 2, "RED"),
@@ -176,87 +176,96 @@ public class MyUtils : MonoBehaviour
 
         stageList[2] = new List<TDData>
         {
-            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
-            ConstructTDData(1, 2, "GATE"),
-            ConstructTDData(2, 2, WhiteData.Eye, ToD.Truth, 0),
-            ConstructTDData(3, 2, "GATE"),
-            ConstructTDData(0, 1, "0"),
-            ConstructTDData(1, 1, "RED"),
-            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
-            ConstructTDData(3, 1, "WHITE"),
-            ConstructTDData(4, 1, "1"),
-            ConstructTDData(0, 0, WhiteData.Blank, ToD.Null, 1),
-            ConstructTDData(1, 0, WhiteData.Gate, ToD.Truth, 2),
-            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 2, "WHITE"),
+            ConstructTDData(2, 2, "GATE"),
+            ConstructTDData(3, 2, "GREEN"),
+            ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 1, "1"),
+            ConstructTDData(2, 1, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(3, 1, "8"),
+            ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 1),
+            ConstructTDData(2, 0, WhiteData.Gate, ToD.Devil, 2),    
         };
 
         stageList[3] = new List<TDData>
         {
-            ConstructTDData(2, 3, WhiteData.Gate, ToD.Truth, 0),
-            ConstructTDData(1, 2, WhiteData.Blank, ToD.Null, 1),
-            ConstructTDData(2, 2, "BLUE"),
-            ConstructTDData(3, 2, "0"),
-            ConstructTDData(4, 2, WhiteData.Eye, ToD.Truth, 0),
-            ConstructTDData(0, 1, WhiteData.Gate, ToD.Devil, 1),
-            ConstructTDData(1, 1, "GATE"),
-            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 2),
-            ConstructTDData(3, 1, "GATE"),
-            ConstructTDData(4, 1, WhiteData.Gate, ToD.Devil, 3),
-            ConstructTDData(0, 0, WhiteData.Eye, ToD.Truth, 1),
-            ConstructTDData(1, 0, "WHITE"),
-            ConstructTDData(2, 0, "1"),
-            ConstructTDData(3, 0, WhiteData.Blank, ToD.Null, 0),
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 2, "GATE"),
+            ConstructTDData(2, 2, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(3, 2, "GATE"),
+            ConstructTDData(0, 1, "1"),
+            ConstructTDData(1, 1, "WHITE"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 1, "BLUE"),
+            ConstructTDData(4, 1, "0"),
+            ConstructTDData(0, 0, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 0, WhiteData.Blank, ToD.Null, 0),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(4, 0, WhiteData.Gate, ToD.Truth, 3),
         };
 
         stageList[4] = new List<TDData>
         {
-            ConstructTDData(0, 3, WhiteData.Blank, ToD.Null, 1),
-            ConstructTDData(1, 3, "GATE"),
-            ConstructTDData(2, 3, WhiteData.Eye, ToD.Truth, 0),
-            ConstructTDData(3, 3, "GATE"),
-            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
-            ConstructTDData(1, 2, "WHITE"),
-            ConstructTDData(2, 2, WhiteData.Gate, ToD.Devil, 1),
-            ConstructTDData(3, 2, "RED"),
-            ConstructTDData(4, 2, WhiteData.Gate, ToD.Devil, 2),
-            ConstructTDData(1, 1, "3"),
-            ConstructTDData(2, 1, "1"),
-            ConstructTDData(3, 1, "1"),
-            ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 3),
-            ConstructTDData(0, 0, WhiteData.Gate, ToD.Devil, 4),
-            ConstructTDData(1, 0, "2"),
-            ConstructTDData(2, 0, "GATE"),
-            ConstructTDData(3, 0, WhiteData.Eye, ToD.Devil, 1),
-            ConstructTDData(4, 0, WhiteData.Gate, ToD.Devil, 5),
+            ConstructTDData(1, 2, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(2, 2, "BLUE"),
+            ConstructTDData(3, 2, "0"),
+            ConstructTDData(4, 2, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(0, 1, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 1, "GATE"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 1, "GATE"),
+            ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 2),
+            ConstructTDData(0, 0, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(1, 0, "RED"),
+            ConstructTDData(2, 0, "1"),
+            ConstructTDData(3, 0, WhiteData.Blank, ToD.Null, 0),
         };
 
         stageList[5] = new List<TDData>
         {
-            ConstructTDData(0, 5, "0"),
-            ConstructTDData(1, 5, "GREEN"),
-            ConstructTDData(2, 5, "GATE"),
-            ConstructTDData(0, 4, WhiteData.Eye, ToD.Devil, 0),
-            ConstructTDData(2, 4, WhiteData.Eye, ToD.Truth, 1),
-            ConstructTDData(0, 3, "GATE"),
-            ConstructTDData(1, 3, "WHITE"),
-            ConstructTDData(2, 3, "2"),
-            ConstructTDData(3, 3, WhiteData.Blank, ToD.Null, 0),
-            ConstructTDData(4, 3, WhiteData.Gate, ToD.Devil, 2),
-            ConstructTDData(5, 3, WhiteData.Gate, ToD.Devil, 3),
-            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
-            ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 1),
-            ConstructTDData(2, 2, WhiteData.Blank, ToD.Null, 1),
-            ConstructTDData(3, 2, "GATE"),
-            ConstructTDData(4, 2, WhiteData.Eye, ToD.Devil, 2),
-            ConstructTDData(5, 2, "0"),
-            ConstructTDData(3, 1, "GREEN"),
-            ConstructTDData(5, 1, "RED"),
+            ConstructTDData(2, 4, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(0, 3, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(1, 3, "GATE"),
+            ConstructTDData(2, 3, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(3, 3, "GATE"),
+            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(1, 2, "GREEN"),
+            ConstructTDData(2, 2, WhiteData.Gate, ToD.Truth, 2),
+            ConstructTDData(3, 2, "WHITE"),
+            ConstructTDData(0, 1, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(1, 1, "3"),
+            ConstructTDData(2, 1, "2"),
+            ConstructTDData(3, 1, "1"),
+            ConstructTDData(0, 0, WhiteData.Gate, ToD.Devil, 4),
+            ConstructTDData(1, 0, "1"),
+            ConstructTDData(2, 0, WhiteData.Eye, ToD.Devil, 1),
             ConstructTDData(3, 0, "1"),
-            ConstructTDData(4, 0, WhiteData.Eye, ToD.Truth, 3),
-            ConstructTDData(5, 0, "GATE"),
         };
 
         stageList[6] = new List<TDData>
+        {
+            ConstructTDData(0, 4, "GATE"),
+            ConstructTDData(1, 4, "BLUE"),
+            ConstructTDData(2, 4, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(0, 3, "WHITE"),
+            ConstructTDData(1, 3, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(2, 3, "2"),
+            ConstructTDData(3, 3, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(0, 2, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(1, 2, "1"),
+            ConstructTDData(2, 2, "GREEN"),
+            ConstructTDData(3, 2, "1"),
+            ConstructTDData(4, 2, "RED"),
+            ConstructTDData(1, 1, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(2, 1, "1"),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 2),
+            ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 3),
+            ConstructTDData(2, 0, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 4),
+        };
+
+        stageList[7] = new List<TDData>
         {
             ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 0),
             ConstructTDData(2, 2, WhiteData.Eye, ToD.Devil, 0),
@@ -270,44 +279,94 @@ public class MyUtils : MonoBehaviour
             ConstructTDData(3, 0, "RED"),
         };
 
-        stageList[7] = new List<TDData>
-        {
-            ConstructTDData(0, 3, "MAP"),
-            ConstructTDData(1, 3, "BLUE"),
-            ConstructTDData(2, 3, "GATE"),
-            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 0),
-            ConstructTDData(1, 2, "DEVIL"),
-            ConstructTDData(2, 2, "2"),
-            ConstructTDData(3, 2, WhiteData.Eye, ToD.Devil, 0),
-            ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            ConstructTDData(1, 1, "GATE"),
-            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
-            ConstructTDData(3, 1, WhiteData.Gate, ToD.Devil, 2),
-            ConstructTDData(0, 0, WhiteData.Gate, ToD.Truth, 3),
-            ConstructTDData(1, 0, "WHITE"),
-            ConstructTDData(2, 0, "1"),
-            ConstructTDData(3, 0, WhiteData.Eye, ToD.Truth, 1),
-        };
-
         stageList[8] = new List<TDData>
         {
-            ConstructTDData(0, 3, WhiteData.Gate, ToD.Truth, 0),
-            ConstructTDData(2, 3, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(0, 3, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(1, 3, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(2, 3, WhiteData.Eye, ToD.Devil, 1),
+            ConstructTDData(0, 2, "0"),
+            ConstructTDData(1, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(2, 2, WhiteData.Blank, ToD.Null, 0),
+            ConstructTDData(3, 2, "2"),
+            ConstructTDData(0, 1, "RED"),
+            ConstructTDData(1, 1, WhiteData.Gate, ToD.Truth, 2),
+            ConstructTDData(2, 1, "BLUE"),
+            ConstructTDData(3, 1, "DEVIL"),
+            ConstructTDData(0, 0, "GATE"),
+            ConstructTDData(1, 0, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(2, 0, WhiteData.Blank, ToD.Null, 0),
+            ConstructTDData(3, 0, "MAP"),
+        };
+
+        stageList[9] = new List<TDData>
+        {
+            ConstructTDData(2, 4, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(4, 4, "0"),
+            ConstructTDData(0, 3, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 3, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(2, 3, "MAP"),
+            ConstructTDData(3, 3, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(4, 3, "GREEN"),
+            ConstructTDData(0, 2, "1"),
+            ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 2),
+            ConstructTDData(2, 2, "DEVIL"),
+            ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(4, 2, "GATE"),
+            ConstructTDData(0, 1, "WHITE"),
+            ConstructTDData(1, 1, WhiteData.Gate, ToD.Devil, 4),
+            ConstructTDData(2, 1, "1"),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(4, 1, WhiteData.Eye, ToD.Devil, 2),
+            ConstructTDData(0, 0, "GATE"),
+        };
+
+        stageList[10] = new List<TDData>
+        {
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(4, 3, WhiteData.Blank, ToD.Null, 1),
             ConstructTDData(0, 2, "2"),
             ConstructTDData(1, 2, WhiteData.Eye, ToD.Devil, 0),
             ConstructTDData(2, 2, "0"),
             ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
-            ConstructTDData(4, 2, "1"),
-            ConstructTDData(0, 1, "ANGEL"),
+            ConstructTDData(4, 2, "2"),
+            ConstructTDData(0, 1, "MAP"),
             ConstructTDData(1, 1, WhiteData.Gate, ToD.Devil, 2),
-            ConstructTDData(2, 1, "RED"),
+            ConstructTDData(2, 1, "MAP"),
             ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 1),
-            ConstructTDData(4, 1, "WHITE"),
-            ConstructTDData(0, 0, "MAP"),
+            ConstructTDData(4, 1, "GATE"),
+            ConstructTDData(0, 0, "ANGEL"),
             ConstructTDData(1, 0, WhiteData.Eye, ToD.Truth, 2),
-            ConstructTDData(2, 0, "MAP"),
+            ConstructTDData(2, 0, "WHITE"),
             ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 3),
-            ConstructTDData(4, 0, "GATE"),
+            ConstructTDData(4, 0, "BLUE"),
+        };
+
+        stageList[11] = new List<TDData>
+        {
+            ConstructTDData(1, 4, "2"),
+            ConstructTDData(2, 4, "DEVIL"),
+            ConstructTDData(3, 4, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(4, 4, "DEVIL"),
+            ConstructTDData(5, 4, "RED"),
+            ConstructTDData(1, 3, "ANGEL"),
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(3, 3, "MAP"),
+            ConstructTDData(4, 3, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(5, 3, "GREEN"),
+            ConstructTDData(0, 2, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 2, WhiteData.Eye, ToD.Devil, 1),
+            ConstructTDData(2, 2, "GATE"),
+            ConstructTDData(4, 2, "GATE"),
+            ConstructTDData(5, 2, WhiteData.Eye, ToD.Truth, 2),
+            ConstructTDData(1, 1, "2"),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Truth, 2),
+            ConstructTDData(4, 1, WhiteData.Gate, ToD.Devil, 3),
+            ConstructTDData(5, 1, "1"),
+            ConstructTDData(1, 0, "BLUE"),
+            ConstructTDData(2, 0, "2"),
+            ConstructTDData(3, 0, WhiteData.Eye, ToD.Devil, 3),
+            ConstructTDData(4, 0, "3"),
+            ConstructTDData(5, 0, "2"),
         };
     }
 }

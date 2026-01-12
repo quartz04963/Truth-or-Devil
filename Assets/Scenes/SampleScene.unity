@@ -1570,7 +1570,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000045776367, y: 0.0000333786}
+  m_AnchoredPosition: {x: 1.0000458, y: 0.0000333786}
   m_SizeDelta: {x: -2.000002, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &397913073
@@ -6043,7 +6043,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 399b61d6ddb2a0943a5cc0dfa40d4683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageNumber: 8
+  stageNumber: 0
   questionCount: 0
   isRunning: 1
   player: {fileID: 456842266}
@@ -6061,7 +6061,6 @@ MonoBehaviour:
   eyeIndexText: {fileID: 134306634}
   answerBoxText: {fileID: 1360068716}
   inputField: {fileID: 107026365}
-  ConsoleLogText: {fileID: 846839628}
 --- !u!4 &1834676764
 Transform:
   m_ObjectHideFlags: 0

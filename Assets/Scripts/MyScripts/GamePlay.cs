@@ -240,7 +240,7 @@ public class GamePlay : MonoBehaviour
         
         if (int.TryParse(inputField.text, out int num))
         {
-            if (1 <= num && num <= 9) {
+            if (1 <= num && num <= 12) {
                 stageNumber = num - 1;
                 MapManager.instance.tileList.ForEach(tile => MapManager.instance.map.SetTile(tile.pos, null));
                 MapManager.instance.objectList.ForEach(obj => Destroy(obj.gameObject));
@@ -249,7 +249,7 @@ public class GamePlay : MonoBehaviour
                 Start();
                 isRunning = true;
             }
-            else Debug.Log("스테이지는 1번부터 9번까지 있습니다.");
+            else Debug.Log("스테이지는 1번부터 12번까지 있습니다.");
         }
         else Debug.Log("숫자를 올바르게 입력하세요.");
         inputField.SetTextWithoutNotify("");
