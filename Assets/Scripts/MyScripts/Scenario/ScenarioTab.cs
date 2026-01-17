@@ -65,12 +65,16 @@ public class ScenarioTab : MonoBehaviour
 
     public void OnClicked()
     {
+        if (!GamePlay.instance.isRunning) return;
+
         ScenarioManager.instance.scenarioList.ForEach(scenario => scenario.Activate(false));
         Activate(true);
     }
 
     public void OnDeleteClicked()
     {
+        if (!GamePlay.instance.isRunning) return;
+        
         if (isActive) ScenarioManager.instance.scenarioList[ScenarioManager.instance.scenarioList.Count - 2].Activate(true);
         ScenarioManager.instance.scenarioList.Remove(this);
         Destroy(gameObject);

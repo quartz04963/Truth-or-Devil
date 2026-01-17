@@ -3,13 +3,13 @@ using UnityEngine;
 public class MyCamera : MonoBehaviour
 {
     public static MyCamera instance;
+    
     public Camera mainCamera;
     public RectTransform background;
 
     void Awake()
     {
         if (instance == null) instance = this;
-        else DontDestroyOnLoad(gameObject);
     }
 
     public void SetOSizeByMap()

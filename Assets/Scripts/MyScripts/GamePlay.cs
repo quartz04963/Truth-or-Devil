@@ -11,39 +11,42 @@ public class GamePlay : MonoBehaviour
 {
     public static GamePlay instance;
 
-    public int stageNumber;
-    public int questionCount;
     public bool isRunning;
     public GameObject player;
     public Vector3Int posOnMap;
 
-    [Header("질문 상자 관련")]
-    public List<int> redBoxData, blueBoxData, greenBoxData;
-    public TextMeshProUGUI redBoxText, blueBoxText, greenBoxText;
+    public List<int> redBoxData;
+    public List<int> blueBoxData;
+    public List<int> greenBoxData;
+    public TextMeshProUGUI redBoxText;
+    public TextMeshProUGUI blueBoxText;
+    public TextMeshProUGUI greenBoxText;
 
-    [Header("답변 관련")]
     public Image eyeBoxImage;
-    public Sprite defaultSprite, angelSprite, devilSprite;
+    public Sprite defaultSprite;
+    public Sprite angelSprite;
+    public Sprite devilSprite;
     public TextMeshProUGUI eyeIndexText;
     public TextMeshProUGUI answerBoxText;
 
-    [Header("임시 추가")]
-    public TMP_InputField inputField;
+    public GameObject stageClearWindow;
+    public GameObject gameOverWindow;
 
     void Awake()
     {
         if (instance == null) instance = this;
-        else DontDestroyOnLoad(gameObject);
     }
 
     void Start()
     {
         Init();
-        MapManager.instance.InitMap(stageNumber);
+        MapManager.instance.InitMap();
         LogManager.instance.InitEmptyCategoryLogs();
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
         MyCamera.instance.SetOSizeByMap();
+
+        isRunning = true;
     }
 
     void Init()
@@ -60,23 +63,19 @@ public class GamePlay : MonoBehaviour
         greenBoxText.SetText("");
         eyeIndexText.SetText("");
         answerBoxText.SetText("");
-        if (stageNumber == 0) Debug.Log("튜토리얼 - 눈알 A는 악마입니다.");
-        else if (stageNumber == 1) Debug.Log("튜토리얼 - 눈알 A는 천사입니다.");
+        if (GameManager.instance.currentStage == 1) Debug.Log("튜토리얼 - 눈알 A는 악마입니다.");
+        else if (GameManager.instance.currentStage == 2) Debug.Log("튜토리얼 - 눈알 A는 천사입니다.");
         else Debug.Log("");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("Main Menu");
+        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene("GamePlay");
 
         if (!isRunning) return;
 
-        Vector3Int dir = Vector3Int.zero;
-        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) dir = Vector3Int.up;
-        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) dir = Vector3Int.left;
-        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) dir = Vector3Int.down;
-        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) dir = Vector3Int.right;
-
+        Vector3Int dir = GetDirectionFromKey();
         if (CanMove(dir))
         {
             posOnMap += dir;
@@ -87,6 +86,14 @@ public class GamePlay : MonoBehaviour
 
         if(CheckGameOver()) GameOver();
         if(CheckStageClear()) StageClear();
+    }
+    Vector3Int GetDirectionFromKey()
+    {
+        if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) return Vector3Int.up;
+        else if (Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)) return Vector3Int.left;
+        else if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow)) return Vector3Int.down;
+        else if (Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)) return Vector3Int.right;
+        else return Vector3Int.zero;
     }
 
     bool CanMove(Vector3Int dir)
@@ -148,7 +155,6 @@ public class GamePlay : MonoBehaviour
 
     void Answer(TDEye eye)
     {
-        questionCount++;
         char answer = '?';
         if (redBoxData[0] == (int)RedData.Gate && blueBoxData[0] == (int)BlueData.Color)
         {
@@ -202,8 +208,9 @@ public class GamePlay : MonoBehaviour
 
     void StageClear()
     {
-        Debug.Log("Stage Clear.");
         isRunning = false;
+        stageClearWindow.SetActive(true);
+        if (GameManager.instance.currentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
     }
 
     bool CheckGameOver()
@@ -223,8 +230,8 @@ public class GamePlay : MonoBehaviour
 
     void GameOver()
     {
-        Debug.Log("Game Over.");
         isRunning = false;
+        gameOverWindow.SetActive(true);
     }
 
     IEnumerator WaitForSeconds(float dur)
@@ -234,24 +241,13 @@ public class GamePlay : MonoBehaviour
         isRunning = true;
     }
 
-    public void OnInputSubmit()
+    public void OnMenuClicked() => SceneManager.LoadScene("Main Menu");
+
+    public void OnRetryClicked() => SceneManager.LoadScene("GamePlay");
+
+    public void OnNextClicked()
     {
-        if (!Input.GetKeyDown(KeyCode.Return) && !Input.GetKeyDown(KeyCode.KeypadEnter)) return;
-        
-        if (int.TryParse(inputField.text, out int num))
-        {
-            if (1 <= num && num <= 12) {
-                stageNumber = num - 1;
-                MapManager.instance.tileList.ForEach(tile => MapManager.instance.map.SetTile(tile.pos, null));
-                MapManager.instance.objectList.ForEach(obj => Destroy(obj.gameObject));
-                LogManager.instance.logList.ForEach(log => Destroy(log.gameObject));
-                ScenarioManager.instance.scenarioList.ForEach(scenario => Destroy(scenario.gameObject));
-                Start();
-                isRunning = true;
-            }
-            else Debug.Log("스테이지는 1번부터 12번까지 있습니다.");
-        }
-        else Debug.Log("숫자를 올바르게 입력하세요.");
-        inputField.SetTextWithoutNotify("");
+        GameManager.instance.currentStage++;
+        SceneManager.LoadScene("GamePlay");
     }
 }

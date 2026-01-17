@@ -56,12 +56,16 @@ public class TDGate : TDObject
 
     public void OnClicked()
     {
+        if (!GamePlay.instance.isRunning) return;
+
         guessedID = (ToD)(((int)guessedID + 1) % 3);
         SetTDGateState(this, guessedID);
     }
 
     void OnMouseEnter()
     {
+        if (!GamePlay.instance.isRunning) return;
+        
         if (MapManager.instance.tileList.FindIndex(tile => tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color) != -1)
             infoBox.SetActive(true);
     }
