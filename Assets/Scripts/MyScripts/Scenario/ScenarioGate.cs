@@ -22,6 +22,8 @@ public class ScenarioGate : MonoBehaviour
 
     public void OnClicked()
     {
+        if (!GamePlay.instance.isRunning) return;
+        
         guessedID = (ToD)(((int)guessedID + 1) % 3);
         switch (guessedID)
         {

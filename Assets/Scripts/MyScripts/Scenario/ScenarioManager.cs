@@ -29,6 +29,7 @@ public class ScenarioManager : MonoBehaviour
     public void InitBaseScenario()
     {
         scenarioList = new List<ScenarioTab>();
+        
         ScenarioTab scenario = AddScenario();
         scenario.deleteButton.enabled = false;
         scenario.deleteButton.image.enabled = false;
@@ -50,5 +51,8 @@ public class ScenarioManager : MonoBehaviour
         scenarioScrollRect.verticalNormalizedPosition = 0f;
     }
 
-    public void OnAddScenarioClicked() => AddScenario();
+    public void OnAddScenarioClicked() 
+    {
+        if (GamePlay.instance.isRunning) AddScenario();
+    }
 }

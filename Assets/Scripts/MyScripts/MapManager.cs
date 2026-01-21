@@ -46,12 +46,11 @@ public class MapManager : MonoBehaviour
     void Awake()
     {
         if (instance == null) instance = this;
-        else DontDestroyOnLoad(gameObject);
     }
 
-    public void InitMap(int stageNumber)
+    public void InitMap()
     {
-        tileList = MyUtils.stageList[stageNumber];
+        tileList = MyUtils.stageList[GameManager.instance.currentStage - 1];
         objectList = new List<TDObject>();
         eyeList = new List<TDEye>();
         gateList = new List<TDGate>();

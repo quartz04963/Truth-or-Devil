@@ -121,15 +121,15 @@ public class MyUtils : MonoBehaviour
             case "WHITE": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White});
             case "ANGEL": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth});
             case "DEVIL": return new TDData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Devil});
-            case "0" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 0});
-            case "1" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 1});
-            case "2" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 2});
-            case "3" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 3});
-            case "4" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 4});
-            case "5" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 5});
-            case "6" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 6});
-            case "7" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 7});
-            case "8" : return new TDData(new Vector3Int(x, y, 0), TileColor.Green, new List<int>{(int)GreenData.Equal, 8});
+            case "0" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 0});
+            case "1" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 1});
+            case "2" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 2});
+            case "3" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 3});
+            case "4" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 4});
+            case "5" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 5});
+            case "6" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 6});
+            case "7" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 7});
+            case "8" : return new TDData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 8});
             default: return new TDData(Vector3Int.zero, TileColor.Red, RedDataNull);
         }
     }

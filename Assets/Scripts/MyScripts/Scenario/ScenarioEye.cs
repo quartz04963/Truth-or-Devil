@@ -22,7 +22,9 @@ public class ScenarioEye : MonoBehaviour
 
     public void OnClicked()
     {
-       guessedID = (ToD)(((int)guessedID + 1) % 3);
+        if (!GamePlay.instance.isRunning) return;
+
+        guessedID = (ToD)(((int)guessedID + 1) % 3);
         switch (guessedID)
         {
             case ToD.Null: image.sprite = defaultSprite; break;
