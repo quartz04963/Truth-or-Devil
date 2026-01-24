@@ -50,7 +50,7 @@ public class MapManager : MonoBehaviour
 
     public void InitMap()
     {
-        tileList = MyUtils.stageList[GameManager.instance.currentStage - 1];
+        tileList = MyUtils.stageList[GameManager.instance.CurrentStage - 1];
         objectList = new List<TDObject>();
         eyeList = new List<TDEye>();
         gateList = new List<TDGate>();

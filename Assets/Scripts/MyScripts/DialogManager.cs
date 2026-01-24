@@ -12,12 +12,14 @@ public class DialogManager : MonoBehaviour
     public bool isTalking; //대화 중 여부
     public bool isPrinting; //대사 출력 중 여부
     public bool isEpilogShowed;
+    public bool isClicked;
     public float interval;
     public int currentLineNumber;
     public TDDialog currentDialog;
     public Coroutine saying;
 
     public GameObject dialog;
+    public GameObject skipButton;
     public Image background;
     public TextMeshProUGUI nameTMP;
     public TextMeshProUGUI dialogTMP;
@@ -31,8 +33,10 @@ public class DialogManager : MonoBehaviour
     {
         if (currentDialog == null || !isTalking) return;
         
-        if (Input.GetMouseButtonDown(0))
+        if (isClicked || Input.GetKeyDown(KeyCode.Return))
         {
+            isClicked = false;
+
             if (isPrinting)
             {
                 interval = 0f;
@@ -84,7 +88,7 @@ public class DialogManager : MonoBehaviour
         
         if (GamePlay.instance.isCleared) 
         {
-            TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.currentStage && dialog.isProlog == false);
+            TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
             if (dialog != null && !isEpilogShowed)
             {
                 isEpilogShowed = true;
@@ -120,4 +124,12 @@ public class DialogManager : MonoBehaviour
     }
 
     public void Fade(float endValue, float duration) => Tween.Alpha(background, endValue, duration);
+
+    public void OnClicked() => isClicked = true;
+
+    public void OnSkipClicked()
+    {
+        if (GamePlay.instance.isCleared) isEpilogShowed = true; 
+        ExitDialog();
+    } 
 }

@@ -33,6 +33,7 @@ public class GamePlay : MonoBehaviour
     public TextMeshProUGUI answerBoxText;
 
     public TextMeshProUGUI stageNumberText;
+    public TextMeshProUGUI enteringCheckTMP;
     public GameObject enteringCheckWindow;
     public GameObject stageClearWindow;
     public GameObject gameOverWindow;
@@ -55,7 +56,7 @@ public class GamePlay : MonoBehaviour
 
         isRunning = true;
         
-        TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.currentStage && dialog.isProlog == true);
+        TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
         DialogManager.instance.StartDialog(dialog);
     }
 
@@ -72,13 +73,15 @@ public class GamePlay : MonoBehaviour
         greenBoxText.SetText("");
         eyeIndexText.SetText("");
         answerBoxText.SetText("");
-        if (GameManager.instance.currentStage <= 12) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.currentStage));
+        if (GameManager.instance.CurrentStage <= 12) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
     }
 
     void Update()
     {
-        if (!isRunning) return;
+        if (Input.GetKeyDown(KeyCode.Escape)) OnExitClicked();
 
+        if (!isRunning) return;
+        
         Vector3Int dir = GetDirectionFromKey();
         if (CanMove(dir))
         {
@@ -139,9 +142,13 @@ public class GamePlay : MonoBehaviour
         {
             isRunning = false;
             enteringCheckWindow.SetActive(true);
-            yield return new WaitUntil(() => isYes || isNo);
+            
+            TDData gate = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
+            enteringCheckTMP.SetText(ZString.Format("정말 문 {0}(으)로\n진입하시겠습니까?", (char)('A' + gate.data[2])));
 
-            if (isYes) Move(dir);
+            yield return new WaitUntil(() => isYes || isNo || Input.GetKeyDown(KeyCode.Return));
+
+            if (isYes || Input.GetKey(KeyCode.Return)) Move(dir);
 
             isRunning = true;
             isYes = isNo = false;
@@ -246,7 +253,7 @@ public class GamePlay : MonoBehaviour
     {
         isRunning = false;
         stageClearWindow.SetActive(true);
-        if (GameManager.instance.currentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
+        if (GameManager.instance.CurrentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
     }
 
     void CheckGameOver()
@@ -292,7 +299,7 @@ public class GamePlay : MonoBehaviour
     public void OnRetryClicked() => SceneManager.LoadScene("GamePlay");
     public void OnNextClicked()
     {
-        GameManager.instance.currentStage++;
+        GameManager.instance.CurrentStage++;
         SceneManager.LoadScene("GamePlay");
     }
 }

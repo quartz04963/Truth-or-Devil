@@ -5,8 +5,19 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
 
     public int maxStage;
-    public int currentStage;
+    [SerializeField] private int currentStage;
+    public int CurrentStage
+    {
+        get => currentStage;
+        set
+        {
+            currentStage = value;
+            if (currentStage >= 8) ruleNumber = Mathf.Max(ruleNumber, 2);
+        }
+    }
+
     public int titleTabNumber;
+    public int ruleNumber;
     
     [Header("옵션 관련")]
     public bool doCheckBeforeEnteringGate = true;

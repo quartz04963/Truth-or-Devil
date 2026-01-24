@@ -13,7 +13,7 @@ public class Tutorial : MonoBehaviour
 
     public void RevisedInit()
     {
-        if (GameManager.instance.currentStage == 1)
+        if (GameManager.instance.CurrentStage == 1)
         {
             // 임시
             MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
@@ -22,27 +22,35 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
+
+            DialogManager.instance.skipButton.SetActive(false);
         } 
 
-        else if (GameManager.instance.currentStage == 2)
+        else if (GameManager.instance.CurrentStage == 2)
         {
             // 임시
             MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
-            
+
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
         }
 
-        else if (GameManager.instance.currentStage == 3)
+        else if (GameManager.instance.CurrentStage == 3)
         {
             ScenarioManager.instance.ActivateScenarios(false);
         }
 
-        else if (GameManager.instance.currentStage == 4)
+        else if (GameManager.instance.CurrentStage == 4)
         {
             ScenarioManager.instance.ActivateScenarios(false);
+        }
+
+        // 정렬 기준 "천사/악마" 비활성화
+        if (1 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 7)
+        {
+            LogManager.instance.dropdown.options.RemoveAt(3);
         }
     }
 
@@ -50,7 +58,7 @@ public class Tutorial : MonoBehaviour
     {
         float duration;
 
-        if (GameManager.instance.currentStage == 1)
+        if (GameManager.instance.CurrentStage == 1)
         {
             if (DialogManager.instance.currentLineNumber == 7)
             {
@@ -60,7 +68,7 @@ public class Tutorial : MonoBehaviour
             }
         }
         
-        else if (GameManager.instance.currentStage == 2)
+        else if (GameManager.instance.CurrentStage == 2)
         {
             if (DialogManager.instance.currentLineNumber == 5)
             {
@@ -73,7 +81,7 @@ public class Tutorial : MonoBehaviour
 
     public bool BreakDialog()
     {
-        if (GameManager.instance.currentStage == 1)
+        if (GameManager.instance.CurrentStage == 1)
         {
             if (DialogManager.instance.currentLineNumber == 10)
             {
@@ -108,7 +116,7 @@ public class Tutorial : MonoBehaviour
 
     public bool BreakEnteringPos(Vector3Int pos)
     {
-        if (GameManager.instance.currentStage == 1)
+        if (GameManager.instance.CurrentStage == 1)
         {
             if (DialogManager.instance.currentLineNumber <= 15)
             {
@@ -126,7 +134,7 @@ public class Tutorial : MonoBehaviour
 
     public bool BreakEnteringGate(Vector3Int dir)
     {
-        if (GameManager.instance.currentStage == 1)
+        if (GameManager.instance.CurrentStage == 1)
         {
             if (GamePlay.instance.posOnMap + dir == new Vector3Int(2, 1, 0)) return true;
         }
