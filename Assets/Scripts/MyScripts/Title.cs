@@ -3,7 +3,6 @@ using UnityEngine;
 public class Title : MonoBehaviour
 {
     public GameObject title;
-    public GameObject settings;
     public GameObject chapter1;
     public GameObject chapter2;
     public GameObject chapter3;
@@ -13,9 +12,14 @@ public class Title : MonoBehaviour
         MoveTo(GameManager.instance.titleTabNumber);
     }
 
-    public void OnStartClicked() {
+    public void OnPlayClicked() {
         if (GameManager.instance.titleTabNumber == 0) GameManager.instance.titleTabNumber = 1;
         MoveTo(GameManager.instance.titleTabNumber);
+    }
+
+    public void OnExitClicked()
+    {
+        Application.Quit();   
     }
 
     public void OnBackClicked() => MoveTo(0);
@@ -33,7 +37,4 @@ public class Title : MonoBehaviour
             case 3: title.SetActive(false); chapter1.SetActive(false); chapter2.SetActive(false); chapter3.SetActive(true); break;
         }
     }
-
-    public void OnOpenSettingsClicked() => settings.SetActive(true);
-    public void OnCloseSettingsClicked() => settings.SetActive(false);
 }

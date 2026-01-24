@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ScenarioManager : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class ScenarioManager : MonoBehaviour
     public ScrollRect scenarioScrollRect;
     public GameObject scenarioScrollView;
 
+    public bool isScenarioShowing = true;
+    public RectTransform showScenarioButton;
+    public TextMeshProUGUI showScenarioButtonTMP;
+
     void Awake()
     {
         if (instance == null) instance = this;
@@ -24,6 +29,7 @@ public class ScenarioManager : MonoBehaviour
         MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(!b));
         MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(!b));
         scenarioScrollView.SetActive(b);
+        showScenarioButton.gameObject.SetActive(b);
     }
     
     public void InitBaseScenario()
@@ -54,5 +60,22 @@ public class ScenarioManager : MonoBehaviour
     public void OnAddScenarioClicked() 
     {
         if (GamePlay.instance.isRunning) AddScenario();
+    }
+
+    public void OnShowScenarioClicked()
+    {
+        if (isScenarioShowing)
+        {
+            showScenarioButton.anchoredPosition = new Vector3(15, 50, 0);
+            showScenarioButtonTMP.SetText(">");
+        }
+        else
+        {
+            showScenarioButton.anchoredPosition = new Vector3(395, 50, 0);
+            showScenarioButtonTMP.SetText("<");
+        }
+
+        isScenarioShowing = !isScenarioShowing;
+        scenarioScrollView.SetActive(isScenarioShowing);
     }
 }

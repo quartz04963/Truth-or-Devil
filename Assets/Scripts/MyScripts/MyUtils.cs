@@ -32,7 +32,7 @@ public enum WhiteData
     Blank = 0, Eye = 1, Gate = 2,
 }
 
-public class MyUtils : MonoBehaviour
+public static class MyUtils
 {
     public static Vector3 offset = new Vector3(0.5f, 0.5f, 0);
     public static List<int> RedDataNull = new List<int>{(int)RedData.Null};
@@ -40,7 +40,7 @@ public class MyUtils : MonoBehaviour
     public static List<int> GreenDataNull = new List<int>{(int)GreenData.Null, 0};
     public static List<TDData>[] stageList = new List<TDData>[15];
     
-    void Awake()
+    static MyUtils()
     {
         InitStageList();
     }
@@ -146,7 +146,7 @@ public class MyUtils : MonoBehaviour
         }
     }
 
-    public void InitStageList()
+    static void InitStageList()
     {
         stageList[0] = new List<TDData>
         {

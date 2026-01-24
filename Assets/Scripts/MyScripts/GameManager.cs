@@ -8,6 +8,9 @@ public class GameManager : MonoBehaviour
     public int currentStage;
     public int titleTabNumber;
     
+    [Header("옵션 관련")]
+    public bool doCheckBeforeEnteringGate = true;
+
     void Awake()
     {
         if (instance == null) {
