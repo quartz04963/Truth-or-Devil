@@ -12,6 +12,9 @@ public class GamePlay : MonoBehaviour
     public static GamePlay instance;
 
     public bool isRunning;
+    public bool isCleared;
+    public bool isOver;
+    public bool isYes, isNo;
     public GameObject player;
     public Vector3Int posOnMap;
 
@@ -29,6 +32,8 @@ public class GamePlay : MonoBehaviour
     public TextMeshProUGUI eyeIndexText;
     public TextMeshProUGUI answerBoxText;
 
+    public TextMeshProUGUI stageNumberText;
+    public GameObject enteringCheckWindow;
     public GameObject stageClearWindow;
     public GameObject gameOverWindow;
 
@@ -45,8 +50,13 @@ public class GamePlay : MonoBehaviour
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
         MyCamera.instance.SetOSizeByMap();
+        
+        Tutorial.instance.RevisedInit();
 
         isRunning = true;
+        
+        TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.currentStage && dialog.isProlog == true);
+        DialogManager.instance.StartDialog(dialog);
     }
 
     void Init()
@@ -57,36 +67,37 @@ public class GamePlay : MonoBehaviour
         eyeBoxImage.enabled = false;
         player.gameObject.SetActive(true);
 
-        // 아래 코드는 임시
         redBoxText.SetText("");
         blueBoxText.SetText("");
         greenBoxText.SetText("");
         eyeIndexText.SetText("");
         answerBoxText.SetText("");
-        if (GameManager.instance.currentStage == 1) Debug.Log("튜토리얼 - 눈알 A는 악마입니다.");
-        else if (GameManager.instance.currentStage == 2) Debug.Log("튜토리얼 - 눈알 A는 천사입니다.");
-        else Debug.Log("");
+        if (GameManager.instance.currentStage <= 12) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.currentStage));
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) SceneManager.LoadScene("Main Menu");
-        if (Input.GetKeyDown(KeyCode.Space)) SceneManager.LoadScene("GamePlay");
-
         if (!isRunning) return;
 
         Vector3Int dir = GetDirectionFromKey();
         if (CanMove(dir))
         {
-            posOnMap += dir;
-            Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
+            if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
+
+            TDData nextTile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
+            if (nextTile.color == TileColor.White && nextTile.data[0] == (int)WhiteData.Gate)
+            {
+                StartCoroutine(CheckEnteringGate(dir));
+            }
+            else Move(dir);
             
             DataBoxUpdate();
         }
 
-        if(CheckGameOver()) GameOver();
-        if(CheckStageClear()) StageClear();
+        CheckGameOver();
+        CheckStageClear();
     }
+
     Vector3Int GetDirectionFromKey()
     {
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) return Vector3Int.up;
@@ -112,6 +123,31 @@ public class GamePlay : MonoBehaviour
             if (!eye.isMarked) return false;
         }
         return true;
+    }
+
+    void Move(Vector3Int dir)
+    {
+        posOnMap += dir;
+        Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
+    }
+
+    IEnumerator CheckEnteringGate(Vector3Int dir)
+    {
+        if (Tutorial.instance.BreakEnteringGate(dir)) yield break;
+
+        if (GameManager.instance.doCheckBeforeEnteringGate)
+        {
+            isRunning = false;
+            enteringCheckWindow.SetActive(true);
+            yield return new WaitUntil(() => isYes || isNo);
+
+            if (isYes) Move(dir);
+
+            isRunning = true;
+            isYes = isNo = false;
+            enteringCheckWindow.SetActive(false);
+        }
+        else Move(dir);
     }
 
     public bool CheckQuestion(List<int> redData, List<int> blueData, List<int> greenData)
@@ -192,43 +228,51 @@ public class GamePlay : MonoBehaviour
         StartCoroutine(WaitForSeconds(1f));
     }
 
-    bool CheckStageClear()
+    void CheckStageClear()
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
         if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth) {
             foreach(TDEye eye in MapManager.instance.eyeList)
             {
-                if (eye.trueID != eye.guessedID) return false;
+                if (eye.trueID != eye.guessedID) return;
             }
-            return true;
+            
+            isCleared = true;
+            DialogManager.instance.StartDialog(TDStory.stageClearLineList);
         }
-        
-        else return false;
     }
-
-    void StageClear()
+    
+    public void StageClear()
     {
         isRunning = false;
         stageClearWindow.SetActive(true);
         if (GameManager.instance.currentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
     }
 
-    bool CheckGameOver()
+    void CheckGameOver()
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
-        if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return false;
+        if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return;
 
-        if(tile.data[1] == (int)ToD.Devil) return true;
+        if(tile.data[1] == (int)ToD.Devil)
+        {
+            isOver = true;
+            DialogManager.instance.StartDialog(TDStory.gameOverLineList);
+            return;
+        }
         
         foreach(TDEye eye in MapManager.instance.eyeList)
         {
-            if (eye.trueID != eye.guessedID) return true;
+            if (eye.trueID != eye.guessedID) 
+            {
+                isOver = true;
+                DialogManager.instance.StartDialog(TDStory.gameOverLineList);
+                return;
+            }
         }
-
-        return false;
     }
 
-    void GameOver()
+    public void GameOver()
     {
         isRunning = false;
         gameOverWindow.SetActive(true);
@@ -241,10 +285,11 @@ public class GamePlay : MonoBehaviour
         isRunning = true;
     }
 
-    public void OnMenuClicked() => SceneManager.LoadScene("Main Menu");
-
+    public void OnExitClicked() => SceneManager.LoadScene("Main Menu");
+    public void OnYesClicked() => isYes = true;
+    public void OnNoClicked() => isNo = true;
+    public void OnDontCheckEnteringChanged(bool isOn) => GameManager.instance.doCheckBeforeEnteringGate = !isOn;
     public void OnRetryClicked() => SceneManager.LoadScene("GamePlay");
-
     public void OnNextClicked()
     {
         GameManager.instance.currentStage++;
