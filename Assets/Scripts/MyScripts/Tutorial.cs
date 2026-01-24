@@ -15,6 +15,10 @@ public class Tutorial : MonoBehaviour
     {
         if (GameManager.instance.currentStage == 1)
         {
+            // 임시
+            MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
+            MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
+
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
@@ -22,6 +26,10 @@ public class Tutorial : MonoBehaviour
 
         else if (GameManager.instance.currentStage == 2)
         {
+            // 임시
+            MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
+            MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
+            
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);

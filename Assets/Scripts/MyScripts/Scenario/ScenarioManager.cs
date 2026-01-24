@@ -26,8 +26,8 @@ public class ScenarioManager : MonoBehaviour
 
     public void ActivateScenarios(bool b)
     {
-        MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(!b));
-        MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(!b));
+        // MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(!b));
+        // MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(!b));
         scenarioScrollView.SetActive(b);
         showScenarioButton.gameObject.SetActive(b);
     }
@@ -77,5 +77,12 @@ public class ScenarioManager : MonoBehaviour
 
         isScenarioShowing = !isScenarioShowing;
         scenarioScrollView.SetActive(isScenarioShowing);
+    }
+
+    public void OnApplyScenarioClicked()
+    {
+        ScenarioTab scenario = scenarioList.Find(scenario => scenario.isActive);
+        scenario.scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
+        scenario.scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.guessedID));
     }
 }

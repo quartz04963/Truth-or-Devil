@@ -31,6 +31,6 @@ public class ScenarioEye : MonoBehaviour
             case ToD.Truth: image.sprite = angelSprite; break;
             case ToD.Devil: image.sprite = devilSprite; break;
         }
-        TDEye.SetTDEyeState(tdEye, guessedID);
+        // TDEye.SetTDEyeState(tdEye, guessedID);
     }
 }

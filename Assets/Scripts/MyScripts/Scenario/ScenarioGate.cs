@@ -31,6 +31,6 @@ public class ScenarioGate : MonoBehaviour
             case ToD.Truth: image.sprite = heavenSprite; break;
             case ToD.Devil: image.sprite = hellSprite; break;
         }
-        TDGate.SetTDGateState(tdGate, guessedID);
+        // TDGate.SetTDGateState(tdGate, guessedID);
     }
 }

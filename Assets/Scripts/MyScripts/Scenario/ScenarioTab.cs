@@ -50,15 +50,15 @@ public class ScenarioTab : MonoBehaviour
         button1.gameObject.SetActive(!b);
         button2.gameObject.SetActive(!b);
         button3.gameObject.SetActive(!b);
-        scenarioEyeList.ForEach(sEye => sEye.button.enabled = b); 
-        scenarioGateList.ForEach(sGate => sGate.button.enabled = b);
+        // scenarioEyeList.ForEach(sEye => sEye.button.enabled = b); 
+        // scenarioGateList.ForEach(sGate => sGate.button.enabled = b);
 
         rimImage.enabled = b;
 
-        if (b) {
-            scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
-            scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.guessedID));
-        }
+        // if (b) {
+        //     scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
+        //     scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.guessedID));
+        // }
         
         isActive = b;
     }
