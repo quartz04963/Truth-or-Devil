@@ -108,7 +108,7 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator StopDialogUntil(Func<bool> condition)
     {
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0));
         DialogManager.instance.ExitDialog();
         yield return new WaitUntil(condition);
         DialogManager.instance.ContinueDialog();

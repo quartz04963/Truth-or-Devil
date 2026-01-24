@@ -32,25 +32,8 @@ public class DialogManager : MonoBehaviour
     void Update()
     {
         if (currentDialog == null || !isTalking) return;
-        
-        if (isClicked || Input.GetKeyDown(KeyCode.Return))
-        {
-            isClicked = false;
 
-            if (isPrinting)
-            {
-                interval = 0f;
-            }
-            else if (currentLineNumber < currentDialog.lineList.Count - 1)
-            {
-                if (Tutorial.instance.BreakDialog()) return;
-                else ContinueDialog();
-            }
-            else
-            {
-                ExitDialog();
-            }
-        }
+        if (Input.GetKeyDown(KeyCode.Return)) OnClicked();
     }
 
     public void StartDialog(TDDialog _currentDialog)
@@ -125,7 +108,22 @@ public class DialogManager : MonoBehaviour
 
     public void Fade(float endValue, float duration) => Tween.Alpha(background, endValue, duration);
 
-    public void OnClicked() => isClicked = true;
+    public void OnClicked() 
+    {
+        if (isPrinting)
+        {
+            interval = 0f;
+        }
+        else if (currentLineNumber < currentDialog.lineList.Count - 1)
+        {
+            if (Tutorial.instance.BreakDialog()) return;
+            else ContinueDialog();
+        }
+        else
+        {
+            ExitDialog();
+        }
+    }
 
     public void OnSkipClicked()
     {
