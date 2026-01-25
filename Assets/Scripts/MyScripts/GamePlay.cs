@@ -37,6 +37,7 @@ public class GamePlay : MonoBehaviour
     public GameObject enteringCheckWindow;
     public GameObject stageClearWindow;
     public GameObject gameOverWindow;
+    public GameObject nextButton;
 
     void Awake()
     {
@@ -73,7 +74,7 @@ public class GamePlay : MonoBehaviour
         greenBoxText.SetText("");
         eyeIndexText.SetText("");
         answerBoxText.SetText("");
-        if (GameManager.instance.CurrentStage <= 12) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
+        if (GameManager.instance.CurrentStage <= 13) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
     }
 
     void Update()

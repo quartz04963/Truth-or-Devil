@@ -1101,7 +1101,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -20, y: 20}
+  m_AnchoredPosition: {x: -20, y: 10}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2751066440078907646
@@ -1325,7 +1325,7 @@ Transform:
   m_GameObject: {fileID: 8931365846767689008}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_Children:
   - {fileID: 8506107826328333314}
   - {fileID: 3943658987557819565}
@@ -1372,12 +1372,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 22aef434bb77da9429a9f0f5c6360855, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ba3437e2887996140b0086ef9e6e162f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.5714286, y: 0.5714286}
+  m_Size: {x: 0.6818182, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -1401,9 +1401,9 @@ MonoBehaviour:
   index: 0
   guessedID: 0
   spriteRenderer: {fileID: 2180333707375024721}
-  defaultSprite: {fileID: 21300000, guid: 22aef434bb77da9429a9f0f5c6360855, type: 3}
-  heavenSprite: {fileID: 21300000, guid: 182d4805d89a818468e7fd53485a050e, type: 3}
-  hellSprite: {fileID: 21300000, guid: 8b11647b1050cce418cfcddb73194fdc, type: 3}
+  defaultSprite: {fileID: 21300000, guid: ba3437e2887996140b0086ef9e6e162f, type: 3}
+  heavenSprite: {fileID: 21300000, guid: 29d182385d7629c41afde53bbd2277ec, type: 3}
+  hellSprite: {fileID: 21300000, guid: 75130a1fd3563374796ab076ed3ce00a, type: 3}
   button: {fileID: 1356943520111085165}
   infoBox: {fileID: 4245321649854102290}
   redCountText: {fileID: 3123053036732379866}
@@ -1427,8 +1427,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.5714286, y: 0.5714286}
-    newSize: {x: 0.5714286, y: 0.5714286}
+    oldSize: {x: 0.6818182, y: 1}
+    newSize: {x: 0.6818182, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0

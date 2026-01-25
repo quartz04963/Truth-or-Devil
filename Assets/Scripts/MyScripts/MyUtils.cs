@@ -267,6 +267,20 @@ public static class MyUtils
 
         stageList[7] = new List<TDData>
         {
+            ConstructTDData(1, 3, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(0, 2, "MAP"),
+            ConstructTDData(1, 2, "DEVIL"),
+            ConstructTDData(2, 2, "2"),
+            ConstructTDData(0, 1, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(1, 1, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(0, 0, "GATE"),
+            ConstructTDData(1, 0, "GREEN"),
+            ConstructTDData(2, 0, "2"),
+        };
+
+        stageList[8] = new List<TDData>
+        {
             ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 0),
             ConstructTDData(2, 2, WhiteData.Eye, ToD.Devil, 0),
             ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
@@ -279,7 +293,7 @@ public static class MyUtils
             ConstructTDData(3, 0, "RED"),
         };
 
-        stageList[8] = new List<TDData>
+        stageList[9] = new List<TDData>
         {
             ConstructTDData(0, 3, WhiteData.Eye, ToD.Truth, 0),
             ConstructTDData(1, 3, WhiteData.Gate, ToD.Devil, 0),
@@ -298,7 +312,7 @@ public static class MyUtils
             ConstructTDData(3, 0, "MAP"),
         };
 
-        stageList[9] = new List<TDData>
+        stageList[10] = new List<TDData>
         {
             ConstructTDData(2, 4, WhiteData.Gate, ToD.Devil, 0),
             ConstructTDData(4, 4, "0"),
@@ -320,7 +334,7 @@ public static class MyUtils
             ConstructTDData(0, 0, "GATE"),
         };
 
-        stageList[10] = new List<TDData>
+        stageList[11] = new List<TDData>
         {
             ConstructTDData(2, 3, WhiteData.Gate, ToD.Truth, 0),
             ConstructTDData(4, 3, WhiteData.Blank, ToD.Null, 1),
@@ -341,7 +355,7 @@ public static class MyUtils
             ConstructTDData(4, 0, "BLUE"),
         };
 
-        stageList[11] = new List<TDData>
+        stageList[12] = new List<TDData>
         {
             ConstructTDData(1, 4, "2"),
             ConstructTDData(2, 4, "DEVIL"),

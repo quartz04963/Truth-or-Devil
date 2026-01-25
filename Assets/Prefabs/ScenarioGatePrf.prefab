@@ -303,7 +303,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &6825629798726629520
 CanvasRenderer:
@@ -335,7 +335,7 @@ MonoBehaviour:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: 22aef434bb77da9429a9f0f5c6360855, type: 3}
   m_Type: 0
-  m_PreserveAspect: 0
+  m_PreserveAspect: 1
   m_FillCenter: 1
   m_FillMethod: 4
   m_FillAmount: 1
@@ -416,8 +416,8 @@ MonoBehaviour:
   tdGate: {fileID: 0}
   guessedID: 0
   image: {fileID: 4380600362818126588}
-  defaultSprite: {fileID: 21300000, guid: 22aef434bb77da9429a9f0f5c6360855, type: 3}
-  heavenSprite: {fileID: 21300000, guid: 182d4805d89a818468e7fd53485a050e, type: 3}
-  hellSprite: {fileID: 21300000, guid: 8b11647b1050cce418cfcddb73194fdc, type: 3}
+  defaultSprite: {fileID: 21300000, guid: ba3437e2887996140b0086ef9e6e162f, type: 3}
+  heavenSprite: {fileID: 21300000, guid: 29d182385d7629c41afde53bbd2277ec, type: 3}
+  hellSprite: {fileID: 21300000, guid: 75130a1fd3563374796ab076ed3ce00a, type: 3}
   tmp: {fileID: 7408156515298254573}
   button: {fileID: 6192056004010142587}

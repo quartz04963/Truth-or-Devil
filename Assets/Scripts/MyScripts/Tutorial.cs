@@ -47,6 +47,11 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.ActivateScenarios(false);
         }
 
+        else if (GameManager.instance.CurrentStage == 13)
+        {
+            GamePlay.instance.nextButton.SetActive(false);
+        }
+
         // 정렬 기준 "천사/악마" 비활성화
         if (1 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 7)
         {

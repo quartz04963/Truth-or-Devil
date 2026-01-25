@@ -11,7 +11,7 @@ public class StageButton : MonoBehaviour
 
     void Start()
     {
-        if (stage <= 12) numberTMP.SetText(ZString.Concat(stage));
+        if (stage <= 13) numberTMP.SetText(ZString.Concat(stage));
         else if (16 <= stage && stage <= 30) numberTMP.SetText(ZString.Concat(stage - 15));
         else numberTMP.SetText(ZString.Concat(stage - 30));
 
