@@ -336,12 +336,12 @@ public static class MyUtils
 
         stageList[11] = new List<TDData>
         {
-            ConstructTDData(2, 3, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Devil, 0),
             ConstructTDData(4, 3, WhiteData.Blank, ToD.Null, 1),
             ConstructTDData(0, 2, "2"),
             ConstructTDData(1, 2, WhiteData.Eye, ToD.Devil, 0),
             ConstructTDData(2, 2, "0"),
-            ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 2, WhiteData.Gate, ToD.Truth, 1),
             ConstructTDData(4, 2, "2"),
             ConstructTDData(0, 1, "MAP"),
             ConstructTDData(1, 1, WhiteData.Gate, ToD.Devil, 2),
@@ -350,7 +350,7 @@ public static class MyUtils
             ConstructTDData(4, 1, "GATE"),
             ConstructTDData(0, 0, "ANGEL"),
             ConstructTDData(1, 0, WhiteData.Eye, ToD.Truth, 2),
-            ConstructTDData(2, 0, "WHITE"),
+            ConstructTDData(2, 0, "GREEN"),
             ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 3),
             ConstructTDData(4, 0, "BLUE"),
         };

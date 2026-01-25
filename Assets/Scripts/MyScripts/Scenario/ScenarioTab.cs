@@ -75,7 +75,10 @@ public class ScenarioTab : MonoBehaviour
     {
         if (!GamePlay.instance.isRunning) return;
         
-        if (isActive) ScenarioManager.instance.scenarioList[ScenarioManager.instance.scenarioList.Count - 2].Activate(true);
+        if (isActive && ScenarioManager.instance.scenarioList.Count >= 2)
+        {
+            ScenarioManager.instance.scenarioList[ScenarioManager.instance.scenarioList.Count - 2].Activate(true);
+        }
         ScenarioManager.instance.scenarioList.Remove(this);
         Destroy(gameObject);
     }

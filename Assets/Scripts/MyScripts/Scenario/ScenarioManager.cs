@@ -37,9 +37,6 @@ public class ScenarioManager : MonoBehaviour
         scenarioList = new List<ScenarioTab>();
         
         ScenarioTab scenario = AddScenario();
-        scenario.deleteButton.enabled = false;
-        scenario.deleteButton.image.enabled = false;
-        scenario.deleteButton.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public ScenarioTab AddScenario()
