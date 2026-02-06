@@ -6887,6 +6887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e7fbe65400b95a4e8134cfe24c5fa02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isOptionOpened: 0
   option: {fileID: 1383229030}
   checkEntering: {fileID: 1672025375}
   bgmVolume: {fileID: 1797057494}
@@ -11678,6 +11679,7 @@ MonoBehaviour:
   isOver: 0
   isYes: 0
   isNo: 0
+  isChecking: 0
   player: {fileID: 456842266}
   posOnMap: {x: 0, y: 0, z: 0}
   redBoxData: 
@@ -12431,10 +12433,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isTalking: 0
-  isPrinting: 0
+  isSkipping: 0
   isEpilogShowed: 0
   isClicked: 0
-  interval: 0.05
+  interval: 0.03
   currentLineNumber: 0
   dialog: {fileID: 990270962}
   skipButton: {fileID: 786428443}
