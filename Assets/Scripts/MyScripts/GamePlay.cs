@@ -15,6 +15,7 @@ public class GamePlay : MonoBehaviour
     public bool isCleared;
     public bool isOver;
     public bool isYes, isNo;
+    public bool isChecking;
     public GameObject player;
     public Vector3Int posOnMap;
 
@@ -79,7 +80,16 @@ public class GamePlay : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) OnExitClicked();
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (OptionManager.instance.IsOptionOpened) OptionManager.instance.OnOptionButtonClicked(false);
+            else if (isChecking) OnNoClicked();
+            else OnExitClicked();
+        }
+        
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            if (isChecking) OnYesClicked();
+        }
 
         if (!isRunning) return;
         
@@ -142,16 +152,18 @@ public class GamePlay : MonoBehaviour
         if (GameManager.instance.doCheckBeforeEnteringGate)
         {
             isRunning = false;
+            isChecking = true;
             enteringCheckWindow.SetActive(true);
             
             TDData gate = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
             enteringCheckTMP.SetText(ZString.Format("정말 문 {0}(으)로\n진입하시겠습니까?", (char)('A' + gate.data[2])));
 
-            yield return new WaitUntil(() => isYes || isNo || Input.GetKeyDown(KeyCode.Return));
+            yield return new WaitUntil(() => isYes || isNo);
 
-            if (isYes || Input.GetKey(KeyCode.Return)) Move(dir);
+            if (isYes) Move(dir);
 
             isRunning = true;
+            isChecking = false;
             isYes = isNo = false;
             enteringCheckWindow.SetActive(false);
         }
