@@ -27,7 +27,7 @@ public class AnswerLog : MonoBehaviour
         redDataText.SetText(MyUtils.GetTextFromData(TileColor.Red, redTileData));
         blueDataText.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueTileData));
         greenDataText.SetText(MyUtils.GetTextFromData(TileColor.Green, greenTileData));
-        eyeDataText.SetText((char)('A' + tdEye.index));
+        eyeDataText.SetText(MyUtils.ConvertToRoman(tdEye.index + 1));
         answerDataText.SetText(answer);
 
         UpdateEyeImage();
@@ -131,7 +131,7 @@ public class AnswerLog : MonoBehaviour
         switch ((BlueData)blueTileData[0])
         {
             case BlueData.Null: 
-                categoryText.SetText((char)('A' + tdEye.index)); 
+                categoryText.SetText(MyUtils.ConvertToRoman(tdEye.index + 1)); 
                 break;
 
             case BlueData.Color:

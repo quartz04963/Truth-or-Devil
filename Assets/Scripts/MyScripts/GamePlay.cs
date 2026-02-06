@@ -228,7 +228,7 @@ public class GamePlay : MonoBehaviour
         
         eyeBoxImage.enabled = true;
         eyeBoxImage.sprite = eye.guessedID == ToD.Null ? defaultSprite : eye.guessedID == ToD.Truth ? angelSprite : devilSprite;
-        eyeIndexText.SetText((char)('A' + eye.index));
+        eyeIndexText.SetText(MyUtils.ConvertToRoman(eye.index + 1));
         answerBoxText.SetText(answer);
 
         LogManager.instance.AddLog(redBoxData, blueBoxData, greenBoxData, eye, answer);

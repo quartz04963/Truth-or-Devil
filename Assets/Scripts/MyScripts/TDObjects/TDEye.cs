@@ -15,8 +15,7 @@ public class TDEye : TDObject
     public void Init(Vector3Int _pos, int _index)
     {
         index = _index;
-        base.Init(_pos, ZString.Format("{0}", (char)('A' + _index)));
-        tmp.rectTransform.position = _pos + MyUtils.offset + new Vector3(0.3f, -0.3f, 0);
+        base.Init(_pos, MyUtils.ConvertToRoman(_index + 1));
     }
 
     public static void SetTDEyeState(TDEye eye, ToD _guessedID)

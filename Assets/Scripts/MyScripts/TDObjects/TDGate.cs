@@ -18,7 +18,6 @@ public class TDGate : TDObject
     {
         index = _index;
         base.Init(_pos, ZString.Format("{0}", (char)('A' + _index)));
-        tmp.rectTransform.position = _pos + MyUtils.offset + new Vector3(0.3f, -0.3f, 0);
         SetInfoBox();
     }
 

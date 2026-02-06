@@ -110,7 +110,7 @@ public class LogManager : MonoBehaviour
                     {
                         log.categoryBox.enabled = true;
                         log.categoryText.enabled = true;
-                        log.categoryText.SetText((char)('A' + i));
+                        log.categoryText.SetText(MyUtils.ConvertToRoman(i + 1));
                         log.categoryText.color = Color.white;
                     }
                 }
