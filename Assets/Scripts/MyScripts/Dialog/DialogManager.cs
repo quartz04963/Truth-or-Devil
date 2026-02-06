@@ -98,6 +98,16 @@ public class DialogManager : MonoBehaviour
         isPrinting = true;
         yield return Tutorial.instance.DoBeforeSayLine();
 
+        Color videlColor = videl.color, nagelColor = nagel.color;
+        switch (tdLine.name)
+        {
+            case "비델": videlColor.a = 1f; nagelColor.a = 0.7f; break;
+            case "나겔": videlColor.a = 0.7f; nagelColor.a = 1f; break;
+            default: videlColor.a = nagelColor.a = 0.7f; break;
+        }
+        videl.color = videlColor;
+        nagel.color = nagelColor;
+
         nameTMP.SetText(tdLine.name);
 
         string text = "";
