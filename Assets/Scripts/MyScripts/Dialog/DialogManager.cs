@@ -10,7 +10,7 @@ public class DialogManager : MonoBehaviour
     public static DialogManager instance;
 
     public bool isTalking; //대화 중 여부
-    public bool isPrinting; //대사 출력 중 여부
+    public bool isSkipping; //대사 출력 중 스킵 여부
     public bool isEpilogShowed;
     public bool isClicked;
     public float interval;
@@ -59,14 +59,17 @@ public class DialogManager : MonoBehaviour
         GamePlay.instance.isRunning = false;
         dialog.SetActive(true);
 
-        interval = 0.05f;
         currentLineNumber++;
         saying = StartCoroutine(SayLine(currentDialog.lineList[currentLineNumber]));
     }
 
     public void ExitDialog()
     {
-        StopCoroutine(saying);
+        if (saying != null) 
+        {
+            StopCoroutine(saying);
+            saying = null;
+        }
 
         isTalking = false;
         GamePlay.instance.isRunning = true;
@@ -95,8 +98,20 @@ public class DialogManager : MonoBehaviour
 
     public IEnumerator SayLine(TDLine tdLine)
     {
-        isPrinting = true;
         yield return Tutorial.instance.DoBeforeSayLine();
+
+        isSkipping = false;
+        WaitForSeconds wait = new WaitForSeconds(interval);
+
+        Color videlColor = videl.color, nagelColor = nagel.color;
+        switch (tdLine.name)
+        {
+            case "비델": videlColor.a = 1f; nagelColor.a = 0.7f; break;
+            case "나겔": videlColor.a = 0.7f; nagelColor.a = 1f; break;
+            default: videlColor.a = nagelColor.a = 0.7f; break;
+        }
+        videl.color = videlColor;
+        nagel.color = nagelColor;
 
         nameTMP.SetText(tdLine.name);
 
@@ -111,19 +126,20 @@ public class DialogManager : MonoBehaviour
             if (isColorTag) continue;
 
             dialogTMP.SetText(text);
-            yield return new WaitForSeconds(interval);
+            
+            if (!isSkipping) yield return wait;
         }
-        
-        isPrinting = false;
+
+        saying = null;
     }
 
     public void Fade(float endValue, float duration) => Tween.Alpha(background, endValue, duration);
 
     public void OnClicked() 
     {
-        if (isPrinting)
+        if (saying != null)
         {
-            interval = 0f;
+            isSkipping = true;
         }
         else if (currentLineNumber < currentDialog.lineList.Count - 1)
         {
