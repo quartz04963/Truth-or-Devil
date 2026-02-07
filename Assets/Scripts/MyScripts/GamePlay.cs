@@ -76,14 +76,6 @@ public class GamePlay : MonoBehaviour
         redBoxData = MyUtils.RedDataNull;
         blueBoxData =  MyUtils.BlueDataNull;
         greenBoxData = MyUtils.GreenDataNull;
-        eyeBoxImage.enabled = false;
-        player.gameObject.SetActive(true);
-
-        redBoxText.SetText("");
-        blueBoxText.SetText("");
-        greenBoxText.SetText("");
-        eyeIndexText.SetText("");
-        answerBoxText.SetText("");
 
         if (GameManager.instance.CurrentStage <= 13) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
         else if (GameManager.instance.CurrentStage <= 28) stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - 13));
