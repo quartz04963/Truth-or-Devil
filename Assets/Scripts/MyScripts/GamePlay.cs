@@ -81,7 +81,8 @@ public class GamePlay : MonoBehaviour
         if (GameManager.instance.CurrentStage <= 13) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
         else if (GameManager.instance.CurrentStage <= 28) stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - 13));
 
-        if (14 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 15) movingRule = MovingRule.CantGoStraight;
+        if (GameManager.instance.CurrentStage == 14) movingRule = MovingRule.CantStop;
+        if (15 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 16) movingRule = MovingRule.CantGoStraight;
     }
 
     void Update()
@@ -161,7 +162,7 @@ public class GamePlay : MonoBehaviour
         return MapManager.instance.gateList.Any(tile => tile.pos == posOnMap + dir);
     }
 
-    void Move(Vector3Int dir)
+    void Move(Vector3Int dir, bool isEnteringGate = false)
     {
         posOnMap += dir;
         Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
@@ -170,8 +171,7 @@ public class GamePlay : MonoBehaviour
 
         if (movingRule == MovingRule.CantStop)
         {
-            
-            if (CanMove(dir) && !CheckFrontTileIsGate(dir)) Move(dir);
+            if (CanMove(dir) && !CheckFrontTileIsGate(dir) && !isEnteringGate) Move(dir);
         }
 
         else if (movingRule == MovingRule.CantGoStraight)
@@ -204,7 +204,7 @@ public class GamePlay : MonoBehaviour
 
             yield return new WaitUntil(() => isYes || isNo);
 
-            if (isYes) Move(dir);
+            if (isYes) Move(dir, true);
 
             isRunning = true;
             isChecking = false;

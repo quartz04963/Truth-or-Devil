@@ -6695,7 +6695,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 882223234bbe5224db5c8eeafedeb19e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStage: 15
+  maxStage: 16
   currentStage: 1
   titleTabNumber: 0
   ruleNumber: 1
@@ -10147,7 +10147,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8631050363519861922, guid: 4a593d95b98ba17408476cb9f4106cd1, type: 3}
       propertyPath: stage
-      value: 28
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8631050363519861932, guid: 4a593d95b98ba17408476cb9f4106cd1, type: 3}
       propertyPath: m_Sprite

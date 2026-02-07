@@ -39,7 +39,7 @@ public static class MyUtils
     public static List<int> RedDataNull = new List<int>{(int)RedData.Null};
     public static List<int> BlueDataNull = new List<int>{(int)BlueData.Null, 0};
     public static List<int> GreenDataNull = new List<int>{(int)GreenData.Null, 0};
-    public static List<TDData>[] stageList = new List<TDData>[15];
+    public static List<TDData>[] stageList = new List<TDData>[20];
     
     static MyUtils()
     {
@@ -404,6 +404,28 @@ public static class MyUtils
         //챕터 2
         stageList[13] = new List<TDData>
         {
+            ConstructTDData(0, 3, "MAP"),
+            ConstructTDData(1, 3, "DEVIL"),
+            ConstructTDData(2, 3, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(3, 3, "RED"),
+            ConstructTDData(4, 3, "MAP"),
+            ConstructTDData(0, 2, "GREEN"),
+            ConstructTDData(1, 2, "1"),
+            ConstructTDData(2, 2, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 2, "0"),
+            ConstructTDData(4, 2, "ANGEL"),
+            ConstructTDData(0, 1, WhiteData.Eye, ToD.Truth, 0),
+            ConstructTDData(1, 1, "GATE"),
+            ConstructTDData(2, 1, "2"),
+            ConstructTDData(3, 1, "GATE"),
+            ConstructTDData(4, 1, WhiteData.Eye, ToD.Devil, 1),
+            ConstructTDData(2, 0, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(4, 0, WhiteData.Gate, ToD.Devil, 3),
+        };
+
+        stageList[14] = new List<TDData>
+        {
             ConstructTDData(0, 3, WhiteData.Gate, ToD.Truth, 0),
             ConstructTDData(1, 3, "RED"),
             ConstructTDData(3, 3, WhiteData.Gate, ToD.Devil, 1),
@@ -417,7 +439,7 @@ public static class MyUtils
             ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 2),
         };
 
-        stageList[14] = new List<TDData>
+        stageList[15] = new List<TDData>
         {
             ConstructTDData(1, 5, WhiteData.Gate, ToD.Devil, 0),
             ConstructTDData(0, 4, WhiteData.Blank, ToD.Null, 1),
