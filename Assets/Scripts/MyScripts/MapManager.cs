@@ -114,6 +114,13 @@ public class MapManager : MonoBehaviour
                         objectList.Add(tdGate);
                         gateList.Add(tdGate);
                     }
+                    else if (tile.data[0] == (int)WhiteData.Blank) //임시 음영 처리를 위한 코드
+                    {
+                        TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
+                        emptyText.Init(tile.pos, "");
+                        objectList.Add(emptyText);
+                        break;
+                    }
                     break;
             }
         }

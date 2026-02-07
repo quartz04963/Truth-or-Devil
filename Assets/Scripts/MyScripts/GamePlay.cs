@@ -7,6 +7,11 @@ using TMPro;
 using Cysharp.Text;
 using PrimeTween;
 
+public enum MovingRule
+{
+    Normal = 0, CantStop = 1, CantGoStraight = 2,
+}
+
 public class GamePlay : MonoBehaviour
 {
     public static GamePlay instance;
@@ -16,9 +21,12 @@ public class GamePlay : MonoBehaviour
     public bool isOver;
     public bool isYes, isNo;
     public bool isChecking;
-    public GameObject player;
+    public MovingRule movingRule;
     public Vector3Int posOnMap;
-
+    public Vector3Int prevDirection;
+    public Vector3Int prevBlockedPos;
+    public GameObject player;
+    
     public List<int> redBoxData;
     public List<int> blueBoxData;
     public List<int> greenBoxData;
@@ -50,6 +58,7 @@ public class GamePlay : MonoBehaviour
         Init();
         MapManager.instance.InitMap();
         LogManager.instance.InitEmptyCategoryLogs();
+        prevBlockedPos = posOnMap; //임시
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
         MyCamera.instance.SetOSizeByMap();
@@ -129,20 +138,47 @@ public class GamePlay : MonoBehaviour
         if (idx == -1) return false;
 
         TDData nextTile = MapManager.instance.tileList[idx];
-        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return true;
+        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
         if (MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir).guessedID == ToD.Devil) return false;
         foreach (TDEye eye in MapManager.instance.eyeList)
         {
             if (!eye.isMarked) return false;
         }
-        return true;
+
+        return CheckGoingstraight(dir);
+    }
+
+    bool CheckGoingstraight(Vector3Int dir)
+    {
+        if (movingRule != MovingRule.CantGoStraight) return true;
+        
+        if (dir == prevDirection) return false;
+        else 
+        {
+            prevDirection = dir;
+            return true;
+        }
     }
 
     void Move(Vector3Int dir)
     {
         posOnMap += dir;
         Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
+
+        if (movingRule == MovingRule.CantGoStraight)
+        {
+            //임시 음영 처리
+            TDObject prevObj = MapManager.instance.objectList.Find(obj => obj.pos == prevBlockedPos);
+            if (prevObj != null) prevObj.BlockTile(false); 
+            
+            TDObject frontObj = MapManager.instance.objectList.Find(obj => obj.pos == posOnMap + dir);
+            if (frontObj != null)
+            {
+                frontObj.BlockTile(true);
+                prevBlockedPos = frontObj.pos;
+            }
+        }
     }
 
     IEnumerator CheckEnteringGate(Vector3Int dir)
