@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Text;
+using System.CodeDom;
 
 public enum TileColor
 {
@@ -164,6 +165,7 @@ public static class MyUtils
 
     static void InitStageList()
     {
+        //챕터 1
         stageList[0] = new List<TDData>
         {
             ConstructTDData(0, 2, WhiteData.Blank, ToD.Null, 1),
@@ -397,6 +399,53 @@ public static class MyUtils
             ConstructTDData(3, 0, WhiteData.Eye, ToD.Devil, 3),
             ConstructTDData(4, 0, "3"),
             ConstructTDData(5, 0, "2"),
+        };
+
+        //챕터 2
+        stageList[13] = new List<TDData>
+        {
+            ConstructTDData(0, 3, WhiteData.Gate, ToD.Truth, 0),
+            ConstructTDData(1, 3, "RED"),
+            ConstructTDData(3, 3, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(1, 2, "GATE"),
+            ConstructTDData(2, 2, "8"),
+            ConstructTDData(3, 2, "BLUE"),
+            ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 1, "1"),
+            ConstructTDData(2, 1, "GATE"),
+            ConstructTDData(2, 0, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 2),
+        };
+
+        stageList[14] = new List<TDData>
+        {
+            ConstructTDData(1, 5, WhiteData.Gate, ToD.Devil, 0),
+            ConstructTDData(0, 4, WhiteData.Blank, ToD.Null, 1),
+            ConstructTDData(1, 4, "2"),
+            ConstructTDData(2, 4, WhiteData.Gate, ToD.Devil, 1),
+            ConstructTDData(3, 4, "1"),
+            ConstructTDData(4, 4, WhiteData.Eye, ToD.Devil, 0),
+            ConstructTDData(0, 3, "1"),
+            ConstructTDData(1, 3, "DEVIL"),
+            ConstructTDData(2, 3, WhiteData.Eye, ToD.Truth, 1),
+            ConstructTDData(3, 3, "2"),
+            ConstructTDData(4, 3, "WHITE"),
+            ConstructTDData(0, 2, WhiteData.Gate, ToD.Devil, 2),
+            ConstructTDData(1, 2, "BLUE"),
+            ConstructTDData(2, 2, "GATE"),
+            ConstructTDData(3, 2, WhiteData.Gate, ToD.Truth, 3),
+            ConstructTDData(4, 2, WhiteData.Gate, ToD.Devil, 4),
+            ConstructTDData(0, 1, "1"),
+            ConstructTDData(1, 1, "GREEN"),
+            ConstructTDData(2, 1, "2"),
+            ConstructTDData(3, 1, WhiteData.Eye, ToD.Devil, 2),
+            ConstructTDData(4, 1, "RED"),
+            ConstructTDData(5, 1, WhiteData.Gate, ToD.Devil, 5),
+            ConstructTDData(0, 0, "RED"),
+            ConstructTDData(1, 0, "0"),
+            ConstructTDData(2, 0, WhiteData.Gate, ToD.Devil, 6),
+            ConstructTDData(3, 0, "ANGEL"),
+            ConstructTDData(4, 0, "MAP"),
         };
     }
 }

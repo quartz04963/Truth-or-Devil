@@ -84,7 +84,11 @@ public class GamePlay : MonoBehaviour
         greenBoxText.SetText("");
         eyeIndexText.SetText("");
         answerBoxText.SetText("");
+
         if (GameManager.instance.CurrentStage <= 13) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
+        else if (GameManager.instance.CurrentStage <= 28) stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - 13));
+
+        if (14 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 15) movingRule = MovingRule.CantGoStraight;
     }
 
     void Update()
@@ -171,7 +175,7 @@ public class GamePlay : MonoBehaviour
             //임시 음영 처리
             TDObject prevObj = MapManager.instance.objectList.Find(obj => obj.pos == prevBlockedPos);
             if (prevObj != null) prevObj.BlockTile(false); 
-            
+
             TDObject frontObj = MapManager.instance.objectList.Find(obj => obj.pos == posOnMap + dir);
             if (frontObj != null)
             {
