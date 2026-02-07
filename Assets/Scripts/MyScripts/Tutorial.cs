@@ -6,6 +6,9 @@ public class Tutorial : MonoBehaviour
 {
     public static Tutorial instance;
 
+    [SerializeField] private bool isStopping;
+    public bool IsStopping => isStopping;
+
     void Awake()
     {
         if (instance == null) instance = this;
@@ -113,10 +116,14 @@ public class Tutorial : MonoBehaviour
 
     IEnumerator StopDialogUntil(Func<bool> condition)
     {
+        if (isStopping) yield break;
+
+        isStopping = true;
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0));
         DialogManager.instance.ExitDialog();
         yield return new WaitUntil(condition);
         DialogManager.instance.ContinueDialog();
+        isStopping = false;
     }
 
     public bool BreakEnteringPos(Vector3Int pos)

@@ -35,7 +35,7 @@ public class DialogManager : MonoBehaviour
     {
         if (currentDialog == null || !isTalking) return;
 
-        if (Input.GetKeyDown(KeyCode.Return)) OnClicked();
+        if (!OptionManager.instance.IsOptionOpened && Input.GetKeyDown(KeyCode.Return)) OnClicked();
     }
 
     public void StartDialog(TDDialog _currentDialog)
