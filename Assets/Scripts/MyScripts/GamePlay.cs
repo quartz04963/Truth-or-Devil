@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -109,8 +110,6 @@ public class GamePlay : MonoBehaviour
                 StartCoroutine(CheckEnteringGate(dir));
             }
             else Move(dir);
-            
-            DataBoxUpdate();
         }
 
         CheckGameOver();
@@ -157,12 +156,25 @@ public class GamePlay : MonoBehaviour
         }
     }
 
+    bool CheckFrontTileIsGate(Vector3Int dir)
+    {
+        return MapManager.instance.gateList.Any(tile => tile.pos == posOnMap + dir);
+    }
+
     void Move(Vector3Int dir)
     {
         posOnMap += dir;
         Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
 
-        if (movingRule == MovingRule.CantGoStraight)
+        DataBoxUpdate(dir);
+
+        if (movingRule == MovingRule.CantStop)
+        {
+            
+            if (CanMove(dir) && !CheckFrontTileIsGate(dir)) Move(dir);
+        }
+
+        else if (movingRule == MovingRule.CantGoStraight)
         {
             //임시 음영 처리
             TDObject prevObj = MapManager.instance.objectList.Find(obj => obj.pos == prevBlockedPos);
@@ -210,7 +222,7 @@ public class GamePlay : MonoBehaviour
         return false;
     }
 
-    void DataBoxUpdate()
+    void DataBoxUpdate(Vector3Int dir)
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
 
@@ -222,10 +234,12 @@ public class GamePlay : MonoBehaviour
             case TileColor.White:
                 if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
                 {
-                    Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
-                    redBoxData = MyUtils.RedDataNull;
-                    blueBoxData = MyUtils.BlueDataNull;
-                    greenBoxData = MyUtils.GreenDataNull;
+                    if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) {
+                        Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
+                        redBoxData = MyUtils.RedDataNull;
+                        blueBoxData = MyUtils.BlueDataNull;
+                        greenBoxData = MyUtils.GreenDataNull;
+                    }
                 }
                 break;
         }
