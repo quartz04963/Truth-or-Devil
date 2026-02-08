@@ -22,7 +22,7 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager instance;
     
-     public Tilemap map;
+    public Tilemap map;
     public List<TDData> tileList;
     public List<TDObject> objectList;
     public List<TDEye> eyeList;

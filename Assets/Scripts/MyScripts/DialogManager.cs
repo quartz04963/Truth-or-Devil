@@ -6,10 +6,10 @@ using TMPro;
 using PrimeTween;
 using Cysharp.Text;
 
-public class TDLine
+public readonly struct TDLine
 {
-    public string name;
-    public string text;
+    public readonly string name;
+    public readonly string text;
 
     public TDLine(string _name, string _text)
     {
@@ -18,11 +18,11 @@ public class TDLine
     }
 }
 
-public class TDDialog
+public readonly struct TDDialog
 {
-    public int stage;
-    public bool isProlog;
-    public List<TDLine> lineList;
+    public readonly int stage;
+    public readonly bool isProlog;
+    public readonly List<TDLine> lineList;
 
     public TDDialog(int _stage, bool _isProlog, List<TDLine> _lineList)
     {
@@ -77,7 +77,7 @@ public class DialogManager : MonoBehaviour
 
     void Update()
     {
-        if (currentDialog == null || !isTalking) return;
+        if (currentDialog.Equals(default(TDDialog)) || !isTalking) return;
 
         if (!OptionManager.instance.IsOptionOpened && Input.GetKeyDown(KeyCode.Return)) OnClicked();
     }
@@ -85,7 +85,7 @@ public class DialogManager : MonoBehaviour
     public void StartDialog(TDDialog _currentDialog)
     {
         currentDialog = _currentDialog;
-        if (currentDialog == null) return;
+        if (currentDialog.Equals(default(TDDialog))) return;
 
         isTalking = true;
         GamePlay.instance.isRunning = false;
@@ -122,7 +122,7 @@ public class DialogManager : MonoBehaviour
         if (GamePlay.instance.isCleared) 
         {
             TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
-            if (dialog != null && !isEpilogShowed)
+            if (!dialog.Equals(default(TDDialog))  && !isEpilogShowed)
             {
                 isEpilogShowed = true;
                 StartDialog(dialog);
