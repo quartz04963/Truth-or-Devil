@@ -1,9 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using PrimeTween;
 using Cysharp.Text;
+
+public class TDLine
+{
+    public string name;
+    public string text;
+
+    public TDLine(string _name, string _text)
+    {
+        name = _name;
+        text = _text;
+    }
+}
+
+public class TDDialog
+{
+    public int stage;
+    public bool isProlog;
+    public List<TDLine> lineList;
+
+    public TDDialog(int _stage, bool _isProlog, List<TDLine> _lineList)
+    {
+        stage = _stage;
+        isProlog = _isProlog;
+        lineList = _lineList;
+    }
+}
+
+public static class TDStory
+{
+    public static TDDialog gameOverLineList = new TDDialog(0, false, new List<TDLine>
+    {
+        new TDLine("비델", "자, 참가자 님의 결과는...!"),
+        new TDLine("비델", "아쉽게도 실패입니다! 안녕히 계세요!"),
+    });
+
+    public static TDDialog stageClearLineList = new TDDialog(0, false, new List<TDLine>
+    {
+        new TDLine("비델", "자, 참가자 님의 결과는...!"),
+        new TDLine("비델", "성공입니다! 축하 드립니다!"),
+    });
+
+    public static List<TDDialog> dialogList = new List<TDDialog>();
+}
 
 public class DialogManager : MonoBehaviour
 {

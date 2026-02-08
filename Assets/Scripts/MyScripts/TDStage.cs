@@ -1,10 +1,11 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
-public static class TDStage
+public readonly struct TDStage
 {
-    public static List<TDData>[] stageList = new List<TDData>[20];
+    public const int Ch1StageCount = 13;
+    public const int Ch2StageCount = 3;
+    public const int Ch3StageCount = 0;
+    public static List<TDData>[] stageList = new List<TDData>[Ch1StageCount + Ch2StageCount + Ch3StageCount];
 
     static TDStage()
     {

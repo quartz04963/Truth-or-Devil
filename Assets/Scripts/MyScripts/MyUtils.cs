@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Text;
 using System.CodeDom;
+using System.IO;
 
 public enum TileColor
 {
@@ -155,5 +156,47 @@ public static class MyUtils
             case WhiteData.Gate: return new TDData(pos, TileColor.White, new List<int>{(int)WhiteData.Gate, (int)toD, index});
             default: return new TDData(Vector3Int.zero, TileColor.Red, RedDataNull);
         }
+    }
+
+    public static void LoadAllDialogs()
+    {
+        TDStory.dialogList = new List<TDDialog>();
+
+        string path;
+        for (int i = 1; i <= TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount; i++)
+        {
+            path = Path.Combine(Application.streamingAssetsPath, ZString.Format("Dialogs/{0}p.tsv", i));
+            if (File.Exists(path))
+            {
+                string text = File.ReadAllText(path); //안드로이드는 ReadAllText가 안 된다고...
+                TDStory.dialogList.Add(new TDDialog(i, true, ParseTSV(text)));
+            }
+
+            path = Path.Combine(Application.streamingAssetsPath, ZString.Format("Dialogs/{0}e.tsv", i));
+            if (File.Exists(path))
+            {
+                string text = File.ReadAllText(path);
+                TDStory.dialogList.Add(new TDDialog(i, false, ParseTSV(text)));
+            }
+        }
+    }
+
+    static List<TDLine> ParseTSV(string tsv)
+    {
+        List<TDLine> list = new List<TDLine>();
+
+        string[] lines = tsv.Split('\n');
+
+        for (int i = 0; i < lines.Length; i++)
+        {
+            if (string.IsNullOrWhiteSpace(lines[i])) continue;
+
+            string[] cols = lines[i].Split('\t');
+
+            TDLine tdLine = new TDLine(cols[0], cols[1]);
+            list.Add(tdLine);
+        }
+
+        return list;
     }
 }
