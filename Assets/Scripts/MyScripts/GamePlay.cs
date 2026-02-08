@@ -78,11 +78,23 @@ public class GamePlay : MonoBehaviour
         blueBoxData =  MyUtils.BlueDataNull;
         greenBoxData = MyUtils.GreenDataNull;
 
-        if (GameManager.instance.CurrentStage <= 13) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
-        else if (GameManager.instance.CurrentStage <= 28) stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - 13));
+        if (GameManager.instance.CurrentStage <= TDStage.Ch1StageCount) 
+        {
+            stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
+        }
+        else if (GameManager.instance.CurrentStage <= TDStage.Ch1StageCount + TDStage.Ch2StageCount) 
+        {
+            stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - TDStage.Ch1StageCount));
+        }
 
-        if (GameManager.instance.CurrentStage == 14) movingRule = MovingRule.CantStop;
-        if (15 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 16) movingRule = MovingRule.CantGoStraight;
+        if (GameManager.instance.CurrentStage == 14) 
+        {
+            movingRule = MovingRule.CantStop;
+        }
+        if (15 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 16)
+        {
+            movingRule = MovingRule.CantGoStraight; 
+        }
     }
 
     void Update()
