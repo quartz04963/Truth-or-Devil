@@ -50,7 +50,7 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.ActivateScenarios(false);
         }
 
-        else if (GameManager.instance.CurrentStage == 13)
+        else if (GameManager.instance.CurrentStage == TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount)
         {
             GamePlay.instance.nextButton.SetActive(false);
         }

@@ -87,11 +87,11 @@ public class GamePlay : MonoBehaviour
             stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - TDStage.Ch1StageCount));
         }
 
-        if (GameManager.instance.CurrentStage == 14) 
+        if (14 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 17) 
         {
             movingRule = MovingRule.CantStop;
         }
-        if (15 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 16)
+        if (18 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 20)
         {
             movingRule = MovingRule.CantGoStraight; 
         }
