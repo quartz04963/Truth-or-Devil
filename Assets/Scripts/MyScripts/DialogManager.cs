@@ -88,7 +88,7 @@ public class DialogManager : MonoBehaviour
         if (currentDialog.Equals(default(TDDialog))) return;
 
         isTalking = true;
-        GamePlay.instance.isRunning = false;
+        GamePlay.instance.IsRunning = false;
         dialog.SetActive(true);
         SetCharacter();
         Fade(1f, 0f);
@@ -100,7 +100,7 @@ public class DialogManager : MonoBehaviour
     public void ContinueDialog()
     {
         isTalking = true;
-        GamePlay.instance.isRunning = false;
+        GamePlay.instance.IsRunning = false;
         dialog.SetActive(true);
 
         currentLineNumber++;
@@ -116,7 +116,7 @@ public class DialogManager : MonoBehaviour
         }
 
         isTalking = false;
-        GamePlay.instance.isRunning = true;
+        GamePlay.instance.IsRunning = true;
         dialog.SetActive(false);
         
         if (GamePlay.instance.isCleared) 
