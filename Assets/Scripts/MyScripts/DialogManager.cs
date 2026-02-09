@@ -1,9 +1,53 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using PrimeTween;
 using Cysharp.Text;
+
+public readonly struct TDLine
+{
+    public readonly string name;
+    public readonly string text;
+
+    public TDLine(string _name, string _text)
+    {
+        name = _name;
+        text = _text;
+    }
+}
+
+public readonly struct TDDialog
+{
+    public readonly int stage;
+    public readonly bool isProlog;
+    public readonly List<TDLine> lineList;
+
+    public TDDialog(int _stage, bool _isProlog, List<TDLine> _lineList)
+    {
+        stage = _stage;
+        isProlog = _isProlog;
+        lineList = _lineList;
+    }
+}
+
+public static class TDStory
+{
+    public static TDDialog gameOverLineList = new TDDialog(0, false, new List<TDLine>
+    {
+        new TDLine("비델", "자, 참가자 님의 결과는...!"),
+        new TDLine("비델", "아쉽게도 실패입니다! 안녕히 계세요!"),
+    });
+
+    public static TDDialog stageClearLineList = new TDDialog(0, false, new List<TDLine>
+    {
+        new TDLine("비델", "자, 참가자 님의 결과는...!"),
+        new TDLine("비델", "성공입니다! 축하 드립니다!"),
+    });
+
+    public static List<TDDialog> dialogList = new List<TDDialog>();
+}
 
 public class DialogManager : MonoBehaviour
 {
@@ -33,15 +77,15 @@ public class DialogManager : MonoBehaviour
 
     void Update()
     {
-        if (currentDialog == null || !isTalking) return;
+        if (currentDialog.Equals(default(TDDialog)) || !isTalking) return;
 
-        if (Input.GetKeyDown(KeyCode.Return)) OnClicked();
+        if (!OptionManager.instance.IsOptionOpened && Input.GetKeyDown(KeyCode.Return)) OnClicked();
     }
 
     public void StartDialog(TDDialog _currentDialog)
     {
         currentDialog = _currentDialog;
-        if (currentDialog == null) return;
+        if (currentDialog.Equals(default(TDDialog))) return;
 
         isTalking = true;
         GamePlay.instance.isRunning = false;
@@ -78,7 +122,7 @@ public class DialogManager : MonoBehaviour
         if (GamePlay.instance.isCleared) 
         {
             TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
-            if (dialog != null && !isEpilogShowed)
+            if (!dialog.Equals(default(TDDialog))  && !isEpilogShowed)
             {
                 isEpilogShowed = true;
                 StartDialog(dialog);

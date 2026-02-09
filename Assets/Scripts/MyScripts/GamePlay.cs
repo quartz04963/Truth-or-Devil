@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,11 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Text;
 using PrimeTween;
+
+public enum MovingRule
+{
+    Normal = 0, CantStop = 1, CantGoStraight = 2,
+}
 
 public class GamePlay : MonoBehaviour
 {
@@ -16,9 +22,12 @@ public class GamePlay : MonoBehaviour
     public bool isOver;
     public bool isYes, isNo;
     public bool isChecking;
-    public GameObject player;
+    public MovingRule movingRule;
     public Vector3Int posOnMap;
-
+    public Vector3Int prevDirection;
+    public Vector3Int prevBlockedPos;
+    public GameObject player;
+    
     public List<int> redBoxData;
     public List<int> blueBoxData;
     public List<int> greenBoxData;
@@ -50,6 +59,7 @@ public class GamePlay : MonoBehaviour
         Init();
         MapManager.instance.InitMap();
         LogManager.instance.InitEmptyCategoryLogs();
+        prevBlockedPos = posOnMap; //임시
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
         MyCamera.instance.SetOSizeByMap();
@@ -67,15 +77,24 @@ public class GamePlay : MonoBehaviour
         redBoxData = MyUtils.RedDataNull;
         blueBoxData =  MyUtils.BlueDataNull;
         greenBoxData = MyUtils.GreenDataNull;
-        eyeBoxImage.enabled = false;
-        player.gameObject.SetActive(true);
 
-        redBoxText.SetText("");
-        blueBoxText.SetText("");
-        greenBoxText.SetText("");
-        eyeIndexText.SetText("");
-        answerBoxText.SetText("");
-        if (GameManager.instance.CurrentStage <= 13) stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
+        if (GameManager.instance.CurrentStage <= TDStage.Ch1StageCount) 
+        {
+            stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
+        }
+        else if (GameManager.instance.CurrentStage <= TDStage.Ch1StageCount + TDStage.Ch2StageCount) 
+        {
+            stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - TDStage.Ch1StageCount));
+        }
+
+        if (14 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 17) 
+        {
+            movingRule = MovingRule.CantStop;
+        }
+        if (18 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 20)
+        {
+            movingRule = MovingRule.CantGoStraight; 
+        }
     }
 
     void Update()
@@ -104,8 +123,6 @@ public class GamePlay : MonoBehaviour
                 StartCoroutine(CheckEnteringGate(dir));
             }
             else Move(dir);
-            
-            DataBoxUpdate();
         }
 
         CheckGameOver();
@@ -129,20 +146,59 @@ public class GamePlay : MonoBehaviour
         if (idx == -1) return false;
 
         TDData nextTile = MapManager.instance.tileList[idx];
-        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return true;
+        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
         if (MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir).guessedID == ToD.Devil) return false;
         foreach (TDEye eye in MapManager.instance.eyeList)
         {
             if (!eye.isMarked) return false;
         }
-        return true;
+
+        return CheckGoingstraight(dir);
     }
 
-    void Move(Vector3Int dir)
+    bool CheckGoingstraight(Vector3Int dir)
+    {
+        if (movingRule != MovingRule.CantGoStraight) return true;
+        
+        if (dir == prevDirection) return false;
+        else 
+        {
+            prevDirection = dir;
+            return true;
+        }
+    }
+
+    bool CheckFrontTileIsGate(Vector3Int dir)
+    {
+        return MapManager.instance.gateList.Any(tile => tile.pos == posOnMap + dir);
+    }
+
+    void Move(Vector3Int dir, bool isEnteringGate = false)
     {
         posOnMap += dir;
         Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
+
+        DataBoxUpdate(dir);
+
+        if (movingRule == MovingRule.CantStop)
+        {
+            if (CanMove(dir) && !CheckFrontTileIsGate(dir) && !isEnteringGate) Move(dir);
+        }
+
+        else if (movingRule == MovingRule.CantGoStraight)
+        {
+            //임시 음영 처리
+            TDObject prevObj = MapManager.instance.objectList.Find(obj => obj.pos == prevBlockedPos);
+            if (prevObj != null) prevObj.BlockTile(false); 
+
+            TDObject frontObj = MapManager.instance.objectList.Find(obj => obj.pos == posOnMap + dir);
+            if (frontObj != null)
+            {
+                frontObj.BlockTile(true);
+                prevBlockedPos = frontObj.pos;
+            }
+        }
     }
 
     IEnumerator CheckEnteringGate(Vector3Int dir)
@@ -160,7 +216,7 @@ public class GamePlay : MonoBehaviour
 
             yield return new WaitUntil(() => isYes || isNo);
 
-            if (isYes) Move(dir);
+            if (isYes) Move(dir, true);
 
             isRunning = true;
             isChecking = false;
@@ -178,7 +234,7 @@ public class GamePlay : MonoBehaviour
         return false;
     }
 
-    void DataBoxUpdate()
+    void DataBoxUpdate(Vector3Int dir)
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
 
@@ -190,10 +246,12 @@ public class GamePlay : MonoBehaviour
             case TileColor.White:
                 if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
                 {
-                    Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
-                    redBoxData = MyUtils.RedDataNull;
-                    blueBoxData = MyUtils.BlueDataNull;
-                    greenBoxData = MyUtils.GreenDataNull;
+                    if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) {
+                        Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
+                        redBoxData = MyUtils.RedDataNull;
+                        blueBoxData = MyUtils.BlueDataNull;
+                        greenBoxData = MyUtils.GreenDataNull;
+                    }
                 }
                 break;
         }

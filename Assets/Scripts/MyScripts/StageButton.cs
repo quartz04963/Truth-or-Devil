@@ -12,8 +12,8 @@ public class StageButton : MonoBehaviour
     void Start()
     {
         if (stage <= 13) numberTMP.SetText(ZString.Concat(stage));
-        else if (16 <= stage && stage <= 30) numberTMP.SetText(ZString.Concat(stage - 15));
-        else numberTMP.SetText(ZString.Concat(stage - 30));
+        else if (14 <= stage && stage <= 28) numberTMP.SetText(ZString.Concat(stage - 13));
+        else numberTMP.SetText(ZString.Concat(stage - 28));
 
         if (GameManager.instance.maxStage >= stage) {
             lockImage.SetActive(false);

@@ -3154,7 +3154,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -1.0000458, y: 0.0000333786}
+  m_AnchoredPosition: {x: -1.0000159, y: 0.0000333786}
   m_SizeDelta: {x: -2.000002, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &397913073
@@ -3459,7 +3459,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &456842267
 Transform:
   m_ObjectHideFlags: 0
@@ -11680,8 +11680,11 @@ MonoBehaviour:
   isYes: 0
   isNo: 0
   isChecking: 0
-  player: {fileID: 456842266}
+  movingRule: 0
   posOnMap: {x: 0, y: 0, z: 0}
+  prevDirection: {x: 0, y: 0, z: 0}
+  prevBlockedPos: {x: 0, y: 0, z: 0}
+  player: {fileID: 456842266}
   redBoxData: 
   blueBoxData: 
   greenBoxData: 

@@ -22,7 +22,7 @@ public class MapManager : MonoBehaviour
 {
     public static MapManager instance;
     
-     public Tilemap map;
+    public Tilemap map;
     public List<TDData> tileList;
     public List<TDObject> objectList;
     public List<TDEye> eyeList;
@@ -50,7 +50,7 @@ public class MapManager : MonoBehaviour
 
     public void InitMap()
     {
-        tileList = MyUtils.stageList[GameManager.instance.CurrentStage - 1];
+        tileList = TDStage.stageList[GameManager.instance.CurrentStage - 1];
         objectList = new List<TDObject>();
         eyeList = new List<TDEye>();
         gateList = new List<TDGate>();
@@ -113,6 +113,13 @@ public class MapManager : MonoBehaviour
                         tdGate.Init(tile.pos, tile.data[2]);
                         objectList.Add(tdGate);
                         gateList.Add(tdGate);
+                    }
+                    else if (tile.data[0] == (int)WhiteData.Blank) //임시 음영 처리를 위한 코드
+                    {
+                        TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
+                        emptyText.Init(tile.pos, "");
+                        objectList.Add(emptyText);
+                        break;
                     }
                     break;
             }

@@ -8,7 +8,7 @@ public class OptionManager : MonoBehaviour
     public static OptionManager instance;
 
     [SerializeField] private bool isOptionOpened;
-    public bool IsOptionOpened { get => isOptionOpened; set => isOptionOpened = value; }
+    public bool IsOptionOpened => isOptionOpened;
 
     public GameObject option;
     public Toggle checkEntering;
