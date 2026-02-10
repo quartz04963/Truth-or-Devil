@@ -59,17 +59,25 @@ public class DialogManager : MonoBehaviour
     public bool isClicked;
     public float interval;
     public int currentLineNumber;
-    public TDDialog currentDialog;
-    public Coroutine saying;
+    private TDDialog currentDialog;
+    private Coroutine saying;
 
-    public GameObject dialog;
-    public GameObject skipButton;
-    public Image background;
-    public Image videl;
-    public Image nagel;
-    public TextMeshProUGUI nameTMP;
-    public TextMeshProUGUI dialogTMP;
-
+    [SerializeField] GameObject dialog;
+    [SerializeField] GameObject skipButton;
+    public void SetSkipButtonActive(bool isActive) => skipButton.SetActive(isActive);
+    [SerializeField] Image background;
+    [SerializeField] Image videl;
+    [SerializeField] Image nagel;
+    [SerializeField] TextMeshProUGUI nameTMP;
+    [SerializeField] TextMeshProUGUI dialogTMP;
+    [SerializeField] GameObject reviewButton;
+    [SerializeField] GameObject reviewInGamePlayButton;
+    public void SetReviewInGamePlayActive(bool isActive) => reviewInGamePlayButton.SetActive(isActive);
+    [SerializeField] GameObject pastDialogs;
+    [SerializeField] GameObject pastDialogPrf;
+    [SerializeField] ScrollRect pastDialogSR;
+    [SerializeField] RectTransform pastDialogContent;
+    
     void Awake()
     {
         if (instance == null) instance = this;
@@ -95,6 +103,17 @@ public class DialogManager : MonoBehaviour
 
         currentLineNumber = 0;
         saying = StartCoroutine(SayLine(currentDialog.lineList[currentLineNumber]));
+
+        if (_currentDialog.Equals(TDStory.stageClearLineList) || _currentDialog.Equals(TDStory.gameOverLineList))
+        {
+            reviewButton.SetActive(false);
+            if (GameManager.instance.CurrentStage == 1) reviewInGamePlayButton.SetActive(false);
+        }
+        else
+        {
+            reviewButton.SetActive(true);
+            foreach (RectTransform rt in pastDialogContent) Destroy(rt.gameObject);
+        }
     }
 
     public void ContinueDialog()
@@ -118,7 +137,7 @@ public class DialogManager : MonoBehaviour
         isTalking = false;
         GamePlay.instance.IsRunning = true;
         dialog.SetActive(false);
-        
+
         if (GamePlay.instance.isCleared) 
         {
             TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
@@ -157,6 +176,9 @@ public class DialogManager : MonoBehaviour
         videl.color = videlColor;
         nagel.color = nagelColor;
 
+        PastDialog dialog = Instantiate(pastDialogPrf, pastDialogContent).GetComponent<PastDialog>();
+        dialog.Init(tdLine.name, tdLine.text);
+        
         nameTMP.SetText(tdLine.name);
 
         string text = "";
@@ -200,5 +222,12 @@ public class DialogManager : MonoBehaviour
     {
         if (GamePlay.instance.isCleared) isEpilogShowed = true; 
         ExitDialog();
+    }
+
+    public void OnReviewClicked(bool isOpening)
+    {
+        pastDialogs.SetActive(isOpening);
+        pastDialogSR.verticalNormalizedPosition = 0;
+        if (GamePlay.instance != null && !GamePlay.instance.isOver && !GamePlay.instance.isCleared) GamePlay.instance.IsRunning = !isOpening;
     }
 }

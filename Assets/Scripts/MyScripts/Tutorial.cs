@@ -26,7 +26,8 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
 
-            DialogManager.instance.skipButton.SetActive(false);
+            DialogManager.instance.SetSkipButtonActive(false);
+            DialogManager.instance.SetReviewInGamePlayActive(true);
         } 
 
         else if (GameManager.instance.CurrentStage == 2)
