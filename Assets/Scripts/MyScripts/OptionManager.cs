@@ -1,5 +1,3 @@
-using System.Data;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,16 +17,13 @@ public class OptionManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    void Start()
-    {
-        checkEntering.SetIsOnWithoutNotify(GameManager.instance.doCheckBeforeEnteringGate);
-        bgmVolume.SetValueWithoutNotify(SoundManager.Instance.GetBgmVolume());
-    }
-
     public void OnOptionClicked(bool isOpening)
     {
         isOptionOpened = isOpening;
         option.SetActive(isOpening);
+
+        checkEntering.SetIsOnWithoutNotify(GameManager.instance.doCheckBeforeEnteringGate);
+        bgmVolume.SetValueWithoutNotify(SoundManager.Instance.GetBgmVolume());
 
         if (GamePlay.instance != null && !GamePlay.instance.isOver && !GamePlay.instance.isCleared) GamePlay.instance.IsRunning = !isOpening;
     }

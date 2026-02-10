@@ -4263,7 +4263,6 @@ MonoBehaviour:
   option: {fileID: 1119891143}
   checkEntering: {fileID: 618588554}
   bgmVolume: {fileID: 857368109}
-  ruleTMP: {fileID: 0}
 --- !u!4 &606935085
 Transform:
   m_ObjectHideFlags: 0
@@ -6615,7 +6614,6 @@ MonoBehaviour:
   maxStage: 20
   currentStage: 1
   titleTabNumber: 0
-  ruleNumber: 1
   doCheckBeforeEnteringGate: 1
 --- !u!4 &1051738498
 Transform:
