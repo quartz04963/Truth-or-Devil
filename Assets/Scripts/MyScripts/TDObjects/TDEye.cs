@@ -36,7 +36,7 @@ public class TDEye : TDObject
     
     public void OnClicked()
     {
-        if (!GamePlay.instance.isRunning) return;
+        if (!GamePlay.instance.IsRunning) return;
         
         guessedID = (ToD)(((int)guessedID + 1) % 3);
         SetTDEyeState(this, guessedID);

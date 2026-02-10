@@ -17,7 +17,8 @@ public class GamePlay : MonoBehaviour
 {
     public static GamePlay instance;
 
-    public bool isRunning;
+    [SerializeField] private bool isRunning;
+    public bool IsRunning { get => isRunning; set => isRunning = value; }
     public bool isCleared;
     public bool isOver;
     public bool isYes, isNo;
@@ -100,7 +101,7 @@ public class GamePlay : MonoBehaviour
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (OptionManager.instance.IsOptionOpened) OptionManager.instance.OnOptionButtonClicked(false);
+            if (OptionManager.instance.IsOptionOpened) OptionManager.instance.OnOptionClicked(false);
             else if (isChecking) OnNoClicked();
             else OnExitClicked();
         }

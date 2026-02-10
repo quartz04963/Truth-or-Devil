@@ -56,7 +56,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void OnAddScenarioClicked() 
     {
-        if (GamePlay.instance.isRunning) AddScenario();
+        if (GamePlay.instance.IsRunning) AddScenario();
     }
 
     public void OnShowScenarioClicked()

@@ -65,7 +65,7 @@ public class ScenarioTab : MonoBehaviour
 
     public void OnClicked()
     {
-        if (!GamePlay.instance.isRunning) return;
+        if (!GamePlay.instance.IsRunning) return;
 
         ScenarioManager.instance.scenarioList.ForEach(scenario => scenario.Activate(false));
         Activate(true);
@@ -73,7 +73,7 @@ public class ScenarioTab : MonoBehaviour
 
     public void OnDeleteClicked()
     {
-        if (!GamePlay.instance.isRunning) return;
+        if (!GamePlay.instance.IsRunning) return;
         
         if (isActive && ScenarioManager.instance.scenarioList.Count >= 2)
         {
