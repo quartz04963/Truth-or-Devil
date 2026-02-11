@@ -43,7 +43,7 @@ public static class TDStory
     public static TDDialog stageClearLineList = new TDDialog(0, false, new List<TDLine>
     {
         new TDLine("비델", "자, 참가자 님의 결과는...!"),
-        new TDLine("비델", "성공입니다! 축하 드립니다!"),
+        new TDLine("비델", "성공입니다! 축하드립니다!"),
     });
 
     public static List<TDDialog> dialogList = new List<TDDialog>();
