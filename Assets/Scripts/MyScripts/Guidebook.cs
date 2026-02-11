@@ -15,16 +15,16 @@ public class Guidebook : MonoBehaviour
     [Header("설명 이미지")]
     [SerializeField] Sprite[] basicSprites; //기본 규칙
     [SerializeField] Sprite[] moveSprites; //이동 방식
-    [SerializeField] Sprite[] questionSprites; //질문 구성
+    [SerializeField] Sprite[] makeQuestionSprites; //질문 구성
+    [SerializeField] Sprite[] askQuestionSprites; //질문 실행
     [SerializeField] Sprite[] resultSprites; //결과 판정
     [SerializeField] Sprite[] functionSprites; //편의 기능
 
     public enum GuideCategory
     {
-        Basic, Move, Question, Result, Function
+        Basic, Move, MakeQuestion, AskQuestion, Result, Function
     }
 
-    private GuideCategory category;
     private Sprite[] spritesToDisplay;
     
     void Awake()
@@ -41,12 +41,11 @@ public class Guidebook : MonoBehaviour
     {
         spritesToDisplay = new Sprite[]
         {
-            basicSprites[0], moveSprites[0], questionSprites[0], resultSprites[0], functionSprites[0],
+            basicSprites[0], moveSprites[0], makeQuestionSprites[0], askQuestionSprites[0], resultSprites[0], functionSprites[0],
         };
 
         if (GameManager.instance.maxStage >= 5) spritesToDisplay[(int)GuideCategory.Function] = functionSprites[1];
-        if (GameManager.instance.maxStage >= 8) spritesToDisplay[(int)GuideCategory.Question] = questionSprites[1];
-        if (GameManager.instance.maxStage >= TDStage.Ch1StageCount + 1) spritesToDisplay[(int)GuideCategory.Move] = moveSprites[1];
+        if (GameManager.instance.maxStage >= 8) spritesToDisplay[(int)GuideCategory.MakeQuestion] = makeQuestionSprites[1];
     }
 
     public void OnGuideCategoryClicked(int num)
