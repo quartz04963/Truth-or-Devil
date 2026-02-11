@@ -169,9 +169,9 @@ public class DialogManager : MonoBehaviour
         Color videlColor = videl.color, nagelColor = nagel.color;
         switch (tdLine.name)
         {
-            case "비델": videlColor.a = 1f; nagelColor.a = 0.7f; break;
-            case "나겔": videlColor.a = 0.7f; nagelColor.a = 1f; break;
-            default: videlColor.a = nagelColor.a = 0.7f; break;
+            case "비델": videlColor.a = 1f; nagelColor.a = 0.5f; break;
+            case "나겔": videlColor.a = 0.5f; nagelColor.a = 1f; break;
+            default: videlColor.a = nagelColor.a = 0.5f; break;
         }
         videl.color = videlColor;
         nagel.color = nagelColor;
