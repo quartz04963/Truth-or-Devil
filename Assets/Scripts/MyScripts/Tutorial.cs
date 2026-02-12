@@ -75,6 +75,11 @@ public class Tutorial : MonoBehaviour
                 DialogManager.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
             }
+
+            if (DialogManager.instance.currentLineNumber == 16)
+            {
+                DialogManager.instance.SetCharacter();
+            }
         }
         
         else if (GameManager.instance.CurrentStage == 2)
@@ -107,7 +112,7 @@ public class Tutorial : MonoBehaviour
             else if (DialogManager.instance.currentLineNumber == 15)
             {
                 StartCoroutine(StopDialogUntil(
-                    () => GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0) && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))));
+                    () => GamePlay.instance.IsRunning && GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0) && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))));
                 return true;
             }
         }

@@ -34,6 +34,11 @@ public readonly struct TDDialog
 
 public static class TDStory
 {
+    public static TDDialog videlPressure = new TDDialog(0, false, new List<TDLine>
+    {
+        new TDLine("비델", "..."),
+    });
+
     public static TDDialog gameOverLineList = new TDDialog(0, false, new List<TDLine>
     {
         new TDLine("비델", "자, 참가자 님의 결과는...!"),
@@ -151,9 +156,10 @@ public class DialogManager : MonoBehaviour
         else if (GamePlay.instance.isOver) GamePlay.instance.GameOver();
     }
 
-    void SetCharacter()
+    public void SetCharacter()
     {
-        if (currentDialog.stage == 1 && currentDialog.isProlog) nagel.enabled = false;
+        if (currentDialog.stage == 1 && currentDialog.isProlog) nagel.enabled = currentLineNumber >= 16;
+
         else if (currentDialog.stage == 2 && !currentDialog.isProlog) videl.enabled = false;
         else if (currentDialog.stage == 12 && currentDialog.isProlog) videl.enabled = false;
         else videl.enabled = nagel.enabled = true;

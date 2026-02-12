@@ -13488,9 +13488,9 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 1a18321831229bd4ebb02a9f6fae81cb, type: 3}
   makeQuestionSprites:
   - {fileID: 21300000, guid: bd17c2528deec7f45b657b4560fdcd56, type: 3}
+  - {fileID: 21300000, guid: 0b58dd88d3c1f1940925e249dc05ff12, type: 3}
   askQuestionSprites:
   - {fileID: 21300000, guid: 16418e7898947af4c8f09679e4e18dcc, type: 3}
-  - {fileID: 21300000, guid: 0b58dd88d3c1f1940925e249dc05ff12, type: 3}
   resultSprites:
   - {fileID: 21300000, guid: b34f49a692be06f4198ad73a2b11a708, type: 3}
   functionSprites:

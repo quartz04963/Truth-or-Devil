@@ -303,8 +303,6 @@ public class GamePlay : MonoBehaviour
         answerBoxText.SetText(answer);
 
         LogManager.instance.AddLog(redBoxData, blueBoxData, greenBoxData, eye, answer);
-
-        StartCoroutine(WaitForSeconds(1f));
     }
 
     void CheckStageClear()
