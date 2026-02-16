@@ -36,7 +36,7 @@ public class AnswerLog : MonoBehaviour
     public void UpdateEyeImage()
     {
         eyeDataImage.sprite = defaultSprite;
-        //eyeDataImage.sprite = tdEye.guessedID == ToD.Null ? defaultSprite : tdEye.guessedID == ToD.Truth ? angelSprite : devilSprite;
+        eyeDataImage.sprite = tdEye.guessedID == ToD.Null ? defaultSprite : tdEye.guessedID == ToD.Truth ? angelSprite : devilSprite;
     }
 
     public void UpdateByDropdown(int value)
