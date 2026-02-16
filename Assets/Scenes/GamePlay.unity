@@ -8167,7 +8167,7 @@ GameObject:
   - component: {fileID: 952175209}
   - component: {fileID: 952175208}
   m_Layer: 5
-  m_Name: Red Box
+  m_Name: Red Box (Image)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10315,7 +10315,7 @@ GameObject:
   - component: {fileID: 1211088473}
   - component: {fileID: 1211088472}
   m_Layer: 5
-  m_Name: Green Box
+  m_Name: Green Box (Image)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16025,12 +16025,19 @@ MonoBehaviour:
   prevDirection: {x: 0, y: 0, z: 0}
   prevBlockedPos: {x: 0, y: 0, z: 0}
   player: {fileID: 456842266}
-  redBoxData: 
-  blueBoxData: 
-  greenBoxData: 
   redBoxText: {fileID: 1337712012}
   blueBoxText: {fileID: 478587020}
   greenBoxText: {fileID: 876422829}
+  redBoxImg: {fileID: 952175208}
+  blueBoxImg: {fileID: 1913750701}
+  greenBoxImg: {fileID: 1211088472}
+  redBoxBrightSprite: {fileID: 21300000, guid: afdbece694c328a4a86be5a0842e2978, type: 3}
+  blueBoxBrightSprite: {fileID: 21300000, guid: ca606a7a134b5de488e8568e3f07a2c3, type: 3}
+  greenBoxBrightSprite: {fileID: 21300000, guid: 5531ce20a0d0501419ed0d0b96e12812, type: 3}
+  redBoxDarkSprite: {fileID: 21300000, guid: afdbece694c328a4a86be5a0842e2978, type: 3}
+  blueBoxDarkSprite: {fileID: 21300000, guid: ca606a7a134b5de488e8568e3f07a2c3, type: 3}
+  greenBoxDarkSprite: {fileID: 21300000, guid: 5531ce20a0d0501419ed0d0b96e12812, type: 3}
+  questionBoxRT: {fileID: 764311323}
   defaultSprite: {fileID: 21300000, guid: ac93f4b1954bb034f85a654b14257bc0, type: 3}
   angelSprite: {fileID: 21300000, guid: e8ec8ed49be3bad42880b754d7eebad1, type: 3}
   devilSprite: {fileID: 21300000, guid: 2c56c84d104e9484faaedca873387a3c, type: 3}
@@ -17241,7 +17248,7 @@ GameObject:
   - component: {fileID: 1913750702}
   - component: {fileID: 1913750701}
   m_Layer: 5
-  m_Name: Blue Box
+  m_Name: Blue Box (Image)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

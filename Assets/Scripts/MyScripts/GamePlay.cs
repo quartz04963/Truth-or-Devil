@@ -29,26 +29,36 @@ public class GamePlay : MonoBehaviour
     public Vector3Int prevBlockedPos;
     public GameObject player;
     
-    public List<int> redBoxData;
-    public List<int> blueBoxData;
-    public List<int> greenBoxData;
-    public TextMeshProUGUI redBoxText;
-    public TextMeshProUGUI blueBoxText;
-    public TextMeshProUGUI greenBoxText;
+    private List<int> redBoxData;
+    private List<int> blueBoxData;
+    private List<int> greenBoxData;
+    [SerializeField]  TextMeshProUGUI redBoxText;
+    [SerializeField] TextMeshProUGUI blueBoxText;
+    [SerializeField] TextMeshProUGUI greenBoxText;
+    [SerializeField] Image redBoxImg;
+    [SerializeField] Image blueBoxImg;
+    [SerializeField] Image greenBoxImg;
+    [SerializeField] Sprite redBoxBrightSprite;
+    [SerializeField] Sprite blueBoxBrightSprite;
+    [SerializeField] Sprite greenBoxBrightSprite;
+    [SerializeField] Sprite redBoxDarkSprite;
+    [SerializeField] Sprite blueBoxDarkSprite;
+    [SerializeField] Sprite greenBoxDarkSprite;
+    [SerializeField] RectTransform questionBoxRT;
 
-    public Sprite defaultSprite;
-    public Sprite angelSprite;
-    public Sprite devilSprite;
-    public GameObject answerBox;
-    public Image eyeBoxImage;
-    public TextMeshProUGUI eyeIndexText;
-    public TextMeshProUGUI answerBoxText;
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] Sprite angelSprite;
+    [SerializeField] Sprite devilSprite;
+    [SerializeField] GameObject answerBox;
+    [SerializeField] Image eyeBoxImage;
+    [SerializeField] TextMeshProUGUI eyeIndexText;
+    [SerializeField] TextMeshProUGUI answerBoxText;
 
-    public TextMeshProUGUI stageNumberText;
-    public TextMeshProUGUI enteringCheckTMP;
-    public GameObject enteringCheckWindow;
-    public GameObject stageClearWindow;
-    public GameObject gameOverWindow;
+    [SerializeField] TextMeshProUGUI stageNumberText;
+    [SerializeField] TextMeshProUGUI enteringCheckTMP;
+    [SerializeField] GameObject enteringCheckWindow;
+    [SerializeField] GameObject stageClearWindow;
+    [SerializeField] GameObject gameOverWindow;
     public GameObject nextButton;
 
     void Awake()
@@ -228,14 +238,6 @@ public class GamePlay : MonoBehaviour
         else Move(dir);
     }
 
-    public bool CheckQuestion(List<int> redData, List<int> blueData, List<int> greenData)
-    {
-        if (redData[0] == (int)RedData.Gate && blueData[0] == (int)BlueData.Color && greenData[0] != (int)GreenData.Null) return true;
-        if (redData[0] == (int)RedData.Map && blueData[0] == (int)BlueData.Eye && greenData[0] != (int)GreenData.Null) return true;
-
-        return false;
-    }
-
     void DataBoxUpdate(Vector3Int dir)
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
@@ -246,17 +248,29 @@ public class GamePlay : MonoBehaviour
             case TileColor.Blue: blueBoxData = tile.data; break;
             case TileColor.Green: greenBoxData = tile.data; break;
             case TileColor.White:
-                if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
+                if(tile.data[0] == (int)WhiteData.Eye)
                 {
                     if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) 
                     {
                         Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
-                        redBoxData = MyUtils.RedDataNull;
-                        blueBoxData = MyUtils.BlueDataNull;
-                        greenBoxData = MyUtils.GreenDataNull;
                     }
                 }
                 break;
+        }
+
+        if (((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Eye) || ((RedData)redBoxData[0] == RedData.Map && (BlueData)blueBoxData[0] == BlueData.Color))
+        {
+            redBoxImg.sprite = redBoxDarkSprite;
+            blueBoxImg.sprite = blueBoxDarkSprite;
+            greenBoxImg.sprite = greenBoxDarkSprite;
+            Debug.Log("Dark");
+        }
+        else
+        {
+            redBoxImg.sprite = redBoxBrightSprite;
+            blueBoxImg.sprite = blueBoxBrightSprite;
+            greenBoxImg.sprite = greenBoxBrightSprite;
+            Debug.Log("Bright");
         }
 
         redBoxText.SetText(MyUtils.GetTextFromData(TileColor.Red, redBoxData));
@@ -268,6 +282,8 @@ public class GamePlay : MonoBehaviour
 
     void Answer(TDEye eye)
     {
+        if ((RedData)redBoxData[0] == RedData.Null || (BlueData)blueBoxData[0] == BlueData.Null || (GreenData)greenBoxData[0] == GreenData.Null) return;
+
         char answer = '?';
         if (redBoxData[0] == (int)RedData.Gate && blueBoxData[0] == (int)BlueData.Color)
         {
@@ -293,6 +309,17 @@ public class GamePlay : MonoBehaviour
                 case GreenData.LessOrEqual: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] <= greenBoxData[1] ? 'O' : 'X'; break;
             }
         }
+        else
+        {
+            Sequence seq = Sequence.Create()
+                .Chain(Tween.LocalPositionX(questionBoxRT, -25, 0.05f))
+                .Chain(Tween.LocalPositionX(questionBoxRT, 0, 0.05f))
+                .Chain(Tween.LocalPositionX(questionBoxRT, 25, 0.05f))
+                .Chain(Tween.LocalPositionX(questionBoxRT, 0, 0.05f));
+
+            return;
+        }
+
         if (eye.trueID == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
         
 
@@ -302,6 +329,10 @@ public class GamePlay : MonoBehaviour
         answerBoxText.SetText(answer);
 
         LogManager.instance.AddLog(redBoxData, blueBoxData, greenBoxData, eye, answer);
+
+        redBoxData = MyUtils.RedDataNull;
+        blueBoxData = MyUtils.BlueDataNull;
+        greenBoxData = MyUtils.GreenDataNull;
     }
 
     void CheckStageClear()
