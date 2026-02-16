@@ -36,10 +36,11 @@ public class GamePlay : MonoBehaviour
     public TextMeshProUGUI blueBoxText;
     public TextMeshProUGUI greenBoxText;
 
-    public Image eyeBoxImage;
     public Sprite defaultSprite;
     public Sprite angelSprite;
     public Sprite devilSprite;
+    public GameObject answerBox;
+    public Image eyeBoxImage;
     public TextMeshProUGUI eyeIndexText;
     public TextMeshProUGUI answerBoxText;
 
@@ -247,7 +248,8 @@ public class GamePlay : MonoBehaviour
             case TileColor.White:
                 if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
                 {
-                    if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) {
+                    if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) 
+                    {
                         Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
                         redBoxData = MyUtils.RedDataNull;
                         blueBoxData = MyUtils.BlueDataNull;
@@ -261,11 +263,7 @@ public class GamePlay : MonoBehaviour
         blueBoxText.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueBoxData));
         greenBoxText.SetText(MyUtils.GetTextFromData(TileColor.Green, greenBoxData));
 
-        if (tile.color != TileColor.White || tile.data[0] != (int) WhiteData.Eye) {
-            eyeBoxImage.enabled = false;
-            eyeIndexText.SetText("");
-            answerBoxText.SetText("");
-        }
+        if (tile.color != TileColor.White || tile.data[0] != (int) WhiteData.Eye) answerBox.SetActive(false);
     }
 
     void Answer(TDEye eye)
@@ -297,7 +295,8 @@ public class GamePlay : MonoBehaviour
         }
         if (eye.trueID == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
         
-        eyeBoxImage.enabled = true;
+
+        answerBox.SetActive(true);
         eyeBoxImage.sprite = eye.guessedID == ToD.Null ? defaultSprite : eye.guessedID == ToD.Truth ? angelSprite : devilSprite;
         eyeIndexText.SetText(MyUtils.ConvertToRoman(eye.index + 1));
         answerBoxText.SetText(answer);
