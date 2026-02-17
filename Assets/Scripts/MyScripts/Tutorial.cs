@@ -24,7 +24,7 @@ public class Tutorial : MonoBehaviour
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
 
             DialogManager.instance.SetSkipButtonActive(false);
             DialogManager.instance.SetReviewInGamePlayActive(true);
@@ -38,7 +38,7 @@ public class Tutorial : MonoBehaviour
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
         }
 
         else if (GameManager.instance.CurrentStage == 3)
