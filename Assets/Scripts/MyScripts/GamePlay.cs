@@ -125,7 +125,7 @@ public class GamePlay : MonoBehaviour
         if (!isRunning) return;
         
         Vector3Int dir = GetDirectionFromKey();
-        if (CanMove(dir))
+        if (CanMove(dir, true))
         {
             if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
 
@@ -150,7 +150,7 @@ public class GamePlay : MonoBehaviour
         else return Vector3Int.zero;
     }
 
-    bool CanMove(Vector3Int dir)
+    bool CanMove(Vector3Int dir, bool isByInput = false)
     {
         if (dir == Vector3Int.zero) return false;
 
@@ -168,13 +168,14 @@ public class GamePlay : MonoBehaviour
         {
             if (!eye.isMarked)
             {
-                eye.Shake(Vector3.left * 0.1f, 0.05f);
                 isNotAllMarked = true;
+                if (isByInput) eye.Shake(Vector3.left * 0.1f, 0.05f);
+                if (!isByInput && isNotAllMarked) break; 
             }
         }
         if (isNotAllMarked)
         {
-            gate.Shake(Vector3.left * 0.1f, 0.05f);
+            if (isByInput) gate.Shake(Vector3.left * 0.1f, 0.05f);
             return false;
         }
 
