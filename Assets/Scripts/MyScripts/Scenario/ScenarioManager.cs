@@ -80,6 +80,6 @@ public class ScenarioManager : MonoBehaviour
     {
         ScenarioTab scenario = scenarioList.Find(scenario => scenario.isActive);
         scenario.scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
-        scenario.scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.guessedID));
+        scenario.scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.isMarked));
     }
 }

@@ -7,12 +7,16 @@ using UnityEngine.UI;
 public class TDGate : TDObject
 {
     public int index;
-    public ToD guessedID;
-    public SpriteRenderer spriteRenderer;
-    public Sprite defaultSprite, heavenSprite, hellSprite;
+    
+    public bool isMarked;
     public Button button;
+    public Image XmarkImg;
+
     public GameObject infoBox;
     public TextMeshProUGUI redCountText, blueCountText, greenCountText, whiteCountText;
+
+    public SpriteRenderer spriteRenderer;
+    public Sprite defaultSprite, heavenSprite, hellSprite;
 
     public void Init(Vector3Int _pos, int _index)
     {
@@ -41,24 +45,16 @@ public class TDGate : TDObject
         whiteCountText.gameObject.SetActive(MapManager.instance.canAskWhite);
     }
 
-    public static void SetTDGateState(TDGate gate, ToD _guessedID)
+    public static void SetTDGateState(TDGate gate, bool _isMarked)
     {
-        gate.guessedID = _guessedID;
-        switch (_guessedID)
-        {
-            case ToD.Null: gate.spriteRenderer.sprite = gate.defaultSprite; break;
-            case ToD.Truth: gate.spriteRenderer.sprite = gate.heavenSprite; break;
-            case ToD.Devil: gate.spriteRenderer.sprite = gate.hellSprite; break;
-        }
-
+        gate.isMarked = _isMarked;
+        gate.XmarkImg.enabled = _isMarked;
     }
 
     public void OnClicked()
     {
-        if (!GamePlay.instance.IsRunning) return;
-
-        guessedID = (ToD)(((int)guessedID + 1) % 3);
-        SetTDGateState(this, guessedID);
+        isMarked = !isMarked;
+        XmarkImg.enabled = isMarked;
     }
 
     void OnMouseEnter()

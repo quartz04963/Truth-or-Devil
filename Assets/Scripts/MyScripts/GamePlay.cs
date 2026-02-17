@@ -161,7 +161,7 @@ public class GamePlay : MonoBehaviour
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
         TDGate gate = MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir);
-        if (gate.guessedID == ToD.Devil) return false;
+        if (gate.isMarked) return false;
 
         bool isNotAllMarked = false;
         foreach (TDEye eye in MapManager.instance.eyeList)

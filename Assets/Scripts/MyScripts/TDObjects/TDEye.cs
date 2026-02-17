@@ -10,7 +10,10 @@ public class TDEye : TDObject
     public ToD guessedID = ToD.Null;
     public SpriteRenderer spriteRenderer;
     public Sprite defaultSprite, angelSprite, devilSprite;
-    public Button button;
+
+    public bool isSelecting;
+    public GameObject button;
+    public GameObject selectingButtons;
 
     public void Init(Vector3Int _pos, int _index)
     {
@@ -36,9 +39,24 @@ public class TDEye : TDObject
     
     public void OnClicked()
     {
-        if (!GamePlay.instance.IsRunning) return;
-        
-        guessedID = (ToD)(((int)guessedID + 1) % 3);
-        SetTDEyeState(this, guessedID);
+        foreach (TDEye eye in MapManager.instance.eyeList)
+        {
+            if (eye != this)
+            {
+                eye.isSelecting = false;
+                eye.selectingButtons.SetActive(false);
+            }
+            else
+            {
+                eye.isSelecting = !isSelecting;
+                eye.selectingButtons.SetActive(eye.isSelecting);
+            }
+        }
+    }
+
+    public void OnSelectingButtonClicked(int _guessedID)
+    {
+        SetTDEyeState(this, (ToD)_guessedID);
+        OnClicked();
     }
 }

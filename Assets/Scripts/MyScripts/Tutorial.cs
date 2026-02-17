@@ -19,7 +19,7 @@ public class Tutorial : MonoBehaviour
         if (GameManager.instance.CurrentStage == 1)
         {
             // 임시
-            MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
+            MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
@@ -33,7 +33,7 @@ public class Tutorial : MonoBehaviour
         else if (GameManager.instance.CurrentStage == 2)
         {
             // 임시
-            MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
+            MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
