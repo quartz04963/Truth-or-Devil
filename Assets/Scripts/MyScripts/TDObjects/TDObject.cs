@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using PrimeTween;
 
 public class TDObject : MonoBehaviour
 {
@@ -18,5 +19,14 @@ public class TDObject : MonoBehaviour
     public virtual void BlockTile(bool isBlocking)
     {
         tileBlock.SetActive(isBlocking);
+    }
+
+    public virtual void Shake(Vector3 dir, float duration)
+    {
+        Sequence seq = Sequence.Create()
+            .Chain(Tween.Position(transform, pos + MyUtils.offset + dir, duration))
+            .Chain(Tween.Position(transform, pos + MyUtils.offset, duration))
+            .Chain(Tween.Position(transform, pos + MyUtils.offset - dir, duration))
+            .Chain(Tween.Position(transform, pos + MyUtils.offset, duration));
     }
 }

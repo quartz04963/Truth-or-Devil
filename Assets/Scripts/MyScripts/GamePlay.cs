@@ -160,10 +160,22 @@ public class GamePlay : MonoBehaviour
         TDData nextTile = MapManager.instance.tileList[idx];
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
-        if (MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir).guessedID == ToD.Devil) return false;
+        TDGate gate = MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir);
+        if (gate.guessedID == ToD.Devil) return false;
+
+        bool isNotAllMarked = false;
         foreach (TDEye eye in MapManager.instance.eyeList)
         {
-            if (!eye.isMarked) return false;
+            if (!eye.isMarked)
+            {
+                eye.Shake(Vector3.left * 0.1f, 0.05f);
+                isNotAllMarked = true;
+            }
+        }
+        if (isNotAllMarked)
+        {
+            gate.Shake(Vector3.left * 0.1f, 0.05f);
+            return false;
         }
 
         return CheckGoingstraight(dir);
@@ -322,7 +334,6 @@ public class GamePlay : MonoBehaviour
 
         if (eye.trueID == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
         
-
         answerBox.SetActive(true);
         eyeBoxImage.sprite = eye.guessedID == ToD.Null ? defaultSprite : eye.guessedID == ToD.Truth ? angelSprite : devilSprite;
         eyeIndexText.SetText(MyUtils.ConvertToRoman(eye.index + 1));
