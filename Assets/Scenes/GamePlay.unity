@@ -3807,7 +3807,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.00019836426, y: 0.0000333786}
+  m_AnchoredPosition: {x: 0.999817, y: 0.0000333786}
   m_SizeDelta: {x: -2.000002, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &397913073
@@ -16189,9 +16189,9 @@ MonoBehaviour:
   redBoxBrightSprite: {fileID: 21300000, guid: afdbece694c328a4a86be5a0842e2978, type: 3}
   blueBoxBrightSprite: {fileID: 21300000, guid: ca606a7a134b5de488e8568e3f07a2c3, type: 3}
   greenBoxBrightSprite: {fileID: 21300000, guid: 5531ce20a0d0501419ed0d0b96e12812, type: 3}
-  redBoxDarkSprite: {fileID: 21300000, guid: afdbece694c328a4a86be5a0842e2978, type: 3}
-  blueBoxDarkSprite: {fileID: 21300000, guid: ca606a7a134b5de488e8568e3f07a2c3, type: 3}
-  greenBoxDarkSprite: {fileID: 21300000, guid: 5531ce20a0d0501419ed0d0b96e12812, type: 3}
+  redBoxDarkSprite: {fileID: 21300000, guid: 41173e641d172c340a7c9a2695cb4f06, type: 3}
+  blueBoxDarkSprite: {fileID: 21300000, guid: 72cf858e155573844b31d2b44151fc4c, type: 3}
+  greenBoxDarkSprite: {fileID: 21300000, guid: 274da9312c0bc9e49bf9c106b65da306, type: 3}
   questionBoxRT: {fileID: 764311323}
   highlightRimRT: {fileID: 1046730263}
   defaultSprite: {fileID: 21300000, guid: ac93f4b1954bb034f85a654b14257bc0, type: 3}
