@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 public class Tutorial : MonoBehaviour
 {
@@ -10,6 +9,10 @@ public class Tutorial : MonoBehaviour
 
     [SerializeField] private bool isStopping;
     public bool IsStopping => isStopping;
+
+    [SerializeField] Sprite tutorialPic1;
+    [SerializeField] Sprite tutorialPic2;
+    [SerializeField] Sprite tutorialPic3;
 
     void Awake()
     {
@@ -80,12 +83,23 @@ public class Tutorial : MonoBehaviour
                 duration = 1.0f;
                 DialogManager.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
+                DialogManager.instance.ShowOnlyPicture(tutorialPic1);
             }
 
-            if (DialogManager.instance.currentLineNumber == 16)
+            else if (DialogManager.instance.currentLineNumber == 8)
             {
-                DialogManager.instance.SetCharacter();
+                DialogManager.instance.ShowOnlyPicture(tutorialPic2);
             }
+
+            else if (DialogManager.instance.currentLineNumber == 9)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPic3);
+            }
+
+            // else if (DialogManager.instance.currentLineNumber == 16)
+            // {
+            //     DialogManager.instance.SetCharacter();
+            // }
         }
         
         else if (GameManager.instance.CurrentStage == 2)
@@ -101,27 +115,27 @@ public class Tutorial : MonoBehaviour
 
     public bool BreakDialog()
     {
-        if (GameManager.instance.CurrentStage == 1)
-        {
-            if (DialogManager.instance.currentLineNumber == 10)
-            {
-                StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 2, 0)));
-                return true;
-            }
+        // if (GameManager.instance.CurrentStage == 1)
+        // {
+        //     if (DialogManager.instance.currentLineNumber == 10)
+        //     {
+        //         StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 2, 0)));
+        //         return true;
+        //     }
 
-            else if (DialogManager.instance.currentLineNumber == 14)
-            {
-                StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0)));
-                return true;
-            }
+        //     else if (DialogManager.instance.currentLineNumber == 14)
+        //     {
+        //         StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0)));
+        //         return true;
+        //     }
 
-            else if (DialogManager.instance.currentLineNumber == 15)
-            {
-                StartCoroutine(StopDialogUntil(
-                    () => GamePlay.instance.IsRunning && GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0) && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))));
-                return true;
-            }
-        }
+        //     else if (DialogManager.instance.currentLineNumber == 15)
+        //     {
+        //         StartCoroutine(StopDialogUntil(
+        //             () => GamePlay.instance.IsRunning && GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0) && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))));
+        //         return true;
+        //     }
+        // }
 
         return false;
     }
@@ -140,28 +154,28 @@ public class Tutorial : MonoBehaviour
 
     public bool BreakEnteringPos(Vector3Int pos)
     {
-        if (GameManager.instance.CurrentStage == 1)
-        {
-            if (DialogManager.instance.currentLineNumber <= 15)
-            {
-                if (pos == new Vector3Int(3, 0, 0)) return true;
-            }
+        // if (GameManager.instance.CurrentStage == 1)
+        // {
+        //     if (DialogManager.instance.currentLineNumber <= 15)
+        //     {
+        //         if (pos == new Vector3Int(3, 0, 0)) return true;
+        //     }
 
-            if (DialogManager.instance.currentLineNumber <= 14)
-            {
-                if (pos == new Vector3Int(2, 1, 0)) return true;
-            }
-        }
+        //     if (DialogManager.instance.currentLineNumber <= 14)
+        //     {
+        //         if (pos == new Vector3Int(2, 1, 0)) return true;
+        //     }
+        // }
 
         return false;
     }
 
     public bool BreakEnteringGate(Vector3Int dir)
     {
-        if (GameManager.instance.CurrentStage == 1)
-        {
-            if (GamePlay.instance.posOnMap + dir == new Vector3Int(2, 1, 0)) return true;
-        }
+        // if (GameManager.instance.CurrentStage == 1)
+        // {
+        //     if (GamePlay.instance.posOnMap + dir == new Vector3Int(2, 1, 0)) return true;
+        // }
 
         return false;
     }

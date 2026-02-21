@@ -73,8 +73,11 @@ public class DialogManager : MonoBehaviour
     [SerializeField] Image background;
     [SerializeField] Image videl;
     [SerializeField] Image nagel;
+    [SerializeField] Image picture;
     [SerializeField] TextMeshProUGUI nameTMP;
     [SerializeField] TextMeshProUGUI dialogTMP;
+    [SerializeField] GameObject nameBox;
+    [SerializeField] GameObject dialogBox;
     [SerializeField] GameObject reviewButton;
     [SerializeField] GameObject reviewInGamePlayButton;
     public void SetReviewInGamePlayActive(bool isActive) => reviewInGamePlayButton.SetActive(isActive);
@@ -203,6 +206,17 @@ public class DialogManager : MonoBehaviour
         }
 
         saying = null;
+    }
+
+    public void ShowOnlyPicture(Sprite sprite)
+    {
+        videl.enabled = nagel.enabled = false;
+
+        nameBox.SetActive(false);
+        dialogBox.SetActive(false);
+
+        picture.enabled = true;
+        picture.sprite = sprite;
     }
 
     public void Fade(float endValue, float duration) => Tween.Alpha(background, endValue, duration);
