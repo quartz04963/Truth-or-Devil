@@ -8,6 +8,7 @@ public class TDObject : MonoBehaviour
     public Canvas canvas;
     public TextMeshProUGUI tmp;
     public GameObject tileBlock;
+    public GameObject highlightRim;
 
     public virtual void Init(Vector3Int _pos, string str)
     {
@@ -19,6 +20,11 @@ public class TDObject : MonoBehaviour
     public virtual void BlockTile(bool isBlocking)
     {
         tileBlock.SetActive(isBlocking);
+    }
+
+    public virtual void HighlightTile(bool isOn)
+    {
+        highlightRim.SetActive(isOn);
     }
 
     public virtual void Shake(Vector3 dir, float duration)

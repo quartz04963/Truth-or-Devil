@@ -45,6 +45,7 @@ public class GamePlay : MonoBehaviour
     [SerializeField] Sprite blueBoxDarkSprite;
     [SerializeField] Sprite greenBoxDarkSprite;
     [SerializeField] RectTransform questionBoxRT;
+    [SerializeField] RectTransform highlightRimRT;
 
     [SerializeField] Sprite defaultSprite;
     [SerializeField] Sprite angelSprite;
@@ -271,6 +272,18 @@ public class GamePlay : MonoBehaviour
                 break;
         }
 
+        // 튜토리얼 연출 - 질문 상자 강조
+        if (GameManager.instance.CurrentStage <= 2)
+        {
+            switch (tile.color)
+            {
+                case TileColor.Red: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(-260, 0); break;
+                case TileColor.Blue: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(0, 0); break;
+                case TileColor.Green: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(260, 0); break;
+                case TileColor.White: highlightRimRT.gameObject.SetActive(false); break;
+            }
+        }
+
         if (((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Eye) || ((RedData)redBoxData[0] == RedData.Map && (BlueData)blueBoxData[0] == BlueData.Color))
         {
             redBoxImg.sprite = redBoxDarkSprite;
@@ -289,6 +302,8 @@ public class GamePlay : MonoBehaviour
         redBoxText.SetText(MyUtils.GetTextFromData(TileColor.Red, redBoxData));
         blueBoxText.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueBoxData));
         greenBoxText.SetText(MyUtils.GetTextFromData(TileColor.Green, greenBoxData));
+        
+        Tutorial.instance.HighlightTiles(redBoxData, blueBoxData);
 
         if (tile.color != TileColor.White || tile.data[0] != (int) WhiteData.Eye) answerBox.SetActive(false);
     }

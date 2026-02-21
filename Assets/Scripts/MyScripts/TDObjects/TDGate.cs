@@ -45,6 +45,16 @@ public class TDGate : TDObject
         whiteCountText.gameObject.SetActive(MapManager.instance.canAskWhite);
     }
 
+    public void SetSprite(ToD tod)
+    {
+        switch (tod)
+        {
+            case ToD.Null: spriteRenderer.sprite = defaultSprite; break;
+            case ToD.Truth: spriteRenderer.sprite = heavenSprite; break;
+            case ToD.Devil: spriteRenderer.sprite = hellSprite; break;
+        }
+    }
+
     public static void SetTDGateState(TDGate gate, bool _isMarked)
     {
         gate.isMarked = _isMarked;

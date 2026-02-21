@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class Tutorial : MonoBehaviour
 {
@@ -18,13 +20,14 @@ public class Tutorial : MonoBehaviour
     {
         if (GameManager.instance.CurrentStage == 1)
         {
-            // 임시
             MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
+            MapManager.instance.gateList[0].SetSprite(ToD.Truth);
+            MapManager.instance.gateList[1].SetSprite(ToD.Devil);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
 
             DialogManager.instance.SetSkipButtonActive(false);
             DialogManager.instance.SetReviewInGamePlayActive(true);
@@ -32,13 +35,11 @@ public class Tutorial : MonoBehaviour
 
         else if (GameManager.instance.CurrentStage == 2)
         {
-            // 임시
             MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
-            MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
         }
 
         else if (GameManager.instance.CurrentStage == 3)
@@ -49,6 +50,11 @@ public class Tutorial : MonoBehaviour
         else if (GameManager.instance.CurrentStage == 4)
         {
             ScenarioManager.instance.ActivateScenarios(false);
+        }
+        else if (GameManager.instance.CurrentStage == 8)
+        {
+            MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
         }
 
         else if (GameManager.instance.CurrentStage == TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount)
@@ -158,5 +164,63 @@ public class Tutorial : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void HighlightTiles(List<int> redBoxData, List<int> blueBoxData)
+    {
+        if (GameManager.instance.CurrentStage <= 2)
+        {
+            MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
+
+            if ((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Null)
+            {
+                foreach (TDGate gate in MapManager.instance.gateList)
+                {
+                    foreach (TDObject obj in MapManager.instance.objectList)
+                    {
+                        if (Math.Abs(obj.pos.x - gate.pos.x) <= 1 && Math.Abs(obj.pos.y - gate.pos.y) <= 1 && obj.pos != gate.pos)
+                            obj.HighlightTile(true);
+                    }
+                }
+            }
+            else if ((RedData)redBoxData[0] == RedData.Null && (BlueData)blueBoxData[0] == BlueData.Color)
+            {
+                foreach (TDData tile in MapManager.instance.tileList)
+                {
+                    if (tile.color == (TileColor)blueBoxData[1])
+                        MapManager.instance.objectList.Find(obj => obj.pos == tile.pos).HighlightTile(true);
+                }
+            }
+            else if ((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Color)
+            {
+                foreach (TDGate gate in MapManager.instance.gateList)
+                {
+                    foreach (TDData tile in MapManager.instance.tileList)
+                    {
+                        if (Math.Abs(tile.pos.x - gate.pos.x) <= 1 && Math.Abs(tile.pos.y - gate.pos.y) <= 1 && tile.pos != gate.pos 
+                            && tile.color == (TileColor)blueBoxData[1])
+                            MapManager.instance.objectList.Find(obj => obj.pos == tile.pos).HighlightTile(true);
+                    }
+                }
+            }
+        }
+
+        else if (GameManager.instance.CurrentStage == 8)
+        {
+            MapManager.instance.eyeList.ForEach(obj => obj.HighlightTile(false));
+
+            if ((RedData)redBoxData[0] == RedData.Map && (BlueData)blueBoxData[0] == BlueData.Null)
+            {
+                MapManager.instance.eyeList.ForEach(eye => eye.HighlightTile(true));
+            }
+            else if ((BlueData)blueBoxData[0] == BlueData.Eye)
+            {
+                foreach (TDEye eye in MapManager.instance.eyeList)
+                {
+                    if (eye.trueID == (ToD)blueBoxData[1]) eye.HighlightTile(true);
+                }
+            }
+
+        }
     }
 }
