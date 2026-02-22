@@ -10,7 +10,7 @@ public class Title : MonoBehaviour
     void Start()
     {
         MoveTo(GameManager.instance.titleTabNumber);
-        SoundManager.Instance.PlayTitleBGM();
+        SoundManager.Instance.PlayBGM("title");
     }
 
     public void OnPlayClicked() {

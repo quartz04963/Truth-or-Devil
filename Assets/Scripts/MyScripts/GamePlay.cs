@@ -71,18 +71,24 @@ public class GamePlay : MonoBehaviour
     {
         Init();
         MapManager.instance.InitMap();
-        LogManager.instance.InitEmptyCategoryLogs();
         prevBlockedPos = posOnMap; //임시
+
+        LogManager.instance.InitEmptyCategoryLogs();
+        
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
+
         MyCamera.instance.SetOSizeByMap();
+
+        SoundManager.Instance.StopBgm();
+        SoundManager.Instance.PlayBGM("gameplay");
         
         Tutorial.instance.RevisedInit();
-
-        isRunning = true;
         
         TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
         DialogManager.instance.StartDialog(dialog);
+
+        isRunning = true;
     }
 
     void Init()

@@ -9204,7 +9204,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmSource: {fileID: 961976659}
-  bgmClip: {fileID: 8300000, guid: d2c16a6c17303a44c86600d8649820e4, type: 3}
+  titleBGM: {fileID: 8300000, guid: d2c16a6c17303a44c86600d8649820e4, type: 3}
+  gameplayBGM: {fileID: 8300000, guid: e7146c22fb0dea043bb1f2d8b341b36a, type: 3}
 --- !u!4 &1521194433
 Transform:
   m_ObjectHideFlags: 0
