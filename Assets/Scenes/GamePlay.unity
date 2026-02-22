@@ -2617,7 +2617,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394252239}
   m_HandleRect: {fileID: 1394252238}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 1
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -14215,6 +14215,7 @@ MonoBehaviour:
   BlueTile: {fileID: 11400000, guid: fe9872b1eedfa894fa61e763192f2588, type: 2}
   GreenTile: {fileID: 11400000, guid: d86fb5a4ba2a0fd4a843770558f07c3f, type: 2}
   WhiteTile: {fileID: 11400000, guid: 10c4e0d5a966ef148941c56da20bf10a, type: 2}
+  RoundWhiteTile: {fileID: 11400000, guid: e3f3ebc65e26ea446954bb135da834dc, type: 2}
   TDTextPrf: {fileID: 224452755241986807, guid: 0b4c8842994190949a6de7d92fe51e5e, type: 3}
   TDEyePrf: {fileID: 5257850310718929578, guid: 5797a1d74aaae8a4fb6e63ea062870e3, type: 3}
   TDGatePrf: {fileID: 8931365846767689008, guid: ef5c44caab85bc8468bf093e73cfc6db, type: 3}
