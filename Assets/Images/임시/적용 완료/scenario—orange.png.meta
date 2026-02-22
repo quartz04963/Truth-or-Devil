@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 728433bc7eaaab24485f0689d90922e8
+guid: 8ee0f4876e4097d47937dd757a05783d
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 3059006545923297871
-    second: KakaoTalk_20260105_145215114_02_0
+      213: 5110195978567736156
+    second: "scenario\u2014orange_0"
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -50,7 +50,7 @@ TextureImporter:
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 205, y: 122, z: 293, w: 219}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -118,13 +118,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: KakaoTalk_20260105_145215114_02_0
+      name: "scenario\u2014orange_0"
       rect:
         serializedVersion: 2
-        x: 207
-        y: 123
-        width: 1420
-        height: 738
+        x: 4
+        y: 3
+        width: 201
+        height: 43
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -132,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f425a570f36c37a20800000000000000
-      internalID: 3059006545923297871
+      spriteID: c5bd823ea201be640800000000000000
+      internalID: 5110195978567736156
       vertices: []
       indices: 
       edges: []
