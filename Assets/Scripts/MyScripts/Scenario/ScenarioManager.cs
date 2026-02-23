@@ -15,7 +15,7 @@ public class ScenarioManager : MonoBehaviour
     public ScrollRect scenarioScrollRect;
     public GameObject scenarioScrollView;
 
-    public bool isShowing = true;
+    public bool isShowing;
     public bool isSliding;
     public RectTransform scenarioRT;
     public RectTransform showScenarioRT;
@@ -25,12 +25,12 @@ public class ScenarioManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public void ActivateScenarios(bool b)
+    public void ActivateScenarios(bool isActive)
     {
         // MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(!b));
         // MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(!b));
-        scenarioScrollView.SetActive(b);
-        showScenarioRT.gameObject.SetActive(b);
+        scenarioScrollView.SetActive(isActive);
+        showScenarioRT.gameObject.SetActive(isActive);
     }
     
     public void InitBaseScenario()
