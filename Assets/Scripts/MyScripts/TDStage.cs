@@ -12,8 +12,8 @@ public readonly struct TDStage
         //챕터 1
         stageList[0] = new List<TDData>
         {
-            MyUtils.ConstructTDData(0, 1, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTDData(4, 1, WhiteData.Gate, ToD.Devil, 1),
+            MyUtils.ConstructTDData(0, 1, WhiteData.Gate, ToD.Devil, 0),
+            MyUtils.ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 1),
             MyUtils.ConstructTDData(0, 0, WhiteData.Blank, ToD.Null, 1),
             MyUtils.ConstructTDData(1, 0, "GATE"),
             MyUtils.ConstructTDData(2, 0, "RED"),

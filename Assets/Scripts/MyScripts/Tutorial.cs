@@ -25,8 +25,8 @@ public class Tutorial : MonoBehaviour
         {
             MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
-            MapManager.instance.gateList[0].SetSprite(ToD.Truth);
-            MapManager.instance.gateList[1].SetSprite(ToD.Devil);
+            MapManager.instance.gateList[0].SetSprite(ToD.Devil);
+            MapManager.instance.gateList[1].SetSprite(ToD.Truth);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
@@ -188,7 +188,7 @@ public class Tutorial : MonoBehaviour
 
     public void HighlightTiles(List<int> redBoxData, List<int> blueBoxData)
     {
-        if (GameManager.instance.CurrentStage <= 2)
+        if (GameManager.instance.CurrentStage == 1)
         {
             MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
             MapManager.instance.gateList.ForEach(gate => gate.HighlightArea(false));

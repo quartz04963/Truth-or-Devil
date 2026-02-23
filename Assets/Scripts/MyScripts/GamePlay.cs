@@ -283,7 +283,7 @@ public class GamePlay : MonoBehaviour
         }
 
         // 튜토리얼 연출 - 질문 상자 강조
-        if (GameManager.instance.CurrentStage <= 2)
+        if (GameManager.instance.CurrentStage == 1)
         {
             switch (tile.color)
             {
