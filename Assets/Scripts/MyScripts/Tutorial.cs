@@ -10,9 +10,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private bool isStopping;
     public bool IsStopping => isStopping;
 
-    [SerializeField] Sprite tutorialPic1;
-    [SerializeField] Sprite tutorialPic2;
-    [SerializeField] Sprite tutorialPic3;
+    [SerializeField] Sprite[] tutorialPictures;
 
     void Awake()
     {
@@ -89,18 +87,24 @@ public class Tutorial : MonoBehaviour
                 duration = 1.0f;
                 DialogManager.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
-                DialogManager.instance.ShowOnlyPicture(tutorialPic1);
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[0]);
             }
 
             else if (DialogManager.instance.currentLineNumber == 10)
             {
-                DialogManager.instance.ShowOnlyPicture(tutorialPic2);
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[1]);
             }
 
             else if (DialogManager.instance.currentLineNumber == 11)
             {
-                DialogManager.instance.ShowOnlyPicture(tutorialPic3);
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[2]);
             }
+
+            else if (DialogManager.instance.currentLineNumber == 12)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[3]);
+            }
+
 
             // else if (DialogManager.instance.currentLineNumber == 16)
             // {
@@ -108,13 +112,29 @@ public class Tutorial : MonoBehaviour
             // }
         }
         
-        else if (GameManager.instance.CurrentStage == 2)
+        else if (GameManager.instance.CurrentStage == 2 && !GamePlay.instance.isCleared)
         {
-            if (DialogManager.instance.currentLineNumber == 5 && !GamePlay.instance.isCleared)
+            if (DialogManager.instance.currentLineNumber == 5)
             {
                 duration = 1.0f;
                 DialogManager.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
+            }
+        }
+
+        else if (GameManager.instance.CurrentStage == 3 && !GamePlay.instance.isCleared)
+        {
+            if (DialogManager.instance.currentLineNumber == 11)
+            {
+                duration = 1.0f;
+                DialogManager.instance.Fade(0f, duration);
+                yield return new WaitForSeconds(duration);
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[4]);
+            }
+
+            else if (DialogManager.instance.currentLineNumber == 12)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[5]);
             }
         }
     }
