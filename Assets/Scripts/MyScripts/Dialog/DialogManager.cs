@@ -62,6 +62,7 @@ public class DialogManager : MonoBehaviour
     public bool isSkipping; //대사 출력 중 스킵 여부
     public bool isEpilogShowed;
     public bool isClicked;
+    public bool isOnlyPictureShowed;
     public float interval;
     public int currentLineNumber;
     private TDDialog currentDialog;
@@ -191,8 +192,12 @@ public class DialogManager : MonoBehaviour
         videl.color = videlColor;
         nagel.color = nagelColor;
 
-        PastDialog dialog = Instantiate(pastDialogPrf, pastDialogContent).GetComponent<PastDialog>();
-        dialog.Init(tdLine.name, tdLine.text);
+        if (!isOnlyPictureShowed) 
+        {
+            PastDialog dialog = Instantiate(pastDialogPrf, pastDialogContent).GetComponent<PastDialog>();
+            dialog.Init(tdLine.name, tdLine.text);
+        }
+        else isOnlyPictureShowed = false;
         
         nameTMP.SetText(tdLine.name);
 
@@ -223,6 +228,8 @@ public class DialogManager : MonoBehaviour
 
         picture.enabled = true;
         picture.sprite = sprite;
+
+        isOnlyPictureShowed = true;
     }
 
     public void Fade(float endValue, float duration) => Tween.Alpha(background, endValue, duration);

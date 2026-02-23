@@ -33,7 +33,7 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
 
             // DialogManager.instance.SetSkipButtonActive(false);
-            DialogManager.instance.SetReviewInGamePlayActive(true);
+            // DialogManager.instance.SetReviewInGamePlayActive(true);
         } 
 
         else if (GameManager.instance.CurrentStage == 2)
@@ -80,9 +80,9 @@ public class Tutorial : MonoBehaviour
     {
         float duration;
 
-        if (GameManager.instance.CurrentStage == 1)
+        if (GameManager.instance.CurrentStage == 1 && !GamePlay.instance.isCleared)
         {
-            if (DialogManager.instance.currentLineNumber == 7)
+            if (DialogManager.instance.currentLineNumber == 9)
             {
                 duration = 1.0f;
                 DialogManager.instance.Fade(0f, duration);
@@ -90,12 +90,12 @@ public class Tutorial : MonoBehaviour
                 DialogManager.instance.ShowOnlyPicture(tutorialPic1);
             }
 
-            else if (DialogManager.instance.currentLineNumber == 8)
+            else if (DialogManager.instance.currentLineNumber == 10)
             {
                 DialogManager.instance.ShowOnlyPicture(tutorialPic2);
             }
 
-            else if (DialogManager.instance.currentLineNumber == 9)
+            else if (DialogManager.instance.currentLineNumber == 11)
             {
                 DialogManager.instance.ShowOnlyPicture(tutorialPic3);
             }
@@ -108,7 +108,7 @@ public class Tutorial : MonoBehaviour
         
         else if (GameManager.instance.CurrentStage == 2)
         {
-            if (DialogManager.instance.currentLineNumber == 5)
+            if (DialogManager.instance.currentLineNumber == 5 && !GamePlay.instance.isCleared)
             {
                 duration = 1.0f;
                 DialogManager.instance.Fade(0f, duration);
