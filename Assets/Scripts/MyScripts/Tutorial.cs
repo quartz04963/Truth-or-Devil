@@ -57,8 +57,10 @@ public class Tutorial : MonoBehaviour
 
         else if (GameManager.instance.CurrentStage == 8)
         {
-            MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
+            MapManager.instance.eyeList[0].button.SetActive(false);
+            MapManager.instance.eyeList[2].button.SetActive(false);
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[2], ToD.Devil);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
             ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
@@ -232,7 +234,7 @@ public class Tutorial : MonoBehaviour
             {
                 foreach (TDEye eye in MapManager.instance.eyeList)
                 {
-                    if (eye.trueID == (ToD)blueBoxData[1]) eye.HighlightTile(true);
+                    if (eye.guessedID == (ToD)blueBoxData[1]) eye.HighlightTile(true);
                 }
             }
         }
