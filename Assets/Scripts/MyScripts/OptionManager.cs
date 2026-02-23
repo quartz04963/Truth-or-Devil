@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class OptionManager : MonoBehaviour
 {
@@ -19,6 +20,8 @@ public class OptionManager : MonoBehaviour
 
     public void OnOptionClicked(bool isOpening)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        
         isOptionOpened = isOpening;
         option.SetActive(isOpening);
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class Guidebook : MonoBehaviour
 {
@@ -61,6 +62,8 @@ public class Guidebook : MonoBehaviour
 
     public void OnGuidebookClicked(bool isOpening)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         isGuidebookOpened = isOpening;
         guidebook.SetActive(isOpening);
 

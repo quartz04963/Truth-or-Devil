@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Text;
@@ -240,6 +241,8 @@ public class GamePlay : MonoBehaviour
 
         if (GameManager.instance.doCheckBeforeEnteringGate)
         {
+            EventSystem.current.SetSelectedGameObject(null);
+            
             isRunning = false;
             isChecking = true;
             enteringCheckWindow.SetActive(true);
@@ -383,8 +386,11 @@ public class GamePlay : MonoBehaviour
     
     public void StageClear()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         isRunning = false;
         stageClearWindow.SetActive(true);
+        
         if (GameManager.instance.CurrentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
     }
 
@@ -413,6 +419,8 @@ public class GamePlay : MonoBehaviour
 
     public void GameOver()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         isRunning = false;
         gameOverWindow.SetActive(true);
     }

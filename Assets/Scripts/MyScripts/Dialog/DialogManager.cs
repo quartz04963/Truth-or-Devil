@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -82,6 +83,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] GameObject reviewButton;
     [SerializeField] GameObject reviewInGamePlayButton;
     public void SetReviewInGamePlayActive(bool isActive) => reviewInGamePlayButton.SetActive(isActive);
+    [SerializeField] bool isPastDialogOpened;
     [SerializeField] GameObject pastDialogs;
     [SerializeField] GameObject pastDialogPrf;
     [SerializeField] ScrollRect pastDialogSR;
@@ -96,11 +98,18 @@ public class DialogManager : MonoBehaviour
     {
         if (currentDialog.Equals(default(TDDialog)) || !isTalking) return;
 
-        if (!OptionManager.instance.IsOptionOpened && Input.GetKeyDown(KeyCode.Return)) OnClicked();
+        if (!CheckOtherWindowOpened() && Input.GetKeyDown(KeyCode.Return)) OnClicked();
+    }
+
+    bool CheckOtherWindowOpened()
+    {
+        return isPastDialogOpened || OptionManager.instance.IsOptionOpened || Guidebook.instance.IsGuidebookOpened;
     }
 
     public void StartDialog(TDDialog _currentDialog)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         currentDialog = _currentDialog;
         if (currentDialog.Equals(default(TDDialog))) return;
 
@@ -139,6 +148,8 @@ public class DialogManager : MonoBehaviour
 
     public void ExitDialog()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         if (saying != null) 
         {
             StopCoroutine(saying);
@@ -259,8 +270,13 @@ public class DialogManager : MonoBehaviour
 
     public void OnReviewClicked(bool isOpening)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
+        isPastDialogOpened = isOpening;
+
         pastDialogs.SetActive(isOpening);
         pastDialogSR.verticalNormalizedPosition = 0;
+
         if (GamePlay.instance != null && !GamePlay.instance.isOver && !GamePlay.instance.isCleared) GamePlay.instance.IsRunning = !isOpening;
     }
 }
