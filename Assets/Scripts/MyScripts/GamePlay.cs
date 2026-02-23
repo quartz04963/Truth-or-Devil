@@ -83,11 +83,11 @@ public class GamePlay : MonoBehaviour
         SoundManager.Instance.StopBgm();
         SoundManager.Instance.PlayBGM("gameplay");
         
-        Tutorial.instance.RevisedInit();
-        
         TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
         DialogManager.instance.StartDialog(dialog);
 
+        Tutorial.instance.RevisedInit();
+        
         isRunning = true;
     }
 
@@ -295,14 +295,12 @@ public class GamePlay : MonoBehaviour
             redBoxImg.sprite = redBoxDarkSprite;
             blueBoxImg.sprite = blueBoxDarkSprite;
             greenBoxImg.sprite = greenBoxDarkSprite;
-            Debug.Log("Dark");
         }
         else
         {
             redBoxImg.sprite = redBoxBrightSprite;
             blueBoxImg.sprite = blueBoxBrightSprite;
             greenBoxImg.sprite = greenBoxBrightSprite;
-            Debug.Log("Bright");
         }
 
         redBoxText.SetText(MyUtils.GetTextFromData(TileColor.Red, redBoxData));

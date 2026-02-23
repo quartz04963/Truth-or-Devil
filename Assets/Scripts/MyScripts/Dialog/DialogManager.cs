@@ -114,11 +114,13 @@ public class DialogManager : MonoBehaviour
 
         if (_currentDialog.Equals(TDStory.stageClearLineList) || _currentDialog.Equals(TDStory.gameOverLineList))
         {
+            skipButton.SetActive(false);
             reviewButton.SetActive(false);
             if (GameManager.instance.CurrentStage == 1) reviewInGamePlayButton.SetActive(false);
         }
         else
         {
+            skipButton.SetActive(true);
             reviewButton.SetActive(true);
             foreach (RectTransform rt in pastDialogContent) Destroy(rt.gameObject);
         }
@@ -162,7 +164,6 @@ public class DialogManager : MonoBehaviour
     public void SetCharacter()
     {
         if (currentDialog.stage == 1 && currentDialog.isProlog) nagel.enabled = currentLineNumber >= 16;
-
         else if (currentDialog.stage == 2 && !currentDialog.isProlog) videl.enabled = false;
         else if (currentDialog.stage == 12 && currentDialog.isProlog) videl.enabled = false;
         else videl.enabled = nagel.enabled = true;
@@ -170,6 +171,11 @@ public class DialogManager : MonoBehaviour
 
     public IEnumerator SayLine(TDLine tdLine)
     {
+        videl.enabled = nagel.enabled = true;
+        nameBox.SetActive(true);
+        dialogBox.SetActive(true);
+        picture.enabled = false;
+
         yield return Tutorial.instance.DoBeforeSayLine();
 
         isSkipping = false;
