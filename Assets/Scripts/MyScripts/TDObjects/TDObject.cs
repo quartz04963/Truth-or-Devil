@@ -1,6 +1,7 @@
 using TMPro;
 using UnityEngine;
 using PrimeTween;
+using UnityEngine.UI;
 
 public class TDObject : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class TDObject : MonoBehaviour
     public TextMeshProUGUI tmp;
     public GameObject tileBlock;
     public GameObject highlightRim;
+    public Image highlightBG;
 
     public virtual void Init(Vector3Int _pos, string str)
     {
@@ -22,9 +24,10 @@ public class TDObject : MonoBehaviour
         tileBlock.SetActive(isBlocking);
     }
 
-    public virtual void HighlightTile(bool isOn)
+    public virtual void HighlightTile(bool isOn, bool isfilled = true)
     {
         highlightRim.SetActive(isOn);
+        highlightBG.enabled = isfilled;
     }
 
     public virtual void Shake(Vector3 dir, float duration)

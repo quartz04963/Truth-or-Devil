@@ -11,6 +11,9 @@ public class TDGate : TDObject
     public bool isMarked;
     public Button button;
     public Image XmarkImg;
+    public Image areaBG;
+    public GameObject areaRim;
+    
 
     public GameObject infoBox;
     public TextMeshProUGUI redCountText, blueCountText, greenCountText, whiteCountText;
@@ -59,6 +62,12 @@ public class TDGate : TDObject
     {
         gate.isMarked = _isMarked;
         gate.XmarkImg.enabled = _isMarked;
+    }
+
+    public void HighlightArea(bool isOn, bool isfilled = true)
+    {
+        areaRim.SetActive(isOn);
+        areaBG.enabled = isfilled;
     }
 
     public void OnClicked()
