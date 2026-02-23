@@ -2617,7 +2617,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1394252239}
   m_HandleRect: {fileID: 1394252238}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -3613,7 +3613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.9997864, y: 0.0000333786}
+  m_AnchoredPosition: {x: 1.0000916, y: 0.0000333786}
   m_SizeDelta: {x: -2.000002, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &397913073
@@ -3643,12 +3643,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 55
+    m_Left: 60
     m_Right: 0
-    m_Top: 10
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 8
+  m_Spacing: 15
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
@@ -5394,7 +5394,7 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 5
-    m_Top: 5
+    m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
   m_Spacing: 15
@@ -5872,7 +5872,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 508221768}
   m_HandleRect: {fileID: 508221767}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -13577,7 +13577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logList: []
-  answerLogPrf: {fileID: 7059495173980636314, guid: 60a9f098580f5ae499f9814b4e9c93af, type: 3}
+  answerLogPrf: {fileID: 9142740041616169821, guid: d749bd0c9868c344c8ed5b827ed5dc68, type: 3}
   content: {fileID: 397913072}
   dropdown: {fileID: 1369995693}
   LogScrollRect: {fileID: 1644708701}
@@ -17130,6 +17130,7 @@ MonoBehaviour:
   isSkipping: 0
   isEpilogShowed: 0
   isClicked: 0
+  isOnlyPictureShowed: 0
   interval: 0.03
   currentLineNumber: 0
   dialog: {fileID: 990270962}
@@ -17144,6 +17145,7 @@ MonoBehaviour:
   dialogBox: {fileID: 350176020}
   reviewButton: {fileID: 1506214346}
   reviewInGamePlayButton: {fileID: 585439823}
+  isPastDialogOpened: 0
   pastDialogs: {fileID: 1870718225}
   pastDialogPrf: {fileID: 7341719508664293120, guid: ac557ceced463cc4cb1a6bc16796089e, type: 3}
   pastDialogSR: {fileID: 1868139245}

@@ -33,7 +33,7 @@ public class LogManager : MonoBehaviour
         
         TDEye defaultEye = MapManager.instance.eyeList.Find(eye => eye.index == 0);
 
-        for (int i = 0; i < MapManager.instance.mapEyeCount.Sum(); i++)
+        for (int i = 1; i < MapManager.instance.mapEyeCount.Sum(); i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
             TDEye tdEye = MapManager.instance.eyeList.Find(eye => eye.index == i);
@@ -43,7 +43,7 @@ public class LogManager : MonoBehaviour
             logList.Add(log);
         }
 
-        for (int i = (int)TileColor.Red; i <= (int)TileColor.White; i++)
+        for (int i = 1; i <= (int)TileColor.White; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
             log.Init(MyUtils.RedDataNull, new List<int>{(int)BlueData.Color, i}, MyUtils.GreenDataNull, defaultEye);
@@ -52,7 +52,7 @@ public class LogManager : MonoBehaviour
             logList.Add(log);
         }
 
-        for (int i = (int)ToD.Truth; i <= (int)ToD.Devil; i++)
+        for (int i = 2; i <= (int)ToD.Devil; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
             log.Init(MyUtils.RedDataNull, new List<int>{(int)BlueData.Eye, i}, MyUtils.GreenDataNull, defaultEye);
@@ -96,58 +96,58 @@ public class LogManager : MonoBehaviour
             sortedLogList[i].transform.SetSiblingIndex(i);
         }
 
-        SetExistingCategory();
+        // SetExistingCategory();
     }
 
-    void SetExistingCategory()
-    {
-        switch (dropdown.value)
-        {
-            case 1: 
-                for (int i = 0; i < MapManager.instance.mapEyeCount.Sum(); i++)
-                {
-                    AnswerLog log = logList.Find(log => !log.isEmptyCategory && log.tdEye.index == i);
-                    if (log != null)
-                    {
-                        log.categoryBox.enabled = true;
-                        log.categoryText.enabled = true;
-                        log.categoryText.SetText(MyUtils.ConvertToRoman(i + 1));
-                        log.categoryText.color = Color.white;
-                    }
-                }
-                break;
+    // void SetExistingCategory()
+    // {
+    //     switch (dropdown.value)
+    //     {
+    //         case 1: 
+    //             for (int i = 1; i < MapManager.instance.mapEyeCount.Sum(); i++)
+    //             {
+    //                 AnswerLog log = logList.Find(log => !log.isEmptyCategory && log.tdEye.index == i);
+    //                 if (log != null)
+    //                 {
+    //                     // log.categoryBox.enabled = true;
+    //                     // log.categoryText.enabled = true;
+    //                     // log.categoryText.SetText(MyUtils.ConvertToRoman(i + 1));
+    //                     // log.categoryText.color = Color.white;
+    //                 }
+    //             }
+    //             break;
 
-            case 2: 
-                for (int i = (int)TileColor.Red; i <= (int)TileColor.White; i++)
-                {
-                    AnswerLog log = logList.Find(
-                            log => !log.isEmptyCategory && log.blueTileData[0] == (int)BlueData.Color && log.blueTileData[1] == i);
-                    if (log != null)
-                    {
-                        log.categoryBox.enabled = true;
-                        log.categoryText.enabled = true;
-                        log.categoryText.color = MyUtils.GetColorFromTileColor((TileColor)log.blueTileData[1]);
-                        log.categoryText.SetText(MyUtils.GetTextFromData(TileColor.Blue, log.blueTileData));
-                    }
-                }
-                break;
+    //         case 2: 
+    //             for (int i = 1; i <= (int)TileColor.White; i++)
+    //             {
+    //                 AnswerLog log = logList.Find(
+    //                         log => !log.isEmptyCategory && log.blueTileData[0] == (int)BlueData.Color && log.blueTileData[1] == i);
+    //                 if (log != null)
+    //                 {
+    //                     // log.categoryBox.enabled = true;
+    //                     // log.categoryText.enabled = true;
+    //                     // log.categoryText.color = MyUtils.GetColorFromTileColor((TileColor)log.blueTileData[1]);
+    //                     // log.categoryText.SetText(MyUtils.GetTextFromData(TileColor.Blue, log.blueTileData));
+    //                 }
+    //             }
+    //             break;
                 
-            case 3:
-                for (int i = (int)ToD.Truth; i <= (int)ToD.Devil; i++)
-                {
-                    AnswerLog log = logList.Find(
-                            log => !log.isEmptyCategory && log.blueTileData[0] == (int)BlueData.Eye && log.blueTileData[1] == i);
-                    if (log != null)
-                    {
-                        log.categoryBox.enabled = true;
-                        log.categoryText.enabled = true;
-                        log.categoryText.color = Color.white;
-                        log.categoryText.SetText(MyUtils.GetTextFromData(TileColor.Blue, log.blueTileData));
-                    }
-                }
-                break;
-        }
-    }
+    //         case 3:
+    //             for (int i = 2; i <= (int)ToD.Devil; i++)
+    //             {
+    //                 AnswerLog log = logList.Find(
+    //                         log => !log.isEmptyCategory && log.blueTileData[0] == (int)BlueData.Eye && log.blueTileData[1] == i);
+    //                 if (log != null)
+    //                 {
+    //                     // log.categoryBox.enabled = true;
+    //                     // log.categoryText.enabled = true;
+    //                     // log.categoryText.color = Color.white;
+    //                     // log.categoryText.SetText(MyUtils.GetTextFromData(TileColor.Blue, log.blueTileData));
+    //                 }
+    //             }
+    //             break;
+    //     }
+    // }
 
     IEnumerator ScrollToBottom()
     {
