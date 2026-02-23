@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 7aadc0105c732c4468c5e51fbbf4579b
+guid: 36f76d51be397ea4380f7283d564226c
 TextureImporter:
   internalIDToNameTable:
   - first:
@@ -121,10 +121,10 @@ TextureImporter:
       name: icon_settings_0
       rect:
         serializedVersion: 2
-        x: 288
-        y: 286
-        width: 524
-        height: 524
+        x: 18
+        y: 22
+        width: 544
+        height: 544
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

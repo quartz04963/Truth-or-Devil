@@ -7,12 +7,19 @@ using UnityEngine.UI;
 public class TDGate : TDObject
 {
     public int index;
-    public ToD guessedID;
-    public SpriteRenderer spriteRenderer;
-    public Sprite defaultSprite, heavenSprite, hellSprite;
+    
+    public bool isMarked;
     public Button button;
+    public Image XmarkImg;
+    public Image areaBG;
+    public GameObject areaRim;
+    
+
     public GameObject infoBox;
     public TextMeshProUGUI redCountText, blueCountText, greenCountText, whiteCountText;
+
+    public SpriteRenderer spriteRenderer;
+    public Sprite defaultSprite, heavenSprite, hellSprite;
 
     public void Init(Vector3Int _pos, int _index)
     {
@@ -41,24 +48,32 @@ public class TDGate : TDObject
         whiteCountText.gameObject.SetActive(MapManager.instance.canAskWhite);
     }
 
-    public static void SetTDGateState(TDGate gate, ToD _guessedID)
+    public void SetSprite(ToD tod)
     {
-        gate.guessedID = _guessedID;
-        switch (_guessedID)
+        switch (tod)
         {
-            case ToD.Null: gate.spriteRenderer.sprite = gate.defaultSprite; break;
-            case ToD.Truth: gate.spriteRenderer.sprite = gate.heavenSprite; break;
-            case ToD.Devil: gate.spriteRenderer.sprite = gate.hellSprite; break;
+            case ToD.Null: spriteRenderer.sprite = defaultSprite; break;
+            case ToD.Truth: spriteRenderer.sprite = heavenSprite; break;
+            case ToD.Devil: spriteRenderer.sprite = hellSprite; break;
         }
+    }
 
+    public static void SetTDGateState(TDGate gate, bool _isMarked)
+    {
+        gate.isMarked = _isMarked;
+        gate.XmarkImg.enabled = _isMarked;
+    }
+
+    public void HighlightArea(bool isOn, bool isfilled = true)
+    {
+        areaRim.SetActive(isOn);
+        areaBG.enabled = isfilled;
     }
 
     public void OnClicked()
     {
-        if (!GamePlay.instance.IsRunning) return;
-
-        guessedID = (ToD)(((int)guessedID + 1) % 3);
-        SetTDGateState(this, guessedID);
+        isMarked = !isMarked;
+        XmarkImg.enabled = isMarked;
     }
 
     void OnMouseEnter()

@@ -32,6 +32,7 @@ public class MapManager : MonoBehaviour
     public Tile BlueTile;
     public Tile GreenTile;
     public Tile WhiteTile;
+    public Tile RoundWhiteTile;
     public GameObject TDTextPrf;
     public GameObject TDEyePrf;
     public GameObject TDGatePrf;
@@ -89,7 +90,10 @@ public class MapManager : MonoBehaviour
                 case TileColor.Red: map.SetTile(tile.pos, RedTile); break;
                 case TileColor.Blue: map.SetTile(tile.pos, BlueTile); break;
                 case TileColor.Green: map.SetTile(tile.pos, GreenTile); break;
-                case TileColor.White: map.SetTile(tile.pos, WhiteTile); break;
+                case TileColor.White: 
+                    if ((WhiteData)tile.data[0] == WhiteData.Gate) map.SetTile(tile.pos, RoundWhiteTile);
+                    else map.SetTile(tile.pos, WhiteTile); 
+                    break;
             }
 
             switch (tile.color)
@@ -101,20 +105,20 @@ public class MapManager : MonoBehaviour
                     break;
              
                 case TileColor.White:
-                    if (tile.data[0] == (int)WhiteData.Eye) {
+                    if ((WhiteData)tile.data[0] == WhiteData.Eye) {
                         TDEye tdEye = Instantiate(TDEyePrf).GetComponent<TDEye>();
                         tdEye.Init(tile.pos, tile.data[2]);
                         tdEye.trueID = (ToD)tile.data[1];
                         objectList.Add(tdEye);
                         eyeList.Add(tdEye);
                     }
-                    else if (tile.data[0] == (int)WhiteData.Gate) {
+                    else if ((WhiteData)tile.data[0] == WhiteData.Gate) {
                         TDGate tdGate = Instantiate(TDGatePrf).GetComponent<TDGate>();
                         tdGate.Init(tile.pos, tile.data[2]);
                         objectList.Add(tdGate);
                         gateList.Add(tdGate);
                     }
-                    else if (tile.data[0] == (int)WhiteData.Blank) //임시 음영 처리를 위한 코드
+                    else if ((WhiteData)tile.data[0] == WhiteData.Blank) //임시 음영 처리를 위한 코드
                     {
                         TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
                         emptyText.Init(tile.pos, "");

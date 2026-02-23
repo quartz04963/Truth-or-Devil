@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class OptionManager : MonoBehaviour
 {
@@ -17,8 +18,15 @@ public class OptionManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
+    void LateUpdate()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape) && isOptionOpened) OnOptionClicked(false);
+    }
+
     public void OnOptionClicked(bool isOpening)
     {
+        EventSystem.current.SetSelectedGameObject(null);
+        
         isOptionOpened = isOpening;
         option.SetActive(isOpening);
 

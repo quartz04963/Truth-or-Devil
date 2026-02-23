@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Tutorial : MonoBehaviour
@@ -8,6 +9,8 @@ public class Tutorial : MonoBehaviour
 
     [SerializeField] private bool isStopping;
     public bool IsStopping => isStopping;
+
+    [SerializeField] Sprite[] tutorialPictures;
 
     void Awake()
     {
@@ -18,27 +21,26 @@ public class Tutorial : MonoBehaviour
     {
         if (GameManager.instance.CurrentStage == 1)
         {
-            // 임시
-            MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
+            MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
+            MapManager.instance.gateList[0].SetSprite(ToD.Devil);
+            MapManager.instance.gateList[1].SetSprite(ToD.Truth);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
-            ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
+            ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
 
-            DialogManager.instance.SetSkipButtonActive(false);
-            DialogManager.instance.SetReviewInGamePlayActive(true);
+            // DialogManager.instance.SetSkipButtonActive(false);
+            // DialogManager.instance.SetReviewInGamePlayActive(true);
         } 
 
         else if (GameManager.instance.CurrentStage == 2)
         {
-            // 임시
-            MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(false));
-            MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
+            MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
-            ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
+            ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
         else if (GameManager.instance.CurrentStage == 3)
@@ -49,6 +51,17 @@ public class Tutorial : MonoBehaviour
         else if (GameManager.instance.CurrentStage == 4)
         {
             ScenarioManager.instance.ActivateScenarios(false);
+        }
+
+        else if (GameManager.instance.CurrentStage == 8)
+        {
+            MapManager.instance.eyeList[0].button.SetActive(false);
+            MapManager.instance.eyeList[2].button.SetActive(false);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
+            TDEye.SetTDEyeState(MapManager.instance.eyeList[2], ToD.Devil);
+
+            ScenarioManager.instance.scenarioScrollView.SetActive(false);
+            ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
         else if (GameManager.instance.CurrentStage == TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount)
@@ -67,17 +80,39 @@ public class Tutorial : MonoBehaviour
     {
         float duration;
 
-        if (GameManager.instance.CurrentStage == 1)
+        if (GameManager.instance.CurrentStage == 1 && !GamePlay.instance.isCleared)
         {
-            if (DialogManager.instance.currentLineNumber == 7)
+            if (DialogManager.instance.currentLineNumber == 9)
             {
                 duration = 1.0f;
                 DialogManager.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[0]);
             }
+
+            else if (DialogManager.instance.currentLineNumber == 10)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[1]);
+            }
+
+            else if (DialogManager.instance.currentLineNumber == 11)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[2]);
+            }
+
+            else if (DialogManager.instance.currentLineNumber == 12)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[3]);
+            }
+
+
+            // else if (DialogManager.instance.currentLineNumber == 16)
+            // {
+            //     DialogManager.instance.SetCharacter();
+            // }
         }
         
-        else if (GameManager.instance.CurrentStage == 2)
+        else if (GameManager.instance.CurrentStage == 2 && !GamePlay.instance.isCleared)
         {
             if (DialogManager.instance.currentLineNumber == 5)
             {
@@ -86,31 +121,47 @@ public class Tutorial : MonoBehaviour
                 yield return new WaitForSeconds(duration);
             }
         }
+
+        else if (GameManager.instance.CurrentStage == 3 && !GamePlay.instance.isCleared)
+        {
+            if (DialogManager.instance.currentLineNumber == 11)
+            {
+                duration = 1.0f;
+                DialogManager.instance.Fade(0f, duration);
+                yield return new WaitForSeconds(duration);
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[4]);
+            }
+
+            else if (DialogManager.instance.currentLineNumber == 12)
+            {
+                DialogManager.instance.ShowOnlyPicture(tutorialPictures[5]);
+            }
+        }
     }
 
     public bool BreakDialog()
     {
-        if (GameManager.instance.CurrentStage == 1)
-        {
-            if (DialogManager.instance.currentLineNumber == 10)
-            {
-                StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 2, 0)));
-                return true;
-            }
+        // if (GameManager.instance.CurrentStage == 1)
+        // {
+        //     if (DialogManager.instance.currentLineNumber == 10)
+        //     {
+        //         StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 2, 0)));
+        //         return true;
+        //     }
 
-            else if (DialogManager.instance.currentLineNumber == 14)
-            {
-                StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0)));
-                return true;
-            }
+        //     else if (DialogManager.instance.currentLineNumber == 14)
+        //     {
+        //         StartCoroutine(StopDialogUntil(() => GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0)));
+        //         return true;
+        //     }
 
-            else if (DialogManager.instance.currentLineNumber == 15)
-            {
-                StartCoroutine(StopDialogUntil(
-                    () => GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0) && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))));
-                return true;
-            }
-        }
+        //     else if (DialogManager.instance.currentLineNumber == 15)
+        //     {
+        //         StartCoroutine(StopDialogUntil(
+        //             () => GamePlay.instance.IsRunning && GamePlay.instance.posOnMap == new Vector3Int(3, 1, 0) && (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))));
+        //         return true;
+        //     }
+        // }
 
         return false;
     }
@@ -129,29 +180,83 @@ public class Tutorial : MonoBehaviour
 
     public bool BreakEnteringPos(Vector3Int pos)
     {
-        if (GameManager.instance.CurrentStage == 1)
-        {
-            if (DialogManager.instance.currentLineNumber <= 15)
-            {
-                if (pos == new Vector3Int(3, 0, 0)) return true;
-            }
+        // if (GameManager.instance.CurrentStage == 1)
+        // {
+        //     if (DialogManager.instance.currentLineNumber <= 15)
+        //     {
+        //         if (pos == new Vector3Int(3, 0, 0)) return true;
+        //     }
 
-            if (DialogManager.instance.currentLineNumber <= 14)
-            {
-                if (pos == new Vector3Int(2, 1, 0)) return true;
-            }
-        }
+        //     if (DialogManager.instance.currentLineNumber <= 14)
+        //     {
+        //         if (pos == new Vector3Int(2, 1, 0)) return true;
+        //     }
+        // }
 
         return false;
     }
 
     public bool BreakEnteringGate(Vector3Int dir)
     {
-        if (GameManager.instance.CurrentStage == 1)
-        {
-            if (GamePlay.instance.posOnMap + dir == new Vector3Int(2, 1, 0)) return true;
-        }
+        // if (GameManager.instance.CurrentStage == 1)
+        // {
+        //     if (GamePlay.instance.posOnMap + dir == new Vector3Int(2, 1, 0)) return true;
+        // }
 
         return false;
+    }
+
+    public void HighlightTiles(List<int> redBoxData, List<int> blueBoxData)
+    {
+        if (GameManager.instance.CurrentStage == 1)
+        {
+            MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
+            MapManager.instance.gateList.ForEach(gate => gate.HighlightArea(false));
+
+            if ((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Null)
+            {
+                MapManager.instance.gateList.ForEach(gate => gate.HighlightArea(true));
+            }
+
+            else if ((RedData)redBoxData[0] == RedData.Null && (BlueData)blueBoxData[0] == BlueData.Color)
+            {
+                foreach (TDData tile in MapManager.instance.tileList)
+                {
+                    if (tile.color == (TileColor)blueBoxData[1]) MapManager.instance.objectList.Find(obj => obj.pos == tile.pos).HighlightTile(true);
+                }
+            }
+
+            else if ((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Color)
+            {
+                MapManager.instance.gateList.ForEach(gate => gate.HighlightArea(true, false));
+
+                foreach (TDGate gate in MapManager.instance.gateList)
+                {
+                    foreach (TDData tile in MapManager.instance.tileList)
+                    {
+                        if (Math.Abs(tile.pos.x - gate.pos.x) <= 1 && Math.Abs(tile.pos.y - gate.pos.y) <= 1 && tile.pos != gate.pos 
+                            && tile.color == (TileColor)blueBoxData[1])
+                            MapManager.instance.objectList.Find(obj => obj.pos == tile.pos).HighlightTile(true);
+                    }
+                }
+            }
+        }
+
+        else if (GameManager.instance.CurrentStage == 8)
+        {
+            MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
+
+            if ((RedData)redBoxData[0] == RedData.Map)
+            {
+                MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(true, false));
+            }
+            if ((BlueData)blueBoxData[0] == BlueData.Eye)
+            {
+                foreach (TDEye eye in MapManager.instance.eyeList)
+                {
+                    if (eye.guessedID == (ToD)blueBoxData[1]) eye.HighlightTile(true);
+                }
+            }
+        }
     }
 }

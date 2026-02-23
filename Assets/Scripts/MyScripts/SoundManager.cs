@@ -5,7 +5,8 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
 
     [SerializeField] AudioSource bgmSource;
-    [SerializeField] AudioClip bgmClip;
+    [SerializeField] AudioClip titleBGM;
+    [SerializeField] AudioClip gameplayBGM;
 
     void Awake()
     {
@@ -20,9 +21,11 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayTitleBGM()
+    public void PlayBGM(string bgmClip)
     {
-        bgmSource.clip = bgmClip;
+        if (bgmClip == "title") bgmSource.clip = titleBGM;
+        else if (bgmClip == "gameplay") bgmSource.clip = gameplayBGM;
+
         bgmSource.loop = true;
         bgmSource.Play();
     }

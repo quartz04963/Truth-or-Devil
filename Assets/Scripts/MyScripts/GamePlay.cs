@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Text;
@@ -29,25 +30,37 @@ public class GamePlay : MonoBehaviour
     public Vector3Int prevBlockedPos;
     public GameObject player;
     
-    public List<int> redBoxData;
-    public List<int> blueBoxData;
-    public List<int> greenBoxData;
-    public TextMeshProUGUI redBoxText;
-    public TextMeshProUGUI blueBoxText;
-    public TextMeshProUGUI greenBoxText;
+    private List<int> redBoxData;
+    private List<int> blueBoxData;
+    private List<int> greenBoxData;
+    [SerializeField]  TextMeshProUGUI redBoxText;
+    [SerializeField] TextMeshProUGUI blueBoxText;
+    [SerializeField] TextMeshProUGUI greenBoxText;
+    [SerializeField] Image redBoxImg;
+    [SerializeField] Image blueBoxImg;
+    [SerializeField] Image greenBoxImg;
+    [SerializeField] Sprite redBoxBrightSprite;
+    [SerializeField] Sprite blueBoxBrightSprite;
+    [SerializeField] Sprite greenBoxBrightSprite;
+    [SerializeField] Sprite redBoxDarkSprite;
+    [SerializeField] Sprite blueBoxDarkSprite;
+    [SerializeField] Sprite greenBoxDarkSprite;
+    [SerializeField] RectTransform questionBoxRT;
+    [SerializeField] RectTransform highlightRimRT;
 
-    public Image eyeBoxImage;
-    public Sprite defaultSprite;
-    public Sprite angelSprite;
-    public Sprite devilSprite;
-    public TextMeshProUGUI eyeIndexText;
-    public TextMeshProUGUI answerBoxText;
+    [SerializeField] Sprite defaultSprite;
+    [SerializeField] Sprite angelSprite;
+    [SerializeField] Sprite devilSprite;
+    [SerializeField] GameObject answerBox;
+    [SerializeField] Image eyeBoxImage;
+    [SerializeField] TextMeshProUGUI eyeIndexText;
+    [SerializeField] TextMeshProUGUI answerBoxText;
 
-    public TextMeshProUGUI stageNumberText;
-    public TextMeshProUGUI enteringCheckTMP;
-    public GameObject enteringCheckWindow;
-    public GameObject stageClearWindow;
-    public GameObject gameOverWindow;
+    [SerializeField] TextMeshProUGUI stageNumberText;
+    [SerializeField] TextMeshProUGUI enteringCheckTMP;
+    [SerializeField] GameObject enteringCheckWindow;
+    [SerializeField] GameObject stageClearWindow;
+    [SerializeField] GameObject gameOverWindow;
     public GameObject nextButton;
 
     void Awake()
@@ -58,19 +71,26 @@ public class GamePlay : MonoBehaviour
     void Start()
     {
         Init();
+        
         MapManager.instance.InitMap();
-        LogManager.instance.InitEmptyCategoryLogs();
         prevBlockedPos = posOnMap; //임시
+
+        LogManager.instance.InitEmptyCategoryLogs();
+        
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
-        MyCamera.instance.SetOSizeByMap();
-        
-        Tutorial.instance.RevisedInit();
 
-        isRunning = true;
+        MyCamera.instance.SetOSizeByMap();
+
+        SoundManager.Instance.StopBgm();
+        SoundManager.Instance.PlayBGM("gameplay");
         
         TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
         DialogManager.instance.StartDialog(dialog);
+
+        Tutorial.instance.RevisedInit();
+        
+        isRunning = true;
     }
 
     void Init()
@@ -100,9 +120,11 @@ public class GamePlay : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (OptionManager.instance.IsOptionOpened) OptionManager.instance.OnOptionClicked(false);
-            else if (isChecking) OnNoClicked();
+        if (Input.GetKeyDown(KeyCode.Escape) && !OptionManager.instance.IsOptionOpened)
+        {
+            if (isChecking) OnNoClicked();
+            else if (Guidebook.instance.IsGuidebookOpened) Guidebook.instance.OnGuidebookClicked(false);
+            else if (DialogManager.instance.IsPastDialogOpened) DialogManager.instance.OnReviewClicked(false);
             else OnExitClicked();
         }
         
@@ -114,7 +136,7 @@ public class GamePlay : MonoBehaviour
         if (!isRunning) return;
         
         Vector3Int dir = GetDirectionFromKey();
-        if (CanMove(dir))
+        if (CanMove(dir, true))
         {
             if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
 
@@ -139,7 +161,7 @@ public class GamePlay : MonoBehaviour
         else return Vector3Int.zero;
     }
 
-    bool CanMove(Vector3Int dir)
+    bool CanMove(Vector3Int dir, bool isByInput = false)
     {
         if (dir == Vector3Int.zero) return false;
 
@@ -149,10 +171,23 @@ public class GamePlay : MonoBehaviour
         TDData nextTile = MapManager.instance.tileList[idx];
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
-        if (MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir).guessedID == ToD.Devil) return false;
+        TDGate gate = MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir);
+        if (gate.isMarked) return false;
+
+        bool isNotAllMarked = false;
         foreach (TDEye eye in MapManager.instance.eyeList)
         {
-            if (!eye.isMarked) return false;
+            if (!eye.isMarked)
+            {
+                isNotAllMarked = true;
+                if (isByInput) eye.Shake(Vector3.left * 0.1f, 0.05f);
+                if (!isByInput && isNotAllMarked) break; 
+            }
+        }
+        if (isNotAllMarked)
+        {
+            if (isByInput) gate.Shake(Vector3.left * 0.1f, 0.05f);
+            return false;
         }
 
         return CheckGoingstraight(dir);
@@ -208,6 +243,8 @@ public class GamePlay : MonoBehaviour
 
         if (GameManager.instance.doCheckBeforeEnteringGate)
         {
+            EventSystem.current.SetSelectedGameObject(null);
+            
             isRunning = false;
             isChecking = true;
             enteringCheckWindow.SetActive(true);
@@ -227,14 +264,6 @@ public class GamePlay : MonoBehaviour
         else Move(dir);
     }
 
-    public bool CheckQuestion(List<int> redData, List<int> blueData, List<int> greenData)
-    {
-        if (redData[0] == (int)RedData.Gate && blueData[0] == (int)BlueData.Color && greenData[0] != (int)GreenData.Null) return true;
-        if (redData[0] == (int)RedData.Map && blueData[0] == (int)BlueData.Eye && greenData[0] != (int)GreenData.Null) return true;
-
-        return false;
-    }
-
     void DataBoxUpdate(Vector3Int dir)
     {
         TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
@@ -245,31 +274,54 @@ public class GamePlay : MonoBehaviour
             case TileColor.Blue: blueBoxData = tile.data; break;
             case TileColor.Green: greenBoxData = tile.data; break;
             case TileColor.White:
-                if(tile.data[0] == (int)WhiteData.Eye && CheckQuestion(redBoxData, blueBoxData, greenBoxData))
+                if(tile.data[0] == (int)WhiteData.Eye)
                 {
-                    if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) {
+                    if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) 
+                    {
                         Answer(MapManager.instance.eyeList.Find(eye => eye.pos == posOnMap));
-                        redBoxData = MyUtils.RedDataNull;
-                        blueBoxData = MyUtils.BlueDataNull;
-                        greenBoxData = MyUtils.GreenDataNull;
                     }
                 }
                 break;
         }
 
+        // 튜토리얼 연출 - 질문 상자 강조
+        if (GameManager.instance.CurrentStage == 1)
+        {
+            switch (tile.color)
+            {
+                case TileColor.Red: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(-260, 0); break;
+                case TileColor.Blue: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(0, 0); break;
+                case TileColor.Green: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(260, 0); break;
+                case TileColor.White: highlightRimRT.gameObject.SetActive(false); break;
+            }
+        }
+
+        if (((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Eye) || ((RedData)redBoxData[0] == RedData.Map && (BlueData)blueBoxData[0] == BlueData.Color))
+        {
+            redBoxImg.sprite = redBoxDarkSprite;
+            blueBoxImg.sprite = blueBoxDarkSprite;
+            greenBoxImg.sprite = greenBoxDarkSprite;
+        }
+        else
+        {
+            redBoxImg.sprite = redBoxBrightSprite;
+            blueBoxImg.sprite = blueBoxBrightSprite;
+            greenBoxImg.sprite = greenBoxBrightSprite;
+        }
+
         redBoxText.SetText(MyUtils.GetTextFromData(TileColor.Red, redBoxData));
         blueBoxText.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueBoxData));
         greenBoxText.SetText(MyUtils.GetTextFromData(TileColor.Green, greenBoxData));
+        
+        Tutorial.instance.HighlightTiles(redBoxData, blueBoxData);
 
-        if (tile.color != TileColor.White || tile.data[0] != (int) WhiteData.Eye) {
-            eyeBoxImage.enabled = false;
-            eyeIndexText.SetText("");
-            answerBoxText.SetText("");
-        }
+        if (tile.color != TileColor.White || tile.data[0] != (int) WhiteData.Eye) answerBox.SetActive(false);
     }
 
     void Answer(TDEye eye)
     {
+        if ((RedData)redBoxData[0] == RedData.Null || (BlueData)blueBoxData[0] == BlueData.Null || (GreenData)greenBoxData[0] == GreenData.Null) return;
+
         char answer = '?';
         if (redBoxData[0] == (int)RedData.Gate && blueBoxData[0] == (int)BlueData.Color)
         {
@@ -295,16 +347,29 @@ public class GamePlay : MonoBehaviour
                 case GreenData.LessOrEqual: answer = MapManager.instance.mapEyeCount[blueBoxData[1]] <= greenBoxData[1] ? 'O' : 'X'; break;
             }
         }
+        else
+        {
+            Sequence seq = Sequence.Create()
+                .Chain(Tween.LocalPositionX(questionBoxRT, -25, 0.05f))
+                .Chain(Tween.LocalPositionX(questionBoxRT, 0, 0.05f))
+                .Chain(Tween.LocalPositionX(questionBoxRT, 25, 0.05f))
+                .Chain(Tween.LocalPositionX(questionBoxRT, 0, 0.05f));
+
+            return;
+        }
+
         if (eye.trueID == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
         
-        eyeBoxImage.enabled = true;
+        answerBox.SetActive(true);
         eyeBoxImage.sprite = eye.guessedID == ToD.Null ? defaultSprite : eye.guessedID == ToD.Truth ? angelSprite : devilSprite;
         eyeIndexText.SetText(MyUtils.ConvertToRoman(eye.index + 1));
         answerBoxText.SetText(answer);
 
         LogManager.instance.AddLog(redBoxData, blueBoxData, greenBoxData, eye, answer);
 
-        StartCoroutine(WaitForSeconds(1f));
+        redBoxData = MyUtils.RedDataNull;
+        blueBoxData = MyUtils.BlueDataNull;
+        greenBoxData = MyUtils.GreenDataNull;
     }
 
     void CheckStageClear()
@@ -323,8 +388,11 @@ public class GamePlay : MonoBehaviour
     
     public void StageClear()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         isRunning = false;
         stageClearWindow.SetActive(true);
+        
         if (GameManager.instance.CurrentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
     }
 
@@ -353,6 +421,8 @@ public class GamePlay : MonoBehaviour
 
     public void GameOver()
     {
+        EventSystem.current.SetSelectedGameObject(null);
+
         isRunning = false;
         gameOverWindow.SetActive(true);
     }
