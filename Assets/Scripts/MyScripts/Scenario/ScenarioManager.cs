@@ -86,7 +86,7 @@ public class ScenarioManager : MonoBehaviour
 
     public void OnApplyScenarioClicked()
     {
-        ScenarioTab scenario = scenarioList.Find(scenario => scenario.isActive);
+        ScenarioTab scenario = scenarioList.Find(scenario => scenario.isSelected);
         scenario.scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
         scenario.scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.isMarked));
     }

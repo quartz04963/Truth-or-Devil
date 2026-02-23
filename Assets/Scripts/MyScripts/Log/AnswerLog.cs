@@ -98,10 +98,18 @@ public class AnswerLog : MonoBehaviour
                     if (blueTileData[0] == (int)BlueData.Null)
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.index < tdEye.index);
-                        if (answerLog != null) gameObject.SetActive(true);
-                        else gameObject.SetActive(false);
+                        if (answerLog != null) 
+                        {
+                            answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.index == tdEye.index);
+                            if (answerLog != null) 
+                            {
+                                gameObject.SetActive(true);
+                                break;
+                            }
+                        }
                     }
-                    else gameObject.SetActive(false);
+
+                    gameObject.SetActive(false);
                     break;
                     
                 case 2: 
@@ -109,10 +117,19 @@ public class AnswerLog : MonoBehaviour
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(
                             log => !log.isEmptyCategory && log.blueTileData[0] == (int)BlueData.Color && log.blueTileData[1] < blueTileData[1]);
-                        if (answerLog != null) gameObject.SetActive(true);
-                        else gameObject.SetActive(false);
+                        if (answerLog != null) 
+                        {
+                            answerLog = LogManager.instance.logList.Find(
+                                log => !log.isEmptyCategory && log.blueTileData[0] == (int)BlueData.Color && log.blueTileData[1] == blueTileData[1]);
+                            if (answerLog != null) 
+                            {
+                                gameObject.SetActive(true);
+                                break;
+                            }
+                        }
                     }
-                    else gameObject.SetActive(false);
+
+                    gameObject.SetActive(false);
                     break;
 
                 case 3: 
@@ -120,10 +137,19 @@ public class AnswerLog : MonoBehaviour
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(
                             log => !log.isEmptyCategory && log.blueTileData[0] == (int) BlueData.Eye && log.blueTileData[1] < blueTileData[1]);
-                        if (answerLog != null) gameObject.SetActive(true);
-                        else gameObject.SetActive(false);
+                        if (answerLog != null) 
+                        {
+                            answerLog = LogManager.instance.logList.Find(
+                                log => !log.isEmptyCategory && log.blueTileData[0] == (int) BlueData.Eye && log.blueTileData[1] == blueTileData[1]);
+                            if (answerLog != null)
+                            {
+                                gameObject.SetActive(true);
+                                break;
+                            }
+                        }
                     }
-                    else gameObject.SetActive(false);
+
+                    gameObject.SetActive(false);
                     break;
 
             }

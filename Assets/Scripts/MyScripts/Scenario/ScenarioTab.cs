@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ScenarioTab : MonoBehaviour
 {
-    public bool isActive;
+    public bool isSelected;
     public Image rimImage;
     public GameObject eyeRow1, eyeRow2, gateRow;
     public Button button1, button2, button3, deleteButton;
@@ -45,22 +45,22 @@ public class ScenarioTab : MonoBehaviour
         Activate(true);
     }
 
-    public void Activate(bool b)
+    public void Activate(bool isActive)
     {
-        button1.gameObject.SetActive(!b);
-        button2.gameObject.SetActive(!b);
-        button3.gameObject.SetActive(!b);
+        button1.gameObject.SetActive(!isActive);
+        button2.gameObject.SetActive(!isActive);
+        button3.gameObject.SetActive(!isActive);
         // scenarioEyeList.ForEach(sEye => sEye.button.enabled = b); 
         // scenarioGateList.ForEach(sGate => sGate.button.enabled = b);
 
-        rimImage.enabled = b;
+        rimImage.enabled = isActive;
 
         // if (b) {
         //     scenarioEyeList.ForEach(sEye => TDEye.SetTDEyeState(sEye.tdEye, sEye.guessedID));
         //     scenarioGateList.ForEach(sGate => TDGate.SetTDGateState(sGate.tdGate, sGate.guessedID));
         // }
         
-        isActive = b;
+        isSelected = isActive;
     }
 
     public void OnClicked()
@@ -75,7 +75,7 @@ public class ScenarioTab : MonoBehaviour
     {
         if (!GamePlay.instance.IsRunning) return;
         
-        if (isActive && ScenarioManager.instance.scenarioList.Count >= 2)
+        if (isSelected && ScenarioManager.instance.scenarioList.Count >= 2)
         {
             ScenarioManager.instance.scenarioList[ScenarioManager.instance.scenarioList.Count - 2].Activate(true);
         }
