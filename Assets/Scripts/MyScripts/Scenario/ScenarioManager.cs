@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using PrimeTween;
 
 public class ScenarioManager : MonoBehaviour
 {
@@ -15,9 +15,10 @@ public class ScenarioManager : MonoBehaviour
     public ScrollRect scenarioScrollRect;
     public GameObject scenarioScrollView;
 
-    public bool isScenarioShowing = true;
-    public RectTransform showScenarioButton;
-    public TextMeshProUGUI showScenarioButtonTMP;
+    public bool isShowing = true;
+    public bool isSliding;
+    public RectTransform scenarioRT;
+    public RectTransform showScenarioRT;
 
     void Awake()
     {
@@ -29,7 +30,7 @@ public class ScenarioManager : MonoBehaviour
         // MapManager.instance.eyeList.ForEach(eye => eye.button.gameObject.SetActive(!b));
         // MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(!b));
         scenarioScrollView.SetActive(b);
-        showScenarioButton.gameObject.SetActive(b);
+        showScenarioRT.gameObject.SetActive(b);
     }
     
     public void InitBaseScenario()
@@ -61,19 +62,26 @@ public class ScenarioManager : MonoBehaviour
 
     public void OnShowScenarioClicked()
     {
-        if (isScenarioShowing)
+        if (isSliding) return;
+
+        isShowing = !isShowing;
+
+        Sequence seq = Sequence.Create();
+        seq.ChainCallback(() => isSliding = true);
+
+        if (isShowing)
         {
-            showScenarioButton.anchoredPosition = new Vector3(15, 50, 0);
-            showScenarioButtonTMP.SetText(">");
+            seq.Chain(Tween.UIAnchoredPosition(showScenarioRT, endValue: new Vector3(-120, 40, 0), duration: 0.2f));
+            seq.ChainDelay(0.1f);
+            seq.Chain(Tween.UIAnchoredPosition(scenarioRT, endValue: new Vector3(215, 520, 0), duration: 0.2f));
         }
         else
         {
-            showScenarioButton.anchoredPosition = new Vector3(395, 50, 0);
-            showScenarioButtonTMP.SetText("<");
+            seq.Chain(Tween.UIAnchoredPosition(scenarioRT, endValue: new Vector3(-215, 520, 0), duration: 0.2f));
+            seq.ChainDelay(0.1f);
+            seq.Chain(Tween.UIAnchoredPosition(showScenarioRT, endValue: new Vector3(120, 40, 0), duration: 0.2f));
         }
-
-        isScenarioShowing = !isScenarioShowing;
-        scenarioScrollView.SetActive(isScenarioShowing);
+        seq.ChainCallback(() => isSliding = false);
     }
 
     public void OnApplyScenarioClicked()

@@ -30,7 +30,7 @@ public class Tutorial : MonoBehaviour
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Truth);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
-            ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
+            ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
 
             DialogManager.instance.SetSkipButtonActive(false);
             DialogManager.instance.SetReviewInGamePlayActive(true);
@@ -42,7 +42,7 @@ public class Tutorial : MonoBehaviour
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
 
             ScenarioManager.instance.scenarioScrollView.SetActive(false);
-            ScenarioManager.instance.showScenarioButton.gameObject.SetActive(false);
+            ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
         else if (GameManager.instance.CurrentStage == 3)
@@ -54,10 +54,14 @@ public class Tutorial : MonoBehaviour
         {
             ScenarioManager.instance.ActivateScenarios(false);
         }
+        
         else if (GameManager.instance.CurrentStage == 8)
         {
             MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
+
+            ScenarioManager.instance.scenarioScrollView.SetActive(false);
+            ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
         else if (GameManager.instance.CurrentStage == TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount)

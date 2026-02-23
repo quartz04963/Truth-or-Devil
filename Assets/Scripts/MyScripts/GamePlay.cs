@@ -70,6 +70,7 @@ public class GamePlay : MonoBehaviour
     void Start()
     {
         Init();
+        
         MapManager.instance.InitMap();
         prevBlockedPos = posOnMap; //임시
 

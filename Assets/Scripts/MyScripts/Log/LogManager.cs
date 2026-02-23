@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Text;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,12 +15,12 @@ public class LogManager : MonoBehaviour
     public GameObject answerLogPrf;
     public RectTransform content;
     public TMP_Dropdown dropdown;
-
-    public bool isLogShowing = true;
     public ScrollRect LogScrollRect;
-    public GameObject LogScrollView;
-    public RectTransform showLogButton;
-    public TextMeshProUGUI showLogButtonTMP;
+
+    public bool isShowing = true;
+    public bool isSliding;
+    public RectTransform logRT;
+    public RectTransform showLogRT;
 
     void Awake()
     {
@@ -156,18 +157,25 @@ public class LogManager : MonoBehaviour
 
     public void OnShowLogClicked()
     {
-        if (isLogShowing)
+        if (isSliding) return;
+
+        isShowing = !isShowing;
+
+        Sequence seq = Sequence.Create();
+        seq.ChainCallback(() => isSliding = true);
+
+        if (isShowing)
         {
-            showLogButton.anchoredPosition = new Vector3(-15, 50, 0);
-            showLogButtonTMP.SetText("<");
+            seq.Chain(Tween.UIAnchoredPosition(showLogRT, endValue: new Vector3(120, 40, 0), duration: 0.2f));
+            seq.ChainDelay(0.1f);
+            seq.Chain(Tween.UIAnchoredPosition(logRT, endValue: new Vector3(-215, 520, 0), duration: 0.2f));
         }
         else
         {
-            showLogButton.anchoredPosition = new Vector3(-395, 50, 0);
-            showLogButtonTMP.SetText(">");
+            seq.Chain(Tween.UIAnchoredPosition(logRT, endValue: new Vector3(215, 520, 0), duration: 0.2f));
+            seq.ChainDelay(0.1f);
+            seq.Chain(Tween.UIAnchoredPosition(showLogRT, endValue: new Vector3(-120, 40, 0), duration: 0.2f));
         }
-
-        isLogShowing = !isLogShowing;
-        LogScrollView.SetActive(isLogShowing);
+        seq.ChainCallback(() => isSliding = false);
     }
 }
