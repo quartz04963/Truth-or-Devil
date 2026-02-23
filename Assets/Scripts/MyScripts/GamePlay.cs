@@ -120,9 +120,11 @@ public class GamePlay : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (OptionManager.instance.IsOptionOpened) OptionManager.instance.OnOptionClicked(false);
-            else if (isChecking) OnNoClicked();
+        if (Input.GetKeyDown(KeyCode.Escape) && !OptionManager.instance.IsOptionOpened)
+        {
+            if (isChecking) OnNoClicked();
+            else if (Guidebook.instance.IsGuidebookOpened) Guidebook.instance.OnGuidebookClicked(false);
+            else if (DialogManager.instance.IsPastDialogOpened) DialogManager.instance.OnReviewClicked(false);
             else OnExitClicked();
         }
         

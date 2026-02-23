@@ -84,6 +84,7 @@ public class DialogManager : MonoBehaviour
     [SerializeField] GameObject reviewInGamePlayButton;
     public void SetReviewInGamePlayActive(bool isActive) => reviewInGamePlayButton.SetActive(isActive);
     [SerializeField] bool isPastDialogOpened;
+    public bool IsPastDialogOpened { get => isPastDialogOpened; set => isPastDialogOpened = value; }
     [SerializeField] GameObject pastDialogs;
     [SerializeField] GameObject pastDialogPrf;
     [SerializeField] ScrollRect pastDialogSR;
