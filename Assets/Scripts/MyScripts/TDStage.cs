@@ -101,6 +101,55 @@ public readonly struct TDStage
 
         stageList[6] = new List<TDData>
         {
+            MyUtils.ConstructTDData(3, 3, WhiteData.Eye, ToD.Devil, 0),
+            MyUtils.ConstructTDData(0, 2, "1"),
+            MyUtils.ConstructTDData(1, 2, "MAP"),
+            MyUtils.ConstructTDData(2, 2, "DEVIL"),
+            MyUtils.ConstructTDData(3, 2, WhiteData.Eye, ToD.Devil, 1),
+            MyUtils.ConstructTDData(4, 2, WhiteData.Eye, ToD.Devil, 2),
+            MyUtils.ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            MyUtils.ConstructTDData(1, 1, WhiteData.Gate, ToD.Truth, 0),
+            MyUtils.ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
+            MyUtils.ConstructTDData(3, 1, "GATE"),
+            MyUtils.ConstructTDData(2, 0, "1"),
+            MyUtils.ConstructTDData(3, 0, "RED"),
+        };
+
+        stageList[7] = new List<TDData>
+        {
+            MyUtils.ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 0),
+            MyUtils.ConstructTDData(2, 2, WhiteData.Eye, ToD.Devil, 0),
+            MyUtils.ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
+            MyUtils.ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            MyUtils.ConstructTDData(1, 1, "MAP"),
+            MyUtils.ConstructTDData(2, 1, "ANGEL"),
+            MyUtils.ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 1),
+            MyUtils.ConstructTDData(1, 0, "GATE"),
+            MyUtils.ConstructTDData(2, 0, "1"),
+            MyUtils.ConstructTDData(3, 0, "RED"),
+        };
+
+        stageList[8] = new List<TDData>
+        {
+            MyUtils.ConstructTDData(0, 3, WhiteData.Eye, ToD.Truth, 0),
+            MyUtils.ConstructTDData(1, 3, WhiteData.Gate, ToD.Devil, 0),
+            MyUtils.ConstructTDData(2, 3, WhiteData.Eye, ToD.Devil, 1),
+            MyUtils.ConstructTDData(0, 2, "0"),
+            MyUtils.ConstructTDData(1, 2, WhiteData.Gate, ToD.Devil, 1),
+            MyUtils.ConstructTDData(2, 2, WhiteData.Blank, ToD.Null, 0),
+            MyUtils.ConstructTDData(3, 2, "2"),
+            MyUtils.ConstructTDData(0, 1, "RED"),
+            MyUtils.ConstructTDData(1, 1, WhiteData.Gate, ToD.Truth, 2),
+            MyUtils.ConstructTDData(2, 1, "BLUE"),
+            MyUtils.ConstructTDData(3, 1, "DEVIL"),
+            MyUtils.ConstructTDData(0, 0, "GATE"),
+            MyUtils.ConstructTDData(1, 0, WhiteData.Blank, ToD.Null, 1),
+            MyUtils.ConstructTDData(2, 0, WhiteData.Blank, ToD.Null, 0),
+            MyUtils.ConstructTDData(3, 0, "MAP"),
+        };
+
+        stageList[9] = new List<TDData>
+        {
             MyUtils.ConstructTDData(0, 4, "GATE"),
             MyUtils.ConstructTDData(1, 4, "BLUE"),
             MyUtils.ConstructTDData(2, 4, WhiteData.Eye, ToD.Devil, 0),
@@ -119,55 +168,6 @@ public readonly struct TDStage
             MyUtils.ConstructTDData(4, 1, WhiteData.Gate, ToD.Truth, 3),
             MyUtils.ConstructTDData(2, 0, WhiteData.Blank, ToD.Null, 1),
             MyUtils.ConstructTDData(3, 0, WhiteData.Gate, ToD.Devil, 4),
-        };
-
-        stageList[7] = new List<TDData>
-        {
-            MyUtils.ConstructTDData(3, 3, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTDData(0, 2, "1"),
-            MyUtils.ConstructTDData(1, 2, "MAP"),
-            MyUtils.ConstructTDData(2, 2, "DEVIL"),
-            MyUtils.ConstructTDData(3, 2, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTDData(4, 2, WhiteData.Eye, ToD.Devil, 2),
-            MyUtils.ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTDData(1, 1, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTDData(2, 1, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTDData(3, 1, "GATE"),
-            MyUtils.ConstructTDData(2, 0, "1"),
-            MyUtils.ConstructTDData(3, 0, "RED"),
-        };
-
-        stageList[8] = new List<TDData>
-        {
-            MyUtils.ConstructTDData(1, 2, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTDData(2, 2, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTDData(3, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTDData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTDData(1, 1, "MAP"),
-            MyUtils.ConstructTDData(2, 1, "ANGEL"),
-            MyUtils.ConstructTDData(3, 1, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTDData(1, 0, "GATE"),
-            MyUtils.ConstructTDData(2, 0, "1"),
-            MyUtils.ConstructTDData(3, 0, "RED"),
-        };
-
-        stageList[9] = new List<TDData>
-        {
-            MyUtils.ConstructTDData(0, 3, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTDData(1, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTDData(2, 3, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTDData(0, 2, "0"),
-            MyUtils.ConstructTDData(1, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTDData(2, 2, WhiteData.Blank, ToD.Null, 0),
-            MyUtils.ConstructTDData(3, 2, "2"),
-            MyUtils.ConstructTDData(0, 1, "RED"),
-            MyUtils.ConstructTDData(1, 1, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTDData(2, 1, "BLUE"),
-            MyUtils.ConstructTDData(3, 1, "DEVIL"),
-            MyUtils.ConstructTDData(0, 0, "GATE"),
-            MyUtils.ConstructTDData(1, 0, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTDData(2, 0, WhiteData.Blank, ToD.Null, 0),
-            MyUtils.ConstructTDData(3, 0, "MAP"),
         };
 
         stageList[10] = new List<TDData>

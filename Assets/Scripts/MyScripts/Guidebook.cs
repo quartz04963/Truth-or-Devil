@@ -46,7 +46,7 @@ public class Guidebook : MonoBehaviour
         };
 
         if (GameManager.instance.maxStage >= 5) spritesToDisplay[(int)GuideCategory.Function] = functionSprites[1];
-        if (GameManager.instance.maxStage >= 8) spritesToDisplay[(int)GuideCategory.MakeQuestion] = makeQuestionSprites[1];
+        if (GameManager.instance.maxStage >= 7) spritesToDisplay[(int)GuideCategory.MakeQuestion] = makeQuestionSprites[1];
     }
 
     public void OnGuideCategoryClicked(int num)

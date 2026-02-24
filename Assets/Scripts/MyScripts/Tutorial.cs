@@ -53,7 +53,7 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.ActivateScenarios(false);
         }
 
-        else if (GameManager.instance.CurrentStage == 8)
+        else if (GameManager.instance.CurrentStage == 7)
         {
             MapManager.instance.eyeList[0].button.SetActive(false);
             MapManager.instance.eyeList[2].button.SetActive(false);
@@ -70,7 +70,7 @@ public class Tutorial : MonoBehaviour
         }
 
         // 정렬 기준 "천사/악마" 비활성화
-        if (1 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 7)
+        if (1 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 6)
         {
             LogManager.instance.dropdown.options.RemoveAt(3);
         }
@@ -242,7 +242,7 @@ public class Tutorial : MonoBehaviour
             }
         }
 
-        else if (GameManager.instance.CurrentStage == 8)
+        else if (GameManager.instance.CurrentStage == 7)
         {
             MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
 
