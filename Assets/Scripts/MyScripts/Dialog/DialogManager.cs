@@ -278,6 +278,6 @@ public class DialogManager : MonoBehaviour
         pastDialogs.SetActive(isOpening);
         pastDialogSR.verticalNormalizedPosition = 0;
 
-        if (GamePlay.instance != null && !GamePlay.instance.isOver && !GamePlay.instance.isCleared) GamePlay.instance.IsRunning = !isOpening;
+        if (GamePlay.instance != null && !GamePlay.instance.isOver && !GamePlay.instance.isCleared && !isTalking) GamePlay.instance.IsRunning = !isOpening;
     }
 }

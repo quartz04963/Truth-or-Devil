@@ -89,8 +89,6 @@ public class GamePlay : MonoBehaviour
         DialogManager.instance.StartDialog(dialog);
 
         Tutorial.instance.RevisedInit();
-        
-        isRunning = true;
     }
 
     void Init()
@@ -116,6 +114,8 @@ public class GamePlay : MonoBehaviour
         {
             movingRule = MovingRule.CantGoStraight; 
         }
+
+        isRunning = true;
     }
 
     void Update()
