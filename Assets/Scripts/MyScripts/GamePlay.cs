@@ -88,7 +88,7 @@ public class GamePlay : MonoBehaviour
         SoundManager.Instance.PlayBGM("gameplay");
         
         TDDialog dialog = TDDialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
-        Dialog.instance.StartDialog(dialog);
+        DialogSystem.instance.StartDialog(dialog);
 
         Tutorial.instance.RevisedInit();
     }
@@ -126,7 +126,7 @@ public class GamePlay : MonoBehaviour
         {
             if (isChecking) OnNoClicked();
             else if (Guidebook.instance.IsGuidebookOpened) Guidebook.instance.OnGuidebookClicked(false);
-            else if (Dialog.instance.IsPastDialogOpened) Dialog.instance.OnReviewClicked(false);
+            else if (DialogSystem.instance.IsPastDialogOpened) DialogSystem.instance.OnReviewClicked(false);
             else OnExitClicked();
         }
         
@@ -384,7 +384,7 @@ public class GamePlay : MonoBehaviour
             }
             
             isCleared = true;
-            Dialog.instance.StartDialog(TDDialogData.StageClear);
+            DialogSystem.instance.StartDialog(TDDialogData.StageClear);
         }
     }
     
@@ -406,7 +406,7 @@ public class GamePlay : MonoBehaviour
         if(tile.data[1] == (int)ToD.Devil)
         {
             isOver = true;
-            Dialog.instance.StartDialog(TDDialogData.GameOver);
+            DialogSystem.instance.StartDialog(TDDialogData.GameOver);
             return;
         }
         
@@ -415,7 +415,7 @@ public class GamePlay : MonoBehaviour
             if (eye.trueID != eye.guessedID) 
             {
                 isOver = true;
-                Dialog.instance.StartDialog(TDDialogData.GameOver);
+                DialogSystem.instance.StartDialog(TDDialogData.GameOver);
                 return;
             }
         }

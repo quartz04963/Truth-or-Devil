@@ -7,9 +7,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
 
-public class Dialog : MonoBehaviour
+public class DialogSystem : MonoBehaviour
 {
-    public static Dialog instance;
+    public static DialogSystem instance;
 
     public bool isTalking; //대화 중 여부
     public bool isSkipping; //대사 출력 중 스킵 여부
@@ -158,7 +158,7 @@ public class Dialog : MonoBehaviour
         if (!isOnlyPictureShowed) 
         {
             PastDialog dialog = Instantiate(pastDialogPrf, pastDialogContent).GetComponent<PastDialog>();
-            dialog.Init(tdLine.name, tdLine.text);
+            dialog.Init(tdLine.name, tdLine.line);
         }
         else isOnlyPictureShowed = false;
         
@@ -166,7 +166,7 @@ public class Dialog : MonoBehaviour
 
         string text = "";
         bool isColorTag = false;
-        foreach(char c in tdLine.text)
+        foreach(char c in tdLine.line)
         {
             text += c;
 

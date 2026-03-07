@@ -3,12 +3,12 @@ using System.Collections.Generic;
 public readonly struct TDLine
 {
     public readonly string name;
-    public readonly string text;
+    public readonly string line;
 
-    public TDLine(string name, string text)
+    public TDLine(string name, string line)
     {
         this.name = name;
-        this.text = text;
+        this.line = line;
     }
 }
 
