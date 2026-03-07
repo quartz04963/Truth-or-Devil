@@ -1,21 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MyCamera : MonoBehaviour
-{
-    public static MyCamera instance;
-    
-    public Camera mainCamera;
-    public RectTransform background;
+{    
+    [SerializeField] Camera mainCamera;
+    [SerializeField] RectTransform background;
 
-    void Awake()
-    {
-        if (instance == null) instance = this;
-    }
-
-    public void SetOSizeByMap()
+    public void SetOSizeByMap(List<TDData> map)
     {
         int maxX = 0, minX = 8, maxY = 0, minY = 8;
-        foreach (TDData tile in MapManager.instance.tileList)
+        foreach (TDData tile in map)
         {
             if (tile.pos.x > maxX) maxX = tile.pos.x;
             if (tile.pos.x < minX) minX = tile.pos.x;

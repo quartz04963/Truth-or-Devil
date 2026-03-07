@@ -67,6 +67,6 @@ public class Guidebook : MonoBehaviour
         isGuidebookOpened = isOpening;
         guidebook.SetActive(isOpening);
 
-        if (!GamePlay.instance.isOver && !GamePlay.instance.isCleared && !DialogManager.instance.isTalking) GamePlay.instance.IsRunning = !isOpening;
+        if (!GamePlay.instance.isOver && !GamePlay.instance.isCleared && !Dialog.instance.isTalking) GamePlay.instance.IsRunning = !isOpening;
     }
 }

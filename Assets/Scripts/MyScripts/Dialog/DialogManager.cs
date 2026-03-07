@@ -1,77 +1,28 @@
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using PrimeTween;
 using Cysharp.Text;
+using System.Collections;
+using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public readonly struct TDLine
+
+public class Dialog : MonoBehaviour
 {
-    public readonly string name;
-    public readonly string text;
-
-    public TDLine(string _name, string _text)
-    {
-        name = _name;
-        text = _text;
-    }
-}
-
-public readonly struct TDDialog
-{
-    public readonly int stage;
-    public readonly bool isProlog;
-    public readonly List<TDLine> lineList;
-
-    public TDDialog(int _stage, bool _isProlog, List<TDLine> _lineList)
-    {
-        stage = _stage;
-        isProlog = _isProlog;
-        lineList = _lineList;
-    }
-}
-
-public static class TDStory
-{
-    public static TDDialog videlPressure = new TDDialog(0, false, new List<TDLine>
-    {
-        new TDLine("비델", "..."),
-    });
-
-    public static TDDialog gameOverLineList = new TDDialog(0, false, new List<TDLine>
-    {
-        new TDLine("비델", "자, 참가자 님의 결과는...!"),
-        new TDLine("비델", "아쉽게도 실패입니다! 안녕히 계세요!"),
-    });
-
-    public static TDDialog stageClearLineList = new TDDialog(0, false, new List<TDLine>
-    {
-        new TDLine("비델", "자, 참가자 님의 결과는...!"),
-        new TDLine("비델", "성공입니다! 축하드립니다!"),
-    });
-
-    public static List<TDDialog> dialogList = new List<TDDialog>();
-}
-
-public class DialogManager : MonoBehaviour
-{
-    public static DialogManager instance;
+    public static Dialog instance;
 
     public bool isTalking; //대화 중 여부
     public bool isSkipping; //대사 출력 중 스킵 여부
     public bool isEpilogShowed;
-    public bool isClicked;
     public bool isOnlyPictureShowed;
     public float interval;
     public int currentLineNumber;
+
     private TDDialog currentDialog;
     private Coroutine saying;
 
     [SerializeField] GameObject dialog;
     [SerializeField] GameObject skipButton;
-    public void SetSkipButtonActive(bool isActive) => skipButton.SetActive(isActive);
     [SerializeField] Image background;
     [SerializeField] Image videl;
     [SerializeField] Image nagel;
@@ -82,13 +33,13 @@ public class DialogManager : MonoBehaviour
     [SerializeField] GameObject dialogBox;
     [SerializeField] GameObject reviewButton;
     [SerializeField] GameObject reviewInGamePlayButton;
-    public void SetReviewInGamePlayActive(bool isActive) => reviewInGamePlayButton.SetActive(isActive);
-    [SerializeField] bool isPastDialogOpened;
-    public bool IsPastDialogOpened { get => isPastDialogOpened; set => isPastDialogOpened = value; }
     [SerializeField] GameObject pastDialogs;
     [SerializeField] GameObject pastDialogPrf;
     [SerializeField] ScrollRect pastDialogSR;
     [SerializeField] RectTransform pastDialogContent;
+
+    [SerializeField] bool isPastDialogOpened;
+    public bool IsPastDialogOpened { get => isPastDialogOpened; set => isPastDialogOpened = value; }
     
     void Awake()
     {
@@ -123,7 +74,7 @@ public class DialogManager : MonoBehaviour
         currentLineNumber = 0;
         saying = StartCoroutine(SayLine(currentDialog.lineList[currentLineNumber]));
 
-        if (_currentDialog.Equals(TDStory.stageClearLineList) || _currentDialog.Equals(TDStory.gameOverLineList))
+        if (_currentDialog.Equals(TDDialogData.StageClear) || _currentDialog.Equals(TDDialogData.GameOver))
         {
             skipButton.SetActive(false);
             reviewButton.SetActive(false);
@@ -163,7 +114,7 @@ public class DialogManager : MonoBehaviour
 
         if (GamePlay.instance.isCleared) 
         {
-            TDDialog dialog = TDStory.dialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
+            TDDialog dialog = TDDialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
             if (!dialog.Equals(default(TDDialog))  && !isEpilogShowed)
             {
                 isEpilogShowed = true;

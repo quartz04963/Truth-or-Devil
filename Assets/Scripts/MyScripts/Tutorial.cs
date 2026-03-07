@@ -82,27 +82,27 @@ public class Tutorial : MonoBehaviour
 
         if (GameManager.instance.CurrentStage == 1 && !GamePlay.instance.isCleared)
         {
-            if (DialogManager.instance.currentLineNumber == 9)
+            if (Dialog.instance.currentLineNumber == 9)
             {
                 duration = 1.0f;
-                DialogManager.instance.Fade(0f, duration);
+                Dialog.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
-                DialogManager.instance.ShowOnlyPicture(tutorialPictures[0]);
+                Dialog.instance.ShowOnlyPicture(tutorialPictures[0]);
             }
 
-            else if (DialogManager.instance.currentLineNumber == 10)
+            else if (Dialog.instance.currentLineNumber == 10)
             {
-                DialogManager.instance.ShowOnlyPicture(tutorialPictures[1]);
+                Dialog.instance.ShowOnlyPicture(tutorialPictures[1]);
             }
 
-            else if (DialogManager.instance.currentLineNumber == 11)
+            else if (Dialog.instance.currentLineNumber == 11)
             {
-                DialogManager.instance.ShowOnlyPicture(tutorialPictures[2]);
+                Dialog.instance.ShowOnlyPicture(tutorialPictures[2]);
             }
 
-            else if (DialogManager.instance.currentLineNumber == 12)
+            else if (Dialog.instance.currentLineNumber == 12)
             {
-                DialogManager.instance.ShowOnlyPicture(tutorialPictures[3]);
+                Dialog.instance.ShowOnlyPicture(tutorialPictures[3]);
             }
 
 
@@ -114,27 +114,27 @@ public class Tutorial : MonoBehaviour
         
         else if (GameManager.instance.CurrentStage == 2 && !GamePlay.instance.isCleared)
         {
-            if (DialogManager.instance.currentLineNumber == 5)
+            if (Dialog.instance.currentLineNumber == 5)
             {
                 duration = 1.0f;
-                DialogManager.instance.Fade(0f, duration);
+                Dialog.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
             }
         }
 
         else if (GameManager.instance.CurrentStage == 3 && !GamePlay.instance.isCleared)
         {
-            if (DialogManager.instance.currentLineNumber == 11)
+            if (Dialog.instance.currentLineNumber == 11)
             {
                 duration = 1.0f;
-                DialogManager.instance.Fade(0f, duration);
+                Dialog.instance.Fade(0f, duration);
                 yield return new WaitForSeconds(duration);
-                DialogManager.instance.ShowOnlyPicture(tutorialPictures[4]);
+                Dialog.instance.ShowOnlyPicture(tutorialPictures[4]);
             }
 
-            else if (DialogManager.instance.currentLineNumber == 12)
+            else if (Dialog.instance.currentLineNumber == 12)
             {
-                DialogManager.instance.ShowOnlyPicture(tutorialPictures[5]);
+                Dialog.instance.ShowOnlyPicture(tutorialPictures[5]);
             }
         }
     }
@@ -172,9 +172,9 @@ public class Tutorial : MonoBehaviour
 
         isStopping = true;
         yield return new WaitUntil(() => Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0));
-        DialogManager.instance.ExitDialog();
+        Dialog.instance.ExitDialog();
         yield return new WaitUntil(condition);
-        DialogManager.instance.ContinueDialog();
+        Dialog.instance.ContinueDialog();
         isStopping = false;
     }
 

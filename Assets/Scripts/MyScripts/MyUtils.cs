@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Text;
-using System.CodeDom;
 using System.IO;
 
 public enum TileColor
@@ -160,7 +159,7 @@ public static class MyUtils
 
     public static void LoadAllDialogs()
     {
-        TDStory.dialogList = new List<TDDialog>();
+        TDDialogData.DialogList = new List<TDDialog>();
 
         string path;
         for (int i = 1; i <= TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount; i++)
@@ -169,14 +168,14 @@ public static class MyUtils
             if (File.Exists(path))
             {
                 string text = File.ReadAllText(path); //안드로이드는 ReadAllText가 안 된다고...
-                TDStory.dialogList.Add(new TDDialog(i, true, ParseTSV(text)));
+                TDDialogData.DialogList.Add(new TDDialog(i, true, ParseTSV(text)));
             }
 
             path = Path.Combine(Application.streamingAssetsPath, ZString.Format("Dialogs/{0}e.tsv", i));
             if (File.Exists(path))
             {
                 string text = File.ReadAllText(path);
-                TDStory.dialogList.Add(new TDDialog(i, false, ParseTSV(text)));
+                TDDialogData.DialogList.Add(new TDDialog(i, false, ParseTSV(text)));
             }
         }
     }
