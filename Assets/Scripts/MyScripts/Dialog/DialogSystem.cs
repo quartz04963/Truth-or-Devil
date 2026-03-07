@@ -78,7 +78,7 @@ public class DialogSystem : MonoBehaviour
         {
             skipButton.SetActive(false);
             reviewButton.SetActive(false);
-            if (GameManager.instance.CurrentStage == 1) reviewInGamePlayButton.SetActive(false);
+            if (GameManager.Instance.CurrentStage == 1) reviewInGamePlayButton.SetActive(false);
         }
         else
         {
@@ -114,7 +114,7 @@ public class DialogSystem : MonoBehaviour
 
         if (GamePlay.instance.isCleared) 
         {
-            TDDialog dialog = DialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
+            TDDialog dialog = DialogData.DialogList.Find(dialog => dialog.stage == GameManager.Instance.CurrentStage && dialog.isProlog == false);
             if (!dialog.Equals(default(TDDialog))  && !isEpilogShowed)
             {
                 isEpilogShowed = true;

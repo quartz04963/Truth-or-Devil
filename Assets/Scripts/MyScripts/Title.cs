@@ -9,7 +9,7 @@ public class Title : MonoBehaviour
 
     void Start()
     {
-        MoveTo(GameManager.instance.titleTabNumber);
+        MoveTo(GameManager.Instance.titleTabNumber);
         SoundManager.Instance.PlayBGM("title");
     }
 
@@ -19,8 +19,8 @@ public class Title : MonoBehaviour
     }
 
     public void OnPlayClicked() {
-        if (GameManager.instance.titleTabNumber == 0) GameManager.instance.titleTabNumber = 1;
-        MoveTo(GameManager.instance.titleTabNumber);
+        if (GameManager.Instance.titleTabNumber == 0) GameManager.Instance.titleTabNumber = 1;
+        MoveTo(GameManager.Instance.titleTabNumber);
     }
 
     public void OnExitClicked()
@@ -34,7 +34,7 @@ public class Title : MonoBehaviour
 
     void MoveTo(int num)
     {
-        if (num != 0) GameManager.instance.titleTabNumber = num;
+        if (num != 0) GameManager.Instance.titleTabNumber = num;
         switch (num)
         {
             case 0: title.SetActive(true); chapter1.SetActive(false); chapter2.SetActive(false); chapter3.SetActive(false); break;

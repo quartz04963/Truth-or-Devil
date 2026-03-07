@@ -87,7 +87,7 @@ public class GamePlay : MonoBehaviour
         SoundManager.Instance.StopBgm();
         SoundManager.Instance.PlayBGM("gameplay");
         
-        TDDialog dialog = DialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
+        TDDialog dialog = DialogData.DialogList.Find(dialog => dialog.stage == GameManager.Instance.CurrentStage && dialog.isProlog == true);
         DialogSystem.instance.StartDialog(dialog);
 
         Tutorial.instance.RevisedInit();
@@ -99,20 +99,20 @@ public class GamePlay : MonoBehaviour
         blueBoxData =  MyUtils.BlueDataNull;
         greenBoxData = MyUtils.GreenDataNull;
 
-        if (GameManager.instance.CurrentStage <= StageData.Ch1StageCount) 
+        if (GameManager.Instance.CurrentStage <= StageData.Ch1StageCount) 
         {
-            stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
+            stageNumberText.SetText(ZString.Concat("1 - ", GameManager.Instance.CurrentStage));
         }
-        else if (GameManager.instance.CurrentStage <= StageData.Ch1StageCount + StageData.Ch2StageCount) 
+        else if (GameManager.Instance.CurrentStage <= StageData.Ch1StageCount + StageData.Ch2StageCount) 
         {
-            stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - StageData.Ch1StageCount));
+            stageNumberText.SetText(ZString.Concat("2 - ", GameManager.Instance.CurrentStage - StageData.Ch1StageCount));
         }
 
-        if (14 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 17) 
+        if (14 <= GameManager.Instance.CurrentStage && GameManager.Instance.CurrentStage <= 17) 
         {
             movingRule = MovingRule.CantStop;
         }
-        if (18 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 20)
+        if (18 <= GameManager.Instance.CurrentStage && GameManager.Instance.CurrentStage <= 20)
         {
             movingRule = MovingRule.CantGoStraight; 
         }
@@ -243,7 +243,7 @@ public class GamePlay : MonoBehaviour
     {
         if (Tutorial.instance.BreakEnteringGate(dir)) yield break;
 
-        if (GameManager.instance.doCheckBeforeEnteringGate)
+        if (GameManager.Instance.doCheckBeforeEnteringGate)
         {
             EventSystem.current.SetSelectedGameObject(null);
             
@@ -287,7 +287,7 @@ public class GamePlay : MonoBehaviour
         }
 
         // 튜토리얼 연출 - 질문 상자 강조
-        if (GameManager.instance.CurrentStage == 1)
+        if (GameManager.Instance.CurrentStage == 1)
         {
             switch (tile.color)
             {
@@ -395,7 +395,7 @@ public class GamePlay : MonoBehaviour
         isRunning = false;
         stageClearWindow.SetActive(true);
         
-        if (GameManager.instance.CurrentStage == GameManager.instance.maxStage) GameManager.instance.maxStage++;
+        if (GameManager.Instance.CurrentStage == GameManager.Instance.maxStage) GameManager.Instance.maxStage++;
     }
 
     void CheckGameOver()
@@ -439,11 +439,11 @@ public class GamePlay : MonoBehaviour
     public void OnExitClicked() => SceneManager.LoadScene("Main Menu");
     public void OnYesClicked() => isYes = true;
     public void OnNoClicked() => isNo = true;
-    public void OnDontCheckEnteringChanged(bool isOn) => GameManager.instance.doCheckBeforeEnteringGate = !isOn;
+    public void OnDontCheckEnteringChanged(bool isOn) => GameManager.Instance.doCheckBeforeEnteringGate = !isOn;
     public void OnRetryClicked() => SceneManager.LoadScene("GamePlay");
     public void OnNextClicked()
     {
-        GameManager.instance.CurrentStage++;
+        GameManager.Instance.CurrentStage++;
         SceneManager.LoadScene("GamePlay");
     }
 }

@@ -19,7 +19,7 @@ public class Tutorial : MonoBehaviour
 
     public void RevisedInit()
     {
-        if (GameManager.instance.CurrentStage == 1)
+        if (GameManager.Instance.CurrentStage == 1)
         {
             MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             MapManager.instance.gateList.ForEach(gate => gate.button.gameObject.SetActive(false));
@@ -34,7 +34,7 @@ public class Tutorial : MonoBehaviour
             // DialogManager.instance.SetReviewInGamePlayActive(true);
         } 
 
-        else if (GameManager.instance.CurrentStage == 2)
+        else if (GameManager.Instance.CurrentStage == 2)
         {
             MapManager.instance.eyeList.ForEach(eye => eye.button.SetActive(false));
             TDEye.SetTDEyeState(MapManager.instance.eyeList[0], ToD.Devil);
@@ -43,17 +43,17 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
-        else if (GameManager.instance.CurrentStage == 3)
+        else if (GameManager.Instance.CurrentStage == 3)
         {
             ScenarioManager.instance.ActivateScenarios(false);
         }
 
-        else if (GameManager.instance.CurrentStage == 4)
+        else if (GameManager.Instance.CurrentStage == 4)
         {
             ScenarioManager.instance.ActivateScenarios(false);
         }
 
-        else if (GameManager.instance.CurrentStage == 7)
+        else if (GameManager.Instance.CurrentStage == 7)
         {
             MapManager.instance.eyeList[0].button.SetActive(false);
             MapManager.instance.eyeList[2].button.SetActive(false);
@@ -64,13 +64,13 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
-        else if (GameManager.instance.CurrentStage == StageData.Ch1StageCount + StageData.Ch2StageCount + StageData.Ch3StageCount)
+        else if (GameManager.Instance.CurrentStage == StageData.Ch1StageCount + StageData.Ch2StageCount + StageData.Ch3StageCount)
         {
             GamePlay.instance.nextButton.SetActive(false);
         }
 
         // 정렬 기준 "천사/악마" 비활성화
-        if (1 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 6)
+        if (1 <= GameManager.Instance.CurrentStage && GameManager.Instance.CurrentStage <= 6)
         {
             LogManager.instance.dropdown.options.RemoveAt(3);
         }
@@ -80,7 +80,7 @@ public class Tutorial : MonoBehaviour
     {
         float duration;
 
-        if (GameManager.instance.CurrentStage == 1 && !GamePlay.instance.isCleared)
+        if (GameManager.Instance.CurrentStage == 1 && !GamePlay.instance.isCleared)
         {
             if (DialogSystem.instance.currentLineNumber == 9)
             {
@@ -112,7 +112,7 @@ public class Tutorial : MonoBehaviour
             // }
         }
         
-        else if (GameManager.instance.CurrentStage == 2 && !GamePlay.instance.isCleared)
+        else if (GameManager.Instance.CurrentStage == 2 && !GamePlay.instance.isCleared)
         {
             if (DialogSystem.instance.currentLineNumber == 5)
             {
@@ -122,7 +122,7 @@ public class Tutorial : MonoBehaviour
             }
         }
 
-        else if (GameManager.instance.CurrentStage == 3 && !GamePlay.instance.isCleared)
+        else if (GameManager.Instance.CurrentStage == 3 && !GamePlay.instance.isCleared)
         {
             if (DialogSystem.instance.currentLineNumber == 11)
             {
@@ -208,7 +208,7 @@ public class Tutorial : MonoBehaviour
 
     public void HighlightTiles(List<int> redBoxData, List<int> blueBoxData)
     {
-        if (GameManager.instance.CurrentStage == 1)
+        if (GameManager.Instance.CurrentStage == 1)
         {
             MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
             MapManager.instance.gateList.ForEach(gate => gate.HighlightArea(false));
@@ -242,7 +242,7 @@ public class Tutorial : MonoBehaviour
             }
         }
 
-        else if (GameManager.instance.CurrentStage == 7)
+        else if (GameManager.Instance.CurrentStage == 7)
         {
             MapManager.instance.objectList.ForEach(obj => obj.HighlightTile(false));
 

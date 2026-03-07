@@ -30,12 +30,12 @@ public class OptionManager : MonoBehaviour
         isOptionOpened = isOpening;
         option.SetActive(isOpening);
 
-        checkEntering.SetIsOnWithoutNotify(GameManager.instance.doCheckBeforeEnteringGate);
+        checkEntering.SetIsOnWithoutNotify(GameManager.Instance.doCheckBeforeEnteringGate);
         bgmVolume.SetValueWithoutNotify(SoundManager.Instance.GetBgmVolume());
 
         if (GamePlay.instance != null && !GamePlay.instance.isOver && !GamePlay.instance.isCleared && !DialogSystem.instance.isTalking) GamePlay.instance.IsRunning = !isOpening;
     }
 
-    public void OnCheckEnteringChanged(bool isOn) => GameManager.instance.doCheckBeforeEnteringGate = isOn;
+    public void OnCheckEnteringChanged(bool isOn) => GameManager.Instance.doCheckBeforeEnteringGate = isOn;
     public void OnBgmVolumeChanged(float volume) => SoundManager.Instance.SetBgmVolume(volume);
 }
