@@ -6,10 +6,10 @@ public class MyCamera : MonoBehaviour
     [SerializeField] Camera mainCamera;
     [SerializeField] RectTransform background;
 
-    public void SetOSizeByMap(List<TDData> map)
+    public void SetOSizeByMap(List<TDTileData> map)
     {
         int maxX = 0, minX = 8, maxY = 0, minY = 8;
-        foreach (TDData tile in map)
+        foreach (TDTileData tile in map)
         {
             if (tile.pos.x > maxX) maxX = tile.pos.x;
             if (tile.pos.x < minX) minX = tile.pos.x;

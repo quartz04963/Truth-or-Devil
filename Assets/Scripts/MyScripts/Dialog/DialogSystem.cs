@@ -74,7 +74,7 @@ public class DialogSystem : MonoBehaviour
         currentLineNumber = 0;
         saying = StartCoroutine(SayLine(currentDialog.lineList[currentLineNumber]));
 
-        if (_currentDialog.Equals(TDDialogData.StageClear) || _currentDialog.Equals(TDDialogData.GameOver))
+        if (_currentDialog.Equals(DialogData.StageClear) || _currentDialog.Equals(DialogData.GameOver))
         {
             skipButton.SetActive(false);
             reviewButton.SetActive(false);
@@ -114,7 +114,7 @@ public class DialogSystem : MonoBehaviour
 
         if (GamePlay.instance.isCleared) 
         {
-            TDDialog dialog = TDDialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
+            TDDialog dialog = DialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == false);
             if (!dialog.Equals(default(TDDialog))  && !isEpilogShowed)
             {
                 isEpilogShowed = true;

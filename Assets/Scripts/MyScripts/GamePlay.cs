@@ -87,7 +87,7 @@ public class GamePlay : MonoBehaviour
         SoundManager.Instance.StopBgm();
         SoundManager.Instance.PlayBGM("gameplay");
         
-        TDDialog dialog = TDDialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
+        TDDialog dialog = DialogData.DialogList.Find(dialog => dialog.stage == GameManager.instance.CurrentStage && dialog.isProlog == true);
         DialogSystem.instance.StartDialog(dialog);
 
         Tutorial.instance.RevisedInit();
@@ -99,13 +99,13 @@ public class GamePlay : MonoBehaviour
         blueBoxData =  MyUtils.BlueDataNull;
         greenBoxData = MyUtils.GreenDataNull;
 
-        if (GameManager.instance.CurrentStage <= TDStage.Ch1StageCount) 
+        if (GameManager.instance.CurrentStage <= StageData.Ch1StageCount) 
         {
             stageNumberText.SetText(ZString.Concat("1 - ", GameManager.instance.CurrentStage));
         }
-        else if (GameManager.instance.CurrentStage <= TDStage.Ch1StageCount + TDStage.Ch2StageCount) 
+        else if (GameManager.instance.CurrentStage <= StageData.Ch1StageCount + StageData.Ch2StageCount) 
         {
-            stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - TDStage.Ch1StageCount));
+            stageNumberText.SetText(ZString.Concat("2 - ", GameManager.instance.CurrentStage - StageData.Ch1StageCount));
         }
 
         if (14 <= GameManager.instance.CurrentStage && GameManager.instance.CurrentStage <= 17) 
@@ -142,7 +142,7 @@ public class GamePlay : MonoBehaviour
         {
             if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
 
-            TDData nextTile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
+            TDTileData nextTile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
             if (nextTile.color == TileColor.White && nextTile.data[0] == (int)WhiteData.Gate)
             {
                 StartCoroutine(CheckEnteringGate(dir));
@@ -170,7 +170,7 @@ public class GamePlay : MonoBehaviour
         int idx = MapManager.instance.tileList.FindIndex(tile => tile.pos == posOnMap + dir);
         if (idx == -1) return false;
 
-        TDData nextTile = MapManager.instance.tileList[idx];
+        TDTileData nextTile = MapManager.instance.tileList[idx];
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
         TDGate gate = MapManager.instance.gateList.Find(gate => gate.pos == posOnMap + dir);
@@ -215,7 +215,7 @@ public class GamePlay : MonoBehaviour
     void Move(Vector3Int dir, bool isEnteringGate = false)
     {
         posOnMap += dir;
-        Tween.Position(player.transform, posOnMap + MyUtils.offset, 0.1f, Ease.InOutSine);
+        Tween.Position(player.transform, posOnMap + MyUtils.Offset, 0.1f, Ease.InOutSine);
 
         DataBoxUpdate(dir);
 
@@ -251,7 +251,7 @@ public class GamePlay : MonoBehaviour
             isChecking = true;
             enteringCheckWindow.SetActive(true);
             
-            TDData gate = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
+            TDTileData gate = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap + dir);
             enteringCheckTMP.SetText(ZString.Format("정말 문 {0}(으)로\n진입하시겠습니까?", (char)('A' + gate.data[2])));
 
             yield return new WaitUntil(() => isYes || isNo);
@@ -268,7 +268,7 @@ public class GamePlay : MonoBehaviour
 
     void DataBoxUpdate(Vector3Int dir)
     {
-        TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
+        TDTileData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
 
         switch (tile.color)
         {
@@ -376,7 +376,7 @@ public class GamePlay : MonoBehaviour
 
     void CheckStageClear()
     {
-        TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
+        TDTileData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
         if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth) {
             foreach(TDEye eye in MapManager.instance.eyeList)
             {
@@ -384,7 +384,7 @@ public class GamePlay : MonoBehaviour
             }
             
             isCleared = true;
-            DialogSystem.instance.StartDialog(TDDialogData.StageClear);
+            DialogSystem.instance.StartDialog(DialogData.StageClear);
         }
     }
     
@@ -400,13 +400,13 @@ public class GamePlay : MonoBehaviour
 
     void CheckGameOver()
     {
-        TDData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
+        TDTileData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
         if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return;
 
         if(tile.data[1] == (int)ToD.Devil)
         {
             isOver = true;
-            DialogSystem.instance.StartDialog(TDDialogData.GameOver);
+            DialogSystem.instance.StartDialog(DialogData.GameOver);
             return;
         }
         
@@ -415,7 +415,7 @@ public class GamePlay : MonoBehaviour
             if (eye.trueID != eye.guessedID) 
             {
                 isOver = true;
-                DialogSystem.instance.StartDialog(TDDialogData.GameOver);
+                DialogSystem.instance.StartDialog(DialogData.GameOver);
                 return;
             }
         }

@@ -3,27 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[Serializable]
-public struct TDData
-{
-    public Vector3Int pos;
-    public TileColor color;
-    public List<int> data;
-
-    public TDData(Vector3Int _pos, TileColor _color, List<int> _data)
-    {
-        pos = _pos;
-        color = _color; 
-        data = _data;
-    }
-}
-
 public class MapManager : MonoBehaviour
 {
     public static MapManager instance;
     
     public Tilemap map;
-    public List<TDData> tileList;
+    public List<TDTileData> tileList;
     public List<TDObject> objectList;
     public List<TDEye> eyeList;
     public List<TDGate> gateList;
@@ -51,13 +36,13 @@ public class MapManager : MonoBehaviour
 
     public void InitMap()
     {
-        tileList = TDStage.stageList[GameManager.instance.CurrentStage - 1];
+        tileList = StageData.StageList[GameManager.instance.CurrentStage - 1];
         objectList = new List<TDObject>();
         eyeList = new List<TDEye>();
         gateList = new List<TDGate>();
 
         canAskRed = canAskBlue = canAskGreen = canAskWhite = false;
-        foreach(TDData tile in tileList)
+        foreach(TDTileData tile in tileList)
         {
             if (tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color)
             {
@@ -77,11 +62,11 @@ public class MapManager : MonoBehaviour
 
     public void CreateTilesAndObjects()
     {
-        foreach(TDData tile in tileList)
+        foreach(TDTileData tile in tileList)
         {
             if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Blank && tile.data[1] == 1)
             {
-                GamePlay.instance.player.transform.position = tile.pos + MyUtils.offset;
+                GamePlay.instance.player.transform.position = tile.pos + MyUtils.Offset;
                 GamePlay.instance.posOnMap = tile.pos;
             }
 
@@ -133,15 +118,15 @@ public class MapManager : MonoBehaviour
     public void SetAnswer()
     {
         gateColorCount = new[]{0, 0, 0, 0};
-        TDData gate = tileList.Find(tile => tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth);
-        foreach (TDData tile in tileList)
+        TDTileData gate = tileList.Find(tile => tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth);
+        foreach (TDTileData tile in tileList)
         {
             if (Math.Abs(tile.pos.x - gate.pos.x) <= 1 && Math.Abs(tile.pos.y - gate.pos.y) <= 1) gateColorCount[(int)tile.color]++;
         }
         gateColorCount[(int)TileColor.White]--;
 
         mapEyeCount = new[]{0, 0, 0};
-        foreach (TDData tile in tileList)
+        foreach (TDTileData tile in tileList)
         {
             if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Eye) mapEyeCount[tile.data[1]]++;
         }

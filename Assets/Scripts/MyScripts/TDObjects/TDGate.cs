@@ -31,7 +31,7 @@ public class TDGate : TDObject
     public void SetInfoBox()
     {
         int[] gateColorCount = new[]{0, 0, 0, 0};
-        foreach (TDData tile in MapManager.instance.tileList)
+        foreach (TDTileData tile in MapManager.instance.tileList)
         {
             if (Math.Abs(tile.pos.x - pos.x) <= 1 && Math.Abs(tile.pos.y - pos.y) <= 1) gateColorCount[(int)tile.color]++;
         }

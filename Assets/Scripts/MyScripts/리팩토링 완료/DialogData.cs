@@ -26,7 +26,7 @@ public readonly struct TDDialog
     }
 }
 
-public static class TDDialogData
+public static class DialogData
 {
     public static TDDialog VidelPressure = new TDDialog(
         0,

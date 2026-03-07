@@ -64,7 +64,7 @@ public class Tutorial : MonoBehaviour
             ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
         }
 
-        else if (GameManager.instance.CurrentStage == TDStage.Ch1StageCount + TDStage.Ch2StageCount + TDStage.Ch3StageCount)
+        else if (GameManager.instance.CurrentStage == StageData.Ch1StageCount + StageData.Ch2StageCount + StageData.Ch3StageCount)
         {
             GamePlay.instance.nextButton.SetActive(false);
         }
@@ -220,7 +220,7 @@ public class Tutorial : MonoBehaviour
 
             else if ((RedData)redBoxData[0] == RedData.Null && (BlueData)blueBoxData[0] == BlueData.Color)
             {
-                foreach (TDData tile in MapManager.instance.tileList)
+                foreach (TDTileData tile in MapManager.instance.tileList)
                 {
                     if (tile.color == (TileColor)blueBoxData[1]) MapManager.instance.objectList.Find(obj => obj.pos == tile.pos).HighlightTile(true);
                 }
@@ -232,7 +232,7 @@ public class Tutorial : MonoBehaviour
 
                 foreach (TDGate gate in MapManager.instance.gateList)
                 {
-                    foreach (TDData tile in MapManager.instance.tileList)
+                    foreach (TDTileData tile in MapManager.instance.tileList)
                     {
                         if (Math.Abs(tile.pos.x - gate.pos.x) <= 1 && Math.Abs(tile.pos.y - gate.pos.y) <= 1 && tile.pos != gate.pos 
                             && tile.color == (TileColor)blueBoxData[1])

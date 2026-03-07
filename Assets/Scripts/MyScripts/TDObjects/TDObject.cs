@@ -15,7 +15,7 @@ public class TDObject : MonoBehaviour
     public virtual void Init(Vector3Int _pos, string str)
     {
         pos = _pos;
-        gameObject.transform.position = _pos + MyUtils.offset;
+        gameObject.transform.position = _pos + MyUtils.Offset;
         tmp.SetText(str);
     }
 
@@ -33,9 +33,9 @@ public class TDObject : MonoBehaviour
     public virtual void Shake(Vector3 dir, float duration)
     {
         Sequence seq = Sequence.Create()
-            .Chain(Tween.Position(transform, pos + MyUtils.offset + dir, duration))
-            .Chain(Tween.Position(transform, pos + MyUtils.offset, duration))
-            .Chain(Tween.Position(transform, pos + MyUtils.offset - dir, duration))
-            .Chain(Tween.Position(transform, pos + MyUtils.offset, duration));
+            .Chain(Tween.Position(transform, pos + MyUtils.Offset + dir, duration))
+            .Chain(Tween.Position(transform, pos + MyUtils.Offset, duration))
+            .Chain(Tween.Position(transform, pos + MyUtils.Offset - dir, duration))
+            .Chain(Tween.Position(transform, pos + MyUtils.Offset, duration));
     }
 }
