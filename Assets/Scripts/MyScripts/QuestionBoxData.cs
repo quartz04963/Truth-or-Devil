@@ -44,7 +44,7 @@ public class QuestionBoxData : MonoBehaviour
 
     void Start()
     {
-        InitData();
+        ResetData();
     }
 
     // Update is called once per frame
@@ -53,7 +53,7 @@ public class QuestionBoxData : MonoBehaviour
         
     }
 
-    public void InitData()
+    public void ResetData()
     {
         redBoxData = MyUtils.RedDataNull;
         blueBoxData =  MyUtils.BlueDataNull;

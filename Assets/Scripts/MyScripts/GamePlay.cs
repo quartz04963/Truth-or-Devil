@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using Cysharp.Text;
 using PrimeTween;
+using UnityEditor.Experimental.GraphView;
 
 public enum MovingRule
 {
@@ -199,6 +200,11 @@ public class GamePlay : MonoBehaviour
 
         DataBoxUpdate(dir);
 
+        HandleMovingRule(dir, isEnteringGate);
+    }
+
+    void HandleMovingRule(Vector3Int dir, bool isEnteringGate)
+    {
         if (movingRule == MovingRule.CantStop)
         {
             if (CanMove(dir) && !CheckFrontTileIsGate(dir) && !isEnteringGate) Move(dir);
@@ -252,11 +258,12 @@ public class GamePlay : MonoBehaviour
 
         switch (tile.color)
         {
-            case TileColor.Red: questionBoxData.redBoxData = tile.data; break;
-            case TileColor.Blue: questionBoxData.blueBoxData = tile.data; break;
-            case TileColor.Green: questionBoxData.greenBoxData = tile.data; break;
+            case TileColor.Red: questionBoxData.redBoxData = tile.count != 0 ? tile.data : MyUtils.RedDataNull; break;
+            case TileColor.Blue: questionBoxData.blueBoxData = tile.count != 0 ? tile.data : MyUtils.BlueDataNull; break;
+            case TileColor.Green: questionBoxData.greenBoxData = tile.count != 0 ? tile.data : MyUtils.GreenDataNull; break;
             case TileColor.White:
-                if(tile.data[0] == (int)WhiteData.Eye)
+                if (tile.count == 0) questionBoxData.ResetData();
+                else if (tile.data[0] == (int)WhiteData.Eye)
                 {
                     if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) 
                     {
@@ -296,7 +303,7 @@ public class GamePlay : MonoBehaviour
 
         LogManager.instance.AddLog(questionBoxData, eye, answer);
 
-        questionBoxData.InitData();
+        questionBoxData.ResetData();
     }
 
     void CheckStageClear()
