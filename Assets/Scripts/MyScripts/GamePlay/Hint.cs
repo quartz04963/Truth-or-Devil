@@ -1,3 +1,4 @@
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -38,6 +39,8 @@ public class Hint : MonoBehaviour
     void Start()
     {
         int hintIdx = GameManager.Instance.CurrentStage - 1;
+        
+        if (hintIdx >= HintTexts.Length) return;
         
         if (HintTexts[hintIdx] == "Null") 
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 
@@ -23,7 +24,7 @@ public readonly struct TDTileData
 public readonly struct StageData
 {
     public const int Ch1StageCount = 13;
-    public const int Ch2StageCount = 7;
+    public const int Ch2StageCount = 9;
     public const int Ch3StageCount = 0;
     public static List<TDTileData>[] StageList = new List<TDTileData>[Ch1StageCount + Ch2StageCount + Ch3StageCount];
 
@@ -405,6 +406,48 @@ public readonly struct StageData
             MyUtils.ConstructTileData(2, 0, WhiteData.Gate, ToD.Devil, 6),
             MyUtils.ConstructTileData(3, 0, "ANGEL"),
             MyUtils.ConstructTileData(4, 0, "MAP"),
+        };
+
+        StageList[Ch1StageCount + 7] = new List<TDTileData>
+        {
+            MyUtils.ConstructTileData(2, 4, "ANGEL", 3),
+            MyUtils.ConstructTileData(0, 3, WhiteData.Gate, ToD.Devil, 0),
+            MyUtils.ConstructTileData(1, 3, WhiteData.Gate, ToD.Devil, 1),
+            MyUtils.ConstructTileData(2, 3, "1"),
+            MyUtils.ConstructTileData(3, 3, WhiteData.Gate, ToD.Truth, 2),
+            MyUtils.ConstructTileData(0, 2, "GATE"),
+            MyUtils.ConstructTileData(1, 2, WhiteData.Eye, ToD.Truth, 0),
+            MyUtils.ConstructTileData(2, 2, WhiteData.Eye, ToD.Truth, 1),
+            MyUtils.ConstructTileData(3, 2, WhiteData.Eye, ToD.Truth, 2),
+            MyUtils.ConstructTileData(4, 2, "MAP"),
+            MyUtils.ConstructTileData(1, 1, "BLUE", 2),
+            MyUtils.ConstructTileData(2, 1, WhiteData.Gate, ToD.Devil, 3),
+            MyUtils.ConstructTileData(3, 1, "2"),
+            MyUtils.ConstructTileData(4, 1, WhiteData.Blank, ToD.Null, 1),
+            MyUtils.ConstructTileData(1, 0, "0"),
+            MyUtils.ConstructTileData(3, 0, "WHITE", 2),
+        };
+
+        StageList[Ch1StageCount + 8] = new List<TDTileData>
+        {
+            MyUtils.ConstructTileData(1, 2, "ANGEL"),
+            MyUtils.ConstructTileData(2, 2, WhiteData.Gate, ToD.Devil, 0),
+            MyUtils.ConstructTileData(3, 2, "RED"),
+            MyUtils.ConstructTileData(4, 2, "BLUE"),
+            MyUtils.ConstructTileData(6, 2, WhiteData.Gate, ToD.Truth, 1),
+            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
+            MyUtils.ConstructTileData(1, 1, "1"),
+            MyUtils.ConstructTileData(2, 1, WhiteData.Eye, ToD.Devil, 0, 4),
+            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Truth, 1),
+            MyUtils.ConstructTileData(4, 1, WhiteData.Eye, ToD.Truth, 2),
+            MyUtils.ConstructTileData(5, 1, WhiteData.Eye, ToD.Truth, 3),
+            MyUtils.ConstructTileData(6, 1, "DEVIL"),
+            MyUtils.ConstructTileData(1, 0, "MAP"),
+            MyUtils.ConstructTileData(2, 0, WhiteData.Gate, ToD.Devil, 2),
+            MyUtils.ConstructTileData(3, 0, "GREEN"),
+            MyUtils.ConstructTileData(4, 0, "WHITE"),
+            MyUtils.ConstructTileData(5, 0, WhiteData.Gate, ToD.Devil, 3),
+            MyUtils.ConstructTileData(6, 0, "GATE"),  
         };
     }
 }
