@@ -9,6 +9,10 @@ public class QuestionBoxData : MonoBehaviour
     public List<int> redBoxData;
     public List<int> blueBoxData;
     public List<int> greenBoxData;
+    public TDObject lastRedTile;
+    public TDObject lastBlueTile;
+    public TDObject lastGreenTile;
+
     public bool isfull
     {
         get
@@ -132,5 +136,23 @@ public class QuestionBoxData : MonoBehaviour
 
             return '?';
         }
+    }
+
+    public void UpdateLastTile(TileColor color, TDObject lastTile)
+    {
+        switch (color)
+        {
+            case TileColor.Red: lastRedTile = lastTile; break;
+            case TileColor.Blue: lastBlueTile = lastTile; break;
+            case TileColor.Green: lastGreenTile = lastTile; break;
+        }
+    }
+
+    public void DecreaseCount(TDEye eye)
+    {
+        lastRedTile.DecreaseCount();
+        lastBlueTile.DecreaseCount();
+        lastGreenTile.DecreaseCount();
+        eye.DecreaseCount();
     }
 }

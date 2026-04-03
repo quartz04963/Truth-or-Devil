@@ -14,7 +14,7 @@ public class TDObject : MonoBehaviour
     public GameObject highlightRim;
     public Image highlightBG;
 
-    private int count;
+    public int count;
 
     public virtual void Init(Vector3Int _pos, string _code, int _count)
     {

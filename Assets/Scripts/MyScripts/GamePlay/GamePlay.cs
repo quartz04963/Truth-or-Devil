@@ -255,14 +255,15 @@ public class GamePlay : MonoBehaviour
     void DataBoxUpdate(Vector3Int dir)
     {
         TDTileData tile = MapManager.instance.tileList.Find(tile => tile.pos == posOnMap);
+        TDObject obj = MapManager.instance.objectList.Find(obj => obj.pos == posOnMap);
 
         switch (tile.color)
         {
-            case TileColor.Red: questionBoxData.redBoxData = tile.count != 0 ? tile.data : MyUtils.RedDataNull; break;
-            case TileColor.Blue: questionBoxData.blueBoxData = tile.count != 0 ? tile.data : MyUtils.BlueDataNull; break;
-            case TileColor.Green: questionBoxData.greenBoxData = tile.count != 0 ? tile.data : MyUtils.GreenDataNull; break;
+            case TileColor.Red: questionBoxData.redBoxData = obj.count != 0 ? tile.data : MyUtils.RedDataNull; break;
+            case TileColor.Blue: questionBoxData.blueBoxData = obj.count != 0 ? tile.data : MyUtils.BlueDataNull; break;
+            case TileColor.Green: questionBoxData.greenBoxData = obj.count != 0 ? tile.data : MyUtils.GreenDataNull; break;
             case TileColor.White:
-                if (tile.count == 0) questionBoxData.ResetData();
+                if (obj.count == 0) questionBoxData.ResetData();
                 else if (tile.data[0] == (int)WhiteData.Eye)
                 {
                     if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) 
@@ -278,6 +279,9 @@ public class GamePlay : MonoBehaviour
         {
             questionBoxData.Highlight(tile.color);
         }
+
+        
+        questionBoxData.UpdateLastTile(tile.color, obj);
 
         questionBoxData.ChangeBrightness();
         questionBoxData.SetAllText();
@@ -303,6 +307,7 @@ public class GamePlay : MonoBehaviour
 
         LogManager.instance.AddLog(questionBoxData, eye, answer);
 
+        questionBoxData.DecreaseCount(eye);
         questionBoxData.ResetData();
     }
 

@@ -59,4 +59,10 @@ public class TDEye : TDObject
         SetTDEyeState(this, (ToD)_guessedID);
         OnClicked();
     }
+
+    public override void DecreaseCount()
+    {
+        if (count == 1) spriteRenderer.color = Color.gray;
+        base.DecreaseCount();
+    }
 }
