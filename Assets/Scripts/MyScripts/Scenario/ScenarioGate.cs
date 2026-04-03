@@ -15,7 +15,7 @@ public class ScenarioGate : MonoBehaviour
     {
         tdGate = _tdGate;
         tdGate.isMarked = false;
-        tmp.SetText((char)('A' + tdGate.index));
+        tmp.SetText((char)('A' + tdGate.code));
     }
 
     public void OnClicked()

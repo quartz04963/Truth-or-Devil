@@ -119,41 +119,41 @@ public static class MyUtils
         }    
     }
 
-    public static TDTileData ConstructTileData(int x, int y, string str)
+    public static TDTileData ConstructTileData(int x, int y, string str, int count = -1)
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         switch (str)
         {
-            case "GATE": return new TDTileData(pos, TileColor.Red, new List<int>{(int)RedData.Gate});
-            case "MAP": return new TDTileData(pos, TileColor.Red, new List<int>{(int)RedData.Map});
-            case "RED": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red});
-            case "BLUE": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Blue});
-            case "GREEN": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Green});
-            case "WHITE": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White});
-            case "ANGEL": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth});
-            case "DEVIL": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Devil});
-            case "0" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 0});
-            case "1" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 1});
-            case "2" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 2});
-            case "3" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 3});
-            case "4" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 4});
-            case "5" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 5});
-            case "6" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 6});
-            case "7" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 7});
-            case "8" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 8});
-            default: return new TDTileData(Vector3Int.zero, TileColor.Red, RedDataNull);
+            case "GATE": return new TDTileData(pos, TileColor.Red, new List<int>{(int)RedData.Gate}, count);
+            case "MAP": return new TDTileData(pos, TileColor.Red, new List<int>{(int)RedData.Map}, count);
+            case "RED": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}, count);
+            case "BLUE": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Blue}, count);
+            case "GREEN": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Green}, count);
+            case "WHITE": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}, count);
+            case "ANGEL": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth}, count);
+            case "DEVIL": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Devil}, count);
+            case "0" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 0}, count);
+            case "1" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 1}, count);
+            case "2" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 2}, count);
+            case "3" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 3}, count);
+            case "4" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 4}, count);
+            case "5" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 5}, count);
+            case "6" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 6}, count);
+            case "7" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 7}, count);
+            case "8" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 8}, count);
+            default: return new TDTileData(Vector3Int.zero, TileColor.Red, RedDataNull, count);
         }
     }
 
-    public static TDTileData ConstructTileData(int x, int y, WhiteData whitedata, ToD toD, int index)
+    public static TDTileData ConstructTileData(int x, int y, WhiteData whitedata, ToD toD, int index, int count = -1)
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         switch (whitedata)
         {
-            case WhiteData.Blank: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Blank, index});
-            case WhiteData.Eye: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Eye, (int)toD, index});
-            case WhiteData.Gate: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Gate, (int)toD, index});
-            default: return new TDTileData(Vector3Int.zero, TileColor.Red, RedDataNull);
+            case WhiteData.Blank: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Blank, index}, count);
+            case WhiteData.Eye: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Eye, (int)toD, index}, count);
+            case WhiteData.Gate: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Gate, (int)toD, index}, count);
+            default: return new TDTileData(Vector3Int.zero, TileColor.Red, RedDataNull, count);
         }
     }
 

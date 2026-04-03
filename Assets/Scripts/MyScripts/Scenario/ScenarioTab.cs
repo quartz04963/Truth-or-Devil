@@ -25,7 +25,7 @@ public class ScenarioTab : MonoBehaviour
         {
             ScenarioEye eye = i < 4 ?
                 Instantiate(scenarioEyePrf, eyeRow1.transform).GetComponent<ScenarioEye>() : Instantiate(scenarioEyePrf, eyeRow2.transform).GetComponent<ScenarioEye>();
-            eye.Init(MapManager.instance.eyeList.Find(eye => eye.index == i));
+            eye.Init(MapManager.instance.eyeList.Find(eye => eye.code == i));
             scenarioEyeList.Add(eye);
         }
 
@@ -33,7 +33,7 @@ public class ScenarioTab : MonoBehaviour
         for (int i = 0; i < gateCount; i++)
         {
             ScenarioGate gate = Instantiate(scenarioGatePrf, gateRow.transform).GetComponent<ScenarioGate>();
-            gate.Init(MapManager.instance.gateList.Find(gate => gate.index == i));
+            gate.Init(MapManager.instance.gateList.Find(gate => gate.code == i));
             scenarioGateList.Add(gate);
         }
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class TDEye : TDObject
 {
-    public int index;
+    public int code;
     public bool isMarked;
     public ToD trueID;
     public ToD guessedID = ToD.Null;
@@ -15,10 +15,10 @@ public class TDEye : TDObject
     public GameObject button;
     public GameObject selectingButtons;
 
-    public void Init(Vector3Int _pos, int _index)
+    public void Init(Vector3Int _pos, int _code, int _count)
     {
-        index = _index;
-        base.Init(_pos, MyUtils.ConvertToRoman(_index + 1));
+        code = _code;
+        base.Init(_pos, MyUtils.ConvertToRoman(_code + 1), _count);
     }
 
     public static void SetTDEyeState(TDEye eye, ToD _guessedID)

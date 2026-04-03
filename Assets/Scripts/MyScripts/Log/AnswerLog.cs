@@ -35,7 +35,7 @@ public class AnswerLog : MonoBehaviour
         redDataTMP.SetText(MyUtils.GetTextFromData(TileColor.Red, redTileData));
         blueDataTMP.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueTileData));
         greenDataTMP.SetText(MyUtils.GetTextFromData(TileColor.Green, greenTileData));
-        eyeIndexTMP.SetText(MyUtils.ConvertToRoman(tdEye.index + 1));
+        eyeIndexTMP.SetText(MyUtils.ConvertToRoman(tdEye.code + 1));
         answerTMP.SetText(answer);
 
         UpdateEyeImage();
@@ -97,10 +97,10 @@ public class AnswerLog : MonoBehaviour
                 case 1: 
                     if (blueTileData[0] == (int)BlueData.Null)
                     {
-                        AnswerLog answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.index < tdEye.index);
+                        AnswerLog answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.code < tdEye.code);
                         if (answerLog != null) 
                         {
-                            answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.index == tdEye.index);
+                            answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.code == tdEye.code);
                             if (answerLog != null) 
                             {
                                 gameObject.SetActive(true);

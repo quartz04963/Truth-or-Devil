@@ -31,12 +31,12 @@ public class LogManager : MonoBehaviour
     {
         logList = new List<AnswerLog>();
         
-        TDEye defaultEye = MapManager.instance.eyeList.Find(eye => eye.index == 0);
+        TDEye defaultEye = MapManager.instance.eyeList.Find(eye => eye.code == 0);
 
         for (int i = 1; i < MapManager.instance.mapEyeCount.Sum(); i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TDEye tdEye = MapManager.instance.eyeList.Find(eye => eye.index == i);
+            TDEye tdEye = MapManager.instance.eyeList.Find(eye => eye.code == i);
             log.Init(MyUtils.RedDataNull, MyUtils.BlueDataNull, MyUtils.GreenDataNull, tdEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
@@ -62,16 +62,19 @@ public class LogManager : MonoBehaviour
         }
     }
 
-    public void AddLog(List<int> redTileData, List<int> blueTileData, List<int> greenTileData, TDEye tdEye, char answer)
+    public void AddLog(QuestionBoxData qustion, TDEye tdEye, char answer)
     {
         foreach (AnswerLog log in logList)
         {
-            if (log.redTileData.SequenceEqual(redTileData) && log.blueTileData.SequenceEqual(blueTileData) && log.greenTileData.SequenceEqual(greenTileData) 
-                && log.tdEye == tdEye) return;
+            if (log.tdEye == tdEye &&
+                log.redTileData.SequenceEqual(qustion.redBoxData) && 
+                log.blueTileData.SequenceEqual(qustion.blueBoxData) && 
+                log.greenTileData.SequenceEqual(qustion.greenBoxData)
+            ) return;
         }
 
         AnswerLog answerlog = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-        answerlog.Init(redTileData, blueTileData, greenTileData, tdEye, ZString.Concat(answer));
+        answerlog.Init(qustion.redBoxData, qustion.blueBoxData, qustion.greenBoxData, tdEye, ZString.Concat(answer));
         logList.Add(answerlog);
 
         OnDropdownChanged();
@@ -86,7 +89,7 @@ public class LogManager : MonoBehaviour
         switch (dropdown.value)
         {
             case 0: sortedLogList = logList; break;
-            case 1: sortedLogList = logList.OrderBy(log => log.tdEye.index).ToList(); break;
+            case 1: sortedLogList = logList.OrderBy(log => log.tdEye.code).ToList(); break;
             case 2: sortedLogList = logList.OrderBy(log => log.blueTileData[1]).ToList(); break;
             case 3: sortedLogList = logList.OrderBy(log => log.blueTileData[1]).ToList(); break;
         }

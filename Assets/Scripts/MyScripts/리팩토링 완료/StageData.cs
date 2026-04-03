@@ -9,12 +9,14 @@ public readonly struct TDTileData
     public readonly Vector3Int pos;
     public readonly TileColor color;
     public readonly List<int> data;
+    public readonly int count;
 
-    public TDTileData(Vector3Int pos, TileColor color, List<int> data)
+    public TDTileData(Vector3Int pos, TileColor color, List<int> data, int count)
     {
         this.pos = pos;
         this.color = color; 
         this.data = data;
+        this.count = count;
     }
 }
 

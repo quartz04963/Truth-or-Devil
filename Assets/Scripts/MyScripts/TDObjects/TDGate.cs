@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class TDGate : TDObject
 {
-    public int index;
+    public int code;
     
     public bool isMarked;
     public Button button;
@@ -21,10 +21,10 @@ public class TDGate : TDObject
     public SpriteRenderer spriteRenderer;
     public Sprite defaultSprite, heavenSprite, hellSprite;
 
-    public void Init(Vector3Int _pos, int _index)
+    public void Init(Vector3Int _pos, int _code, int _count)
     {
-        index = _index;
-        base.Init(_pos, ZString.Format("{0}", (char)('A' + _index)));
+        code = _code;
+        base.Init(_pos, ZString.Format("{0}", (char)('A' + _code)), _count);
         SetInfoBox();
     }
 

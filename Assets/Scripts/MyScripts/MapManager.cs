@@ -85,28 +85,28 @@ public class MapManager : MonoBehaviour
             {
                 case TileColor.Red: case TileColor.Blue: case TileColor.Green:
                     TDText tdText = Instantiate(TDTextPrf).GetComponent<TDText>();
-                    tdText.Init(tile.pos, MyUtils.GetTextFromData(tile.color, tile.data));
+                    tdText.Init(tile.pos, MyUtils.GetTextFromData(tile.color, tile.data), tile.count);
                     objectList.Add(tdText);
                     break;
              
                 case TileColor.White:
                     if ((WhiteData)tile.data[0] == WhiteData.Eye) {
                         TDEye tdEye = Instantiate(TDEyePrf).GetComponent<TDEye>();
-                        tdEye.Init(tile.pos, tile.data[2]);
+                        tdEye.Init(tile.pos, tile.data[2], tile.count);
                         tdEye.trueID = (ToD)tile.data[1];
                         objectList.Add(tdEye);
                         eyeList.Add(tdEye);
                     }
                     else if ((WhiteData)tile.data[0] == WhiteData.Gate) {
                         TDGate tdGate = Instantiate(TDGatePrf).GetComponent<TDGate>();
-                        tdGate.Init(tile.pos, tile.data[2]);
+                        tdGate.Init(tile.pos, tile.data[2], tile.count);
                         objectList.Add(tdGate);
                         gateList.Add(tdGate);
                     }
                     else if ((WhiteData)tile.data[0] == WhiteData.Blank) //임시 음영 처리를 위한 코드
                     {
                         TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
-                        emptyText.Init(tile.pos, "");
+                        emptyText.Init(tile.pos, "", tile.count);
                         objectList.Add(emptyText);
                         break;
                     }

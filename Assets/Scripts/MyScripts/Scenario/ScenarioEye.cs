@@ -17,7 +17,7 @@ public class ScenarioEye : MonoBehaviour
         tdEye = _tdEye;
         tdEye.guessedID = ToD.Null;
         image.sprite = defaultSprite;
-        tmp.SetText(MyUtils.ConvertToRoman(tdEye.index + 1));
+        tmp.SetText(MyUtils.ConvertToRoman(tdEye.code + 1));
     }
 
     public void OnClicked()
