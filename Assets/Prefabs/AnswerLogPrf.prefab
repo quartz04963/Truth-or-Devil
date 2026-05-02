@@ -701,26 +701,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isEmptyCategory: 0
   tdEye: {fileID: 0}
-  redTileData: 
-  blueTileData: 
-  greenTileData: 
-  category: {fileID: 7059495174765591941}
-  categoryBox: {fileID: 7059495174765591992}
-  redDataBox: {fileID: 7059495174696124918}
-  blueDataBox: {fileID: 7059495174974024294}
-  greenDataBox: {fileID: 7059495173711163338}
-  eyeDataBox: {fileID: 7059495173781629818}
-  answerDataBox: {fileID: 7059495174724215200}
-  eyeDataImage: {fileID: 7059495174779785049}
+  ring: {fileID: 0}
+  background: {fileID: 0}
+  line: {fileID: 0}
+  layoutElement: {fileID: 0}
+  eyeImg: {fileID: 7059495174779785049}
   defaultSprite: {fileID: 21300000, guid: ac93f4b1954bb034f85a654b14257bc0, type: 3}
   angelSprite: {fileID: 21300000, guid: e8ec8ed49be3bad42880b754d7eebad1, type: 3}
   devilSprite: {fileID: 21300000, guid: 2c56c84d104e9484faaedca873387a3c, type: 3}
-  categoryText: {fileID: 7059495173268307012}
-  redDataText: {fileID: 7059495173553945075}
-  blueDataText: {fileID: 7059495174726721011}
-  greenDataText: {fileID: 7059495173833596450}
-  eyeDataText: {fileID: 7059495174725641615}
-  answerDataText: {fileID: 7059495174031853087}
+  redDataTMP: {fileID: 7059495173553945075}
+  blueDataTMP: {fileID: 7059495174726721011}
+  greenDataTMP: {fileID: 7059495173833596450}
+  eyeIndexTMP: {fileID: 7059495174725641615}
+  answerTMP: {fileID: 7059495174031853087}
 --- !u!1 &7059495174031853085
 GameObject:
   m_ObjectHideFlags: 0

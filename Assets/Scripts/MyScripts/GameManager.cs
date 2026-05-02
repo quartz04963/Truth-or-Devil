@@ -2,20 +2,20 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
 
-    public int maxStage;
-    [SerializeField] private int currentStage;
-    public int CurrentStage { get => currentStage; set => currentStage = value; }
     public int titleTabNumber;
+    public int maxStage;
+    public int currentStage;
+    
     
     [Header("옵션 관련")]
     public bool doCheckBeforeEnteringGate = true;
 
     void Awake()
     {
-        if (instance == null) {
-            instance = this;
+        if (Instance == null) {
+            Instance = this;
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);

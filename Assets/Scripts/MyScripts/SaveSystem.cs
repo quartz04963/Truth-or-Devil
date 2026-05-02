@@ -19,8 +19,8 @@ public static class SaveSystem
     {
         SaveData data = new SaveData()
         {
-            maxStage = GameManager.instance.maxStage,
-            doCheckBeforeEnteringGate = GameManager.instance.doCheckBeforeEnteringGate,
+            maxStage = GameManager.Instance.maxStage,
+            doCheckBeforeEnteringGate = GameManager.Instance.doCheckBeforeEnteringGate,
             bgmVolume = SoundManager.Instance.GetBgmVolume(),
         };
         string json = JsonUtility.ToJson(data, true);
@@ -35,8 +35,8 @@ public static class SaveSystem
         string json = File.ReadAllText(savePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-        GameManager.instance.maxStage = data.maxStage;
-        GameManager.instance.doCheckBeforeEnteringGate = data.doCheckBeforeEnteringGate;
+        GameManager.Instance.maxStage = data.maxStage;
+        GameManager.Instance.doCheckBeforeEnteringGate = data.doCheckBeforeEnteringGate;
         SoundManager.Instance.SetBgmVolume(data.bgmVolume);
     }
 }

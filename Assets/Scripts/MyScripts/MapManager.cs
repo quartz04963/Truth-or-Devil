@@ -3,30 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[Serializable]
-public struct TDData
-{
-    public Vector3Int pos;
-    public TileColor color;
-    public List<int> data;
-
-    public TDData(Vector3Int _pos, TileColor _color, List<int> _data)
-    {
-        pos = _pos;
-        color = _color; 
-        data = _data;
-    }
-}
-
 public class MapManager : MonoBehaviour
 {
     public static MapManager instance;
     
     public Tilemap map;
-    public List<TDData> tileList;
-    public List<TDObject> objectList;
-    public List<TDEye> eyeList;
-    public List<TDGate> gateList;
+    public List<TileData> tiles;
+    public List<TDObject> objects;
+    public List<TDEye> eyes;
+    public List<TDGate> gates;
 
     public Tile RedTile;
     public Tile BlueTile;
@@ -37,8 +22,9 @@ public class MapManager : MonoBehaviour
     public GameObject TDEyePrf;
     public GameObject TDGatePrf;
  
-    public int[] gateColorCount;
-    public int[] mapEyeCount;
+    public Dictionary<TileColor, int> exitColorCount;
+    public Dictionary<ToD, int> mapEyeCount;
+    public Dictionary<GaroSero, int> exitGaroSero;
     public bool canAskRed;
     public bool canAskBlue;
     public bool canAskGreen;
@@ -51,13 +37,13 @@ public class MapManager : MonoBehaviour
 
     public void InitMap()
     {
-        tileList = TDStage.stageList[GameManager.instance.CurrentStage - 1];
-        objectList = new List<TDObject>();
-        eyeList = new List<TDEye>();
-        gateList = new List<TDGate>();
+        tiles = StageDataList.stages[GameManager.Instance.currentStage - 1].tiles;
+        objects = new List<TDObject>();
+        eyes = new List<TDEye>();
+        gates = new List<TDGate>();
 
         canAskRed = canAskBlue = canAskGreen = canAskWhite = false;
-        foreach(TDData tile in tileList)
+        foreach(TileData tile in tiles)
         {
             if (tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color)
             {
@@ -77,11 +63,11 @@ public class MapManager : MonoBehaviour
 
     public void CreateTilesAndObjects()
     {
-        foreach(TDData tile in tileList)
+        foreach(TileData tile in tiles)
         {
             if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Blank && tile.data[1] == 1)
             {
-                GamePlay.instance.player.transform.position = tile.pos + MyUtils.offset;
+                GamePlay.instance.player.transform.position = tile.pos + MyUtils.Offset;
                 GamePlay.instance.posOnMap = tile.pos;
             }
 
@@ -100,29 +86,28 @@ public class MapManager : MonoBehaviour
             {
                 case TileColor.Red: case TileColor.Blue: case TileColor.Green:
                     TDText tdText = Instantiate(TDTextPrf).GetComponent<TDText>();
-                    tdText.Init(tile.pos, MyUtils.GetTextFromData(tile.color, tile.data));
-                    objectList.Add(tdText);
+                    tdText.Init(tile, TileData.GetText(tile));
+                    objects.Add(tdText);
                     break;
              
                 case TileColor.White:
                     if ((WhiteData)tile.data[0] == WhiteData.Eye) {
                         TDEye tdEye = Instantiate(TDEyePrf).GetComponent<TDEye>();
-                        tdEye.Init(tile.pos, tile.data[2]);
-                        tdEye.trueID = (ToD)tile.data[1];
-                        objectList.Add(tdEye);
-                        eyeList.Add(tdEye);
+                        tdEye.Init(tile);
+                        objects.Add(tdEye);
+                        eyes.Add(tdEye);
                     }
                     else if ((WhiteData)tile.data[0] == WhiteData.Gate) {
                         TDGate tdGate = Instantiate(TDGatePrf).GetComponent<TDGate>();
-                        tdGate.Init(tile.pos, tile.data[2]);
-                        objectList.Add(tdGate);
-                        gateList.Add(tdGate);
+                        tdGate.Init(tile);
+                        objects.Add(tdGate);
+                        gates.Add(tdGate);
                     }
                     else if ((WhiteData)tile.data[0] == WhiteData.Blank) //임시 음영 처리를 위한 코드
                     {
                         TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
-                        emptyText.Init(tile.pos, "");
-                        objectList.Add(emptyText);
+                        emptyText.Init(tile, "");
+                        objects.Add(emptyText);
                         break;
                     }
                     break;
@@ -132,18 +117,38 @@ public class MapManager : MonoBehaviour
 
     public void SetAnswer()
     {
-        gateColorCount = new[]{0, 0, 0, 0};
-        TDData gate = tileList.Find(tile => tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth);
-        foreach (TDData tile in tileList)
+        TileData gate = tiles.Find(tile => tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth);
+        
+        exitColorCount = new Dictionary<TileColor, int>();
+        exitColorCount[TileColor.Red] = 0;
+        exitColorCount[TileColor.Blue] = 0;
+        exitColorCount[TileColor.Green] = 0;
+        exitColorCount[TileColor.White] = -1;
+        foreach (TileData tile in tiles)
         {
-            if (Math.Abs(tile.pos.x - gate.pos.x) <= 1 && Math.Abs(tile.pos.y - gate.pos.y) <= 1) gateColorCount[(int)tile.color]++;
+            if (Math.Abs(tile.pos.x - gate.pos.x) <= 1 && Math.Abs(tile.pos.y - gate.pos.y) <= 1) {
+                exitColorCount[tile.color]++;
+            }
         }
-        gateColorCount[(int)TileColor.White]--;
 
-        mapEyeCount = new[]{0, 0, 0};
-        foreach (TDData tile in tileList)
+        mapEyeCount = new Dictionary<ToD, int>();
+        mapEyeCount[ToD.Truth] = 0;
+        mapEyeCount[ToD.Devil] = 0;
+        foreach (TileData tile in tiles)
         {
-            if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Eye) mapEyeCount[tile.data[1]]++;
+            if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Eye) {
+                mapEyeCount[(ToD)tile.data[1]]++;
+            }
         }
+
+        exitGaroSero = new Dictionary<GaroSero, int>();
+        int top = tiles[0].pos.y, left = tiles[0].pos.x;
+        foreach (TileData tile in tiles)
+        {
+            if (tile.pos.y > top) top = tile.pos.y;
+            if (tile.pos.x < left) left = tile.pos.x;
+        }
+        exitGaroSero[GaroSero.Garo] = top - gate.pos.y + 1;
+        exitGaroSero[GaroSero.Sero] = gate.pos.x - left + 1;
     }
 }
