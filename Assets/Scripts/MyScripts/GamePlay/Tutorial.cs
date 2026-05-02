@@ -19,50 +19,48 @@ public class Tutorial : MonoBehaviour
 
     public void RevisedInit()
     {
-        // if (GameManager.Instance.CurrentStage == 1)
-        // {
-        //     MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
-        //     MapManager.instance.gates.ForEach(gate => gate.button.gameObject.SetActive(false));
-        //     MapManager.instance.gates[0].SetSprite(ToD.Devil);
-        //     MapManager.instance.gates[1].SetSprite(ToD.Truth);
-        //     TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Truth);
+        if (GameManager.Instance.currentStage == 1)
+        {
+            MapManager.instance.gates.ForEach(gate => gate.button.gameObject.SetActive(false));
+            MapManager.instance.gates[0].SetSprite(ToD.Truth);
+            MapManager.instance.gates[1].SetSprite(ToD.Devil);
 
-        //     ScenarioManager.instance.scenarioScrollView.SetActive(false);
-        //     ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
+            // ScenarioManager.instance.scenarioScrollView.SetActive(false);
+            // ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
 
-        //     // DialogManager.instance.SetSkipButtonActive(false);
-        //     // DialogManager.instance.SetReviewInGamePlayActive(true);
-        // } 
+            // DialogManager.instance.SetSkipButtonActive(false);
+            // DialogManager.instance.SetReviewInGamePlayActive(true);
+        } 
 
-        // else if (GameManager.Instance.CurrentStage == 2)
-        // {
-        //     MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
-        //     TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Devil);
+        else if (GameManager.Instance.currentStage == 2)
+        {
+            MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Truth);
+        }
 
-        //     ScenarioManager.instance.scenarioScrollView.SetActive(false);
-        //     ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
-        // }
+        else if (GameManager.Instance.currentStage == 3)
+        {
+            MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Devil);
+        }
 
-        // else if (GameManager.Instance.CurrentStage == 3)
-        // {
-        //     ScenarioManager.instance.ActivateScenarios(false);
-        // }
+        else if (GameManager.Instance.currentStage == 4)
+        {
+            MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Truth);
+        }
 
-        // else if (GameManager.Instance.CurrentStage == 4)
-        // {
-        //     ScenarioManager.instance.ActivateScenarios(false);
-        // }
+        else if (GameManager.Instance.currentStage == StageDataList.Chapter0 + 5)
+        {
+            MapManager.instance.eyes[0].button.SetActive(false);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Truth);
+        }
 
-        // else if (GameManager.Instance.CurrentStage == 7)
-        // {
-        //     MapManager.instance.eyes[0].button.SetActive(false);
-        //     MapManager.instance.eyes[2].button.SetActive(false);
-        //     TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Devil);
-        //     TDEye.SetTDEyeState(MapManager.instance.eyes[2], ToD.Devil);
-
-        //     ScenarioManager.instance.scenarioScrollView.SetActive(false);
-        //     ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
-        // }
+        else if (GameManager.Instance.currentStage == StageDataList.Chapter0 + StageDataList.Chapter1 + 1)
+        {
+            MapManager.instance.eyes[0].button.SetActive(false);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], ToD.Truth);
+        }
 
         if (GameManager.Instance.currentStage == StageDataList.StageCount)
         {
