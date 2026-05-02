@@ -16,7 +16,7 @@ public class ScenarioTab : MonoBehaviour
 
     public void Init()
     {
-        int eyeCount = MapManager.instance.eyeList.Count;
+        int eyeCount = MapManager.instance.eyes.Count;
         if (eyeCount > 4) {
             eyeRow2.SetActive(true);
             rimImage.rectTransform.sizeDelta = new Vector2(512, 360);
@@ -25,15 +25,15 @@ public class ScenarioTab : MonoBehaviour
         {
             ScenarioEye eye = i < 4 ?
                 Instantiate(scenarioEyePrf, eyeRow1.transform).GetComponent<ScenarioEye>() : Instantiate(scenarioEyePrf, eyeRow2.transform).GetComponent<ScenarioEye>();
-            eye.Init(MapManager.instance.eyeList.Find(eye => eye.code == i));
+            eye.Init(MapManager.instance.eyes.Find(eye => eye.code == i));
             scenarioEyeList.Add(eye);
         }
 
-        int gateCount = MapManager.instance.gateList.Count;
+        int gateCount = MapManager.instance.gates.Count;
         for (int i = 0; i < gateCount; i++)
         {
             ScenarioGate gate = Instantiate(scenarioGatePrf, gateRow.transform).GetComponent<ScenarioGate>();
-            gate.Init(MapManager.instance.gateList.Find(gate => gate.code == i));
+            gate.Init(MapManager.instance.gates.Find(gate => gate.code == i));
             scenarioGateList.Add(gate);
         }
 

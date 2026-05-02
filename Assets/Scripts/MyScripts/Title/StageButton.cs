@@ -12,17 +12,17 @@ public class StageButton : MonoBehaviour
 
     void Start()
     {
-        if (stage <= StageData.Ch1StageCount) 
+        if (stage <= StageDataList.Chapter1) 
         {
             numberTMP.SetText(ZString.Concat(stage));
         }
-        else if (StageData.Ch1StageCount < stage && stage <= StageData.Ch1StageCount + StageData.Ch2StageCount)
+        else if (StageDataList.Chapter1 < stage && stage <= StageDataList.Chapter1 + StageDataList.Chapter2)
         {
-            numberTMP.SetText(ZString.Concat(stage - StageData.Ch1StageCount));
+            numberTMP.SetText(ZString.Concat(stage - StageDataList.Chapter1));
         }
         else 
         {
-            numberTMP.SetText(ZString.Concat(stage - StageData.Ch1StageCount - StageData.Ch2StageCount));
+            numberTMP.SetText(ZString.Concat(stage - StageDataList.Chapter1 - StageDataList.Chapter2));
         }
 
         lockImage.SetActive(GameManager.Instance.maxStage < stage);
@@ -33,7 +33,7 @@ public class StageButton : MonoBehaviour
     {
         if (GameManager.Instance.maxStage < stage) return;
         
-        GameManager.Instance.CurrentStage = stage;
+        GameManager.Instance.currentStage = stage;
         SoundManager.Instance.StopBgm();
         SceneManager.LoadScene("GamePlay");
     }

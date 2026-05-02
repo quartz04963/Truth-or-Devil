@@ -6,9 +6,6 @@ using PrimeTween;
 
 public class QuestionBoxData : MonoBehaviour
 {
-    public List<int> redBoxData;
-    public List<int> blueBoxData;
-    public List<int> greenBoxData;
     public TDObject lastRedTile;
     public TDObject lastBlueTile;
     public TDObject lastGreenTile;
@@ -17,21 +14,22 @@ public class QuestionBoxData : MonoBehaviour
     {
         get
         {
-            return(RedData)redBoxData[0] != RedData.Null && 
-                (BlueData)blueBoxData[0] != BlueData.Null && 
-                (GreenData)greenBoxData[0] != GreenData.Null;
+            return lastRedTile != null && lastBlueTile != null && lastGreenTile != null;
         }
     }
     public bool isInvalid
     {
         get
         {
-            return ((RedData)redBoxData[0] == RedData.Gate && (BlueData)blueBoxData[0] == BlueData.Eye) || 
-                ((RedData)redBoxData[0] == RedData.Map && (BlueData)blueBoxData[0] == BlueData.Color);
+            if (lastRedTile == null || lastBlueTile == null) return false;
+            RedData redData = (RedData)lastRedTile.tileData.data[0];
+            BlueData blueData = (BlueData)lastBlueTile.tileData.data[0];
+            return (redData == RedData.Exit && blueData == BlueData.Eye) || 
+                   (redData == RedData.Map && (blueData == BlueData.Color || blueData == BlueData.GaroSero));
         }
     }
     
-    [SerializeField]  TextMeshProUGUI redBoxText;
+    [SerializeField] TextMeshProUGUI redBoxText;
     [SerializeField] TextMeshProUGUI blueBoxText;
     [SerializeField] TextMeshProUGUI greenBoxText;
     [SerializeField] Image redBoxImg;
@@ -51,17 +49,9 @@ public class QuestionBoxData : MonoBehaviour
         ResetData();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public void ResetData()
     {
-        redBoxData = MyUtils.RedDataNull;
-        blueBoxData =  MyUtils.BlueDataNull;
-        greenBoxData = MyUtils.GreenDataNull;
+        lastRedTile = lastBlueTile = lastGreenTile = null;
     }
 
     public void Highlight(TileColor color)
@@ -93,36 +83,62 @@ public class QuestionBoxData : MonoBehaviour
 
     public void SetAllText()
     {
-        redBoxText.SetText(MyUtils.GetTextFromData(TileColor.Red, redBoxData));
-        blueBoxText.SetText(MyUtils.GetTextFromData(TileColor.Blue, blueBoxData));
-        greenBoxText.SetText(MyUtils.GetTextFromData(TileColor.Green, greenBoxData));
+        if (lastRedTile == null) redBoxText.SetText("");
+        else redBoxText.SetText(TileData.GetText(lastRedTile.tileData));
+
+        if (lastBlueTile == null) blueBoxText.SetText("");
+        else blueBoxText.SetText(TileData.GetText(lastBlueTile.tileData));
+        
+        if (lastGreenTile == null) greenBoxText.SetText("");
+        else greenBoxText.SetText(TileData.GetText(lastGreenTile.tileData));
     }
 
     public char GetAnswer()
     {
-        if (redBoxData[0] == (int)RedData.Gate && blueBoxData[0] == (int)BlueData.Color)
+        if (isInvalid) return '?';
+
+        List<int> redBoxData = lastRedTile.tileData.data;
+        List<int> blueBoxData = lastBlueTile.tileData.data;
+        List<int> greenBoxData = lastGreenTile.tileData.data;
+        if (redBoxData[0] == (int)RedData.Exit && blueBoxData[0] == (int)BlueData.Color)
         {
+            TileColor color = (TileColor)blueBoxData[1];
             switch ((GreenData)greenBoxData[0])
             {
-                case GreenData.Equal: return MapManager.instance.gateColorCount[blueBoxData[1]] == greenBoxData[1] ? 'O' : 'X';
-                case GreenData.NotEqual: return MapManager.instance.gateColorCount[blueBoxData[1]] != greenBoxData[1] ? 'O' : 'X';
-                case GreenData.Greater: return MapManager.instance.gateColorCount[blueBoxData[1]] > greenBoxData[1] ? 'O' : 'X';
-                case GreenData.Less: return MapManager.instance.gateColorCount[blueBoxData[1]] < greenBoxData[1] ? 'O' : 'X';
-                case GreenData.GreaterOrEqual: return MapManager.instance.gateColorCount[blueBoxData[1]] >= greenBoxData[1] ? 'O' : 'X';
-                case GreenData.LessOrEqual: return MapManager.instance.gateColorCount[blueBoxData[1]] <= greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Equal: return MapManager.instance.exitColorCount[color] == greenBoxData[1] ? 'O' : 'X';
+                case GreenData.NotEqual: return MapManager.instance.exitColorCount[color] != greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Greater: return MapManager.instance.exitColorCount[color] > greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Less: return MapManager.instance.exitColorCount[color] < greenBoxData[1] ? 'O' : 'X';
+                case GreenData.GreaterOrEqual: return MapManager.instance.exitColorCount[color] >= greenBoxData[1] ? 'O' : 'X';
+                case GreenData.LessOrEqual: return MapManager.instance.exitColorCount[color] <= greenBoxData[1] ? 'O' : 'X';
+                default: return '?';
+            }
+        }
+        else if (redBoxData[0] == (int)RedData.Exit && blueBoxData[0] == (int)BlueData.GaroSero)
+        {
+            GaroSero garoSero = (GaroSero)blueBoxData[1];
+            switch ((GreenData)greenBoxData[0])
+            {
+                case GreenData.Equal: return MapManager.instance.exitGaroSero[garoSero] == greenBoxData[1] ? 'O' : 'X';
+                case GreenData.NotEqual: return MapManager.instance.exitGaroSero[garoSero] != greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Greater: return MapManager.instance.exitGaroSero[garoSero] > greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Less: return MapManager.instance.exitGaroSero[garoSero] < greenBoxData[1] ? 'O' : 'X';
+                case GreenData.GreaterOrEqual: return MapManager.instance.exitGaroSero[garoSero] >= greenBoxData[1] ? 'O' : 'X';
+                case GreenData.LessOrEqual: return MapManager.instance.exitGaroSero[garoSero] <= greenBoxData[1] ? 'O' : 'X';
                 default: return '?';
             }
         }
         else if (redBoxData[0] == (int)RedData.Map && blueBoxData[0] == (int)BlueData.Eye)
         {
+            ToD eye = (ToD)blueBoxData[1];
             switch ((GreenData)greenBoxData[0])
             {
-                case GreenData.Equal: return MapManager.instance.mapEyeCount[blueBoxData[1]] == greenBoxData[1] ? 'O' : 'X';
-                case GreenData.NotEqual: return MapManager.instance.mapEyeCount[blueBoxData[1]] != greenBoxData[1] ? 'O' : 'X';
-                case GreenData.Greater: return MapManager.instance.mapEyeCount[blueBoxData[1]] > greenBoxData[1] ? 'O' : 'X';
-                case GreenData.Less: return MapManager.instance.mapEyeCount[blueBoxData[1]] < greenBoxData[1] ? 'O' : 'X';
-                case GreenData.GreaterOrEqual: return MapManager.instance.mapEyeCount[blueBoxData[1]] >= greenBoxData[1] ? 'O' : 'X';
-                case GreenData.LessOrEqual: return MapManager.instance.mapEyeCount[blueBoxData[1]] <= greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Equal: return MapManager.instance.mapEyeCount[eye] == greenBoxData[1] ? 'O' : 'X';
+                case GreenData.NotEqual: return MapManager.instance.mapEyeCount[eye] != greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Greater: return MapManager.instance.mapEyeCount[eye] > greenBoxData[1] ? 'O' : 'X';
+                case GreenData.Less: return MapManager.instance.mapEyeCount[eye] < greenBoxData[1] ? 'O' : 'X';
+                case GreenData.GreaterOrEqual: return MapManager.instance.mapEyeCount[eye] >= greenBoxData[1] ? 'O' : 'X';
+                case GreenData.LessOrEqual: return MapManager.instance.mapEyeCount[eye] <= greenBoxData[1] ? 'O' : 'X';
                 default: return '?';
             }
         }

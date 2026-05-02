@@ -6,23 +6,30 @@ using Cysharp.Text;
 
 public class TDObject : MonoBehaviour
 {
+    public int stack;
     public Vector3Int pos;
+    public TileData tileData;
+
+    
+
     public Canvas canvas;
-    public TextMeshProUGUI tmp;
-    public TextMeshProUGUI countText;
+    public TextMeshProUGUI stackText;
+    public TextMeshProUGUI text;
     public GameObject tileBlock;
     public GameObject highlightRim;
     public Image highlightBG;
 
-    public int count;
 
-    public virtual void Init(Vector3Int _pos, string _code, int _count)
+    public virtual void Init(TileData tileData, string text)
     {
-        pos = _pos;
-        gameObject.transform.position = _pos + MyUtils.Offset;
-        tmp.SetText(_code);
-        count = _count;
-        if (_count > 0) countText.SetText(ZString.Concat(_count));
+        this.tileData = tileData;
+        gameObject.transform.position = tileData.pos + MyUtils.Offset;
+
+        this.text.SetText(text);
+
+        pos = tileData.pos;
+        stack = tileData.stack;
+        if (stack > 0) stackText.SetText(ZString.Concat(stack));
     }
 
     public virtual void BlockTile(bool isBlocking)
@@ -47,13 +54,13 @@ public class TDObject : MonoBehaviour
 
     public virtual void DecreaseCount()
     {
-        if (count > 0)
+        if (stack > 0)
         {
-            countText.SetText(ZString.Concat(--count));
+            stackText.SetText(ZString.Concat(--stack));
 
-            if (count == 0)
+            if (stack == 0)
             {
-                countText.gameObject.SetActive(false);
+                stackText.gameObject.SetActive(false);
             }
         }
     }

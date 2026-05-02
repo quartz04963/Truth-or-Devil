@@ -3,44 +3,53 @@ using TMPro;
 using Cysharp.Text;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class TDGate : TDObject
 {
     public int code;
     
     public bool isMarked;
+
     public Button button;
     public Image XmarkImg;
     public Image areaBG;
     public GameObject areaRim;
     
-
     public GameObject infoBox;
     public TextMeshProUGUI redCountText, blueCountText, greenCountText, whiteCountText;
 
     public SpriteRenderer spriteRenderer;
     public Sprite defaultSprite, heavenSprite, hellSprite;
 
-    public void Init(Vector3Int _pos, int _code, int _count)
+    public void Init(TileData tileData)
     {
-        code = _code;
-        base.Init(_pos, ZString.Format("{0}", (char)('A' + _code)), _count);
+        code = tileData.data[2];
+        base.Init(tileData, ZString.Format("{0}", (char)('A' + code)));
+        
         SetInfoBox();
     }
 
     public void SetInfoBox()
     {
-        int[] gateColorCount = new[]{0, 0, 0, 0};
-        foreach (TDTileData tile in MapManager.instance.tileList)
-        {
-            if (Math.Abs(tile.pos.x - pos.x) <= 1 && Math.Abs(tile.pos.y - pos.y) <= 1) gateColorCount[(int)tile.color]++;
-        }
-        gateColorCount[(int)TileColor.White]--;
+        Dictionary<TileColor, int> gateColorCount = new Dictionary<TileColor, int>();
+        gateColorCount[TileColor.Red] = 0;
+        gateColorCount[TileColor.Blue] = 0;
+        gateColorCount[TileColor.Green] = 0;
+        gateColorCount[TileColor.White] = 0;
 
-        redCountText.SetText(ZString.Concat("RED : ", gateColorCount[(int)TileColor.Red]));
-        blueCountText.SetText(ZString.Concat("BLUE : ", gateColorCount[(int)TileColor.Blue]));
-        greenCountText.SetText(ZString.Concat("GREEN : ", gateColorCount[(int)TileColor.Green]));
-        whiteCountText.SetText(ZString.Concat("WHITE : ", gateColorCount[(int)TileColor.White]));
+        foreach (TileData tile in MapManager.instance.tiles)
+        {
+            if (Math.Abs(tile.pos.x - pos.x) <= 1 && Math.Abs(tile.pos.y - pos.y) <= 1) {
+                gateColorCount[tile.color]++;
+            }
+        }
+        gateColorCount[TileColor.White]--;
+
+        redCountText.SetText(ZString.Concat("RED : ", gateColorCount[TileColor.Red]));
+        blueCountText.SetText(ZString.Concat("BLUE : ", gateColorCount[TileColor.Blue]));
+        greenCountText.SetText(ZString.Concat("GREEN : ", gateColorCount[TileColor.Green]));
+        whiteCountText.SetText(ZString.Concat("WHITE : ", gateColorCount[TileColor.White]));
         
         redCountText.gameObject.SetActive(MapManager.instance.canAskRed); 
         blueCountText.gameObject.SetActive(MapManager.instance.canAskBlue);
@@ -80,7 +89,7 @@ public class TDGate : TDObject
     {
         if (!GamePlay.instance.IsRunning) return;
         
-        if (MapManager.instance.tileList.FindIndex(tile => tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color) != -1)
+        if (MapManager.instance.tiles.FindIndex(tile => tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color) != -1)
             infoBox.SetActive(true);
     }
 

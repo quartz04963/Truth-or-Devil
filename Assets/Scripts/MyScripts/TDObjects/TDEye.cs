@@ -15,16 +15,17 @@ public class TDEye : TDObject
     public GameObject button;
     public GameObject selectingButtons;
 
-    public void Init(Vector3Int _pos, int _code, int _count)
+    public void Init(TileData tileData)
     {
-        code = _code;
-        base.Init(_pos, MyUtils.ConvertToRoman(_code + 1), _count);
+        code = tileData.data[2];
+        trueID = (ToD)tileData.data[1];
+        base.Init(tileData, MyUtils.ConvertToRoman(code + 1));
     }
 
-    public static void SetTDEyeState(TDEye eye, ToD _guessedID)
+    public static void SetTDEyeState(TDEye eye, ToD guessedID)
     {
-        eye.guessedID = _guessedID;
-        switch (_guessedID)
+        eye.guessedID = guessedID;
+        switch (guessedID)
         {
             case ToD.Null: eye.isMarked = false; eye.spriteRenderer.sprite = eye.defaultSprite; break;
             case ToD.Truth: eye.isMarked = true; eye.spriteRenderer.sprite = eye.angelSprite; break;
@@ -39,7 +40,7 @@ public class TDEye : TDObject
     
     public void OnClicked()
     {
-        foreach (TDEye eye in MapManager.instance.eyeList)
+        foreach (TDEye eye in MapManager.instance.eyes)
         {
             if (eye != this)
             {
@@ -54,15 +55,15 @@ public class TDEye : TDObject
         }
     }
 
-    public void OnSelectingButtonClicked(int _guessedID)
+    public void OnSelectingButtonClicked(int guessedID)
     {
-        SetTDEyeState(this, (ToD)_guessedID);
+        SetTDEyeState(this, (ToD)guessedID);
         OnClicked();
     }
 
     public override void DecreaseCount()
     {
-        if (count == 1) spriteRenderer.color = Color.gray;
+        if (stack == 1) spriteRenderer.color = Color.gray;
         base.DecreaseCount();
     }
 }

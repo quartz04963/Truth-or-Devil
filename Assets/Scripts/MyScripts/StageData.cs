@@ -1,453 +1,353 @@
-using System;
 using System.Collections.Generic;
-using UnityEditor.SceneManagement;
-using UnityEngine;
 
-
-[Serializable]
-public readonly struct TDTileData
-{
-    public readonly Vector3Int pos;
-    public readonly TileColor color;
-    public readonly List<int> data;
-    public readonly int count;
-
-    public TDTileData(Vector3Int pos, TileColor color, List<int> data, int count)
-    {
-        this.pos = pos;
-        this.color = color; 
-        this.data = data;
-        this.count = count;
-    }
-}
 
 public readonly struct StageData
 {
-    public const int Ch1StageCount = 13;
-    public const int Ch2StageCount = 9;
-    public const int Ch3StageCount = 0;
-    public static List<TDTileData>[] StageList = new List<TDTileData>[Ch1StageCount + Ch2StageCount + Ch3StageCount];
+    public readonly int chapter;
+    public readonly int stage;
+    public readonly List<TileData> tiles;
 
-    static StageData()
+    public StageData(int chapter, int stage, List<TileData> tiles)
     {
-        //챕터 1
-        StageList[0] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 1, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Gate, ToD.Truth, 1),
-            MyUtils.ConstructTileData(0, 0, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 0, "GATE"),
-            MyUtils.ConstructTileData(2, 0, "RED"),
-            MyUtils.ConstructTileData(3, 0, "1"),
-            MyUtils.ConstructTileData(4, 0, WhiteData.Eye, ToD.Truth, 0),
-        };
-
-        StageList[1] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 2, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(0, 1, "1"),
-            MyUtils.ConstructTileData(1, 1, "GATE"),
-            MyUtils.ConstructTileData(2, 1, "WHITE"),
-            MyUtils.ConstructTileData(0, 0, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(1, 0, "GREEN"),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Eye, ToD.Devil, 0),
-        };
-
-        StageList[2] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 2, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(2, 2, "1"),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 1, "BLUE"),
-            MyUtils.ConstructTileData(2, 1, "RED"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(4, 1, "8"),
-            MyUtils.ConstructTileData(1, 0, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 0, "GATE"),
-        };
-
-        StageList[3] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(2, 3, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(1, 2, "WHITE"),
-            MyUtils.ConstructTileData(2, 2, "GATE"),
-            MyUtils.ConstructTileData(3, 2, "RED"),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 1, "1"),
-            MyUtils.ConstructTileData(2, 1, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(3, 1, "2"),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Gate, ToD.Devil, 2),
-        };
-
-        StageList[4] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 2, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(2, 2, "BLUE"),
-            MyUtils.ConstructTileData(3, 2, "0"),
-            MyUtils.ConstructTileData(4, 2, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(1, 1, "GATE"),
-            MyUtils.ConstructTileData(2, 1, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(3, 1, "GATE"),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(0, 0, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(1, 0, "RED"),
-            MyUtils.ConstructTileData(2, 0, "1"),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Blank, ToD.Null, 0),
-        };
-
-        StageList[5] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(2, 4, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(0, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(1, 3, "GATE"),
-            MyUtils.ConstructTileData(2, 3, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(3, 3, "GATE"),
-            MyUtils.ConstructTileData(0, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(1, 2, "GREEN"),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(3, 2, "WHITE"),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(1, 1, "3"),
-            MyUtils.ConstructTileData(2, 1, "2"),
-            MyUtils.ConstructTileData(3, 1, "1"),
-            MyUtils.ConstructTileData(0, 0, WhiteData.Gate, ToD.Devil, 4),
-            MyUtils.ConstructTileData(1, 0, "1"),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTileData(3, 0, "1"),
-        };
-
-        StageList[6] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(3, 3, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(0, 2, "1"),
-            MyUtils.ConstructTileData(1, 2, "MAP"),
-            MyUtils.ConstructTileData(2, 2, "DEVIL"),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTileData(4, 2, WhiteData.Eye, ToD.Devil, 2),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 1, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(2, 1, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(3, 1, "GATE"),
-            MyUtils.ConstructTileData(2, 0, "1"),
-            MyUtils.ConstructTileData(3, 0, "RED"),
-        };
-
-        StageList[7] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 2, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 1, "MAP"),
-            MyUtils.ConstructTileData(2, 1, "ANGEL"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(1, 0, "GATE"),
-            MyUtils.ConstructTileData(2, 0, "1"),
-            MyUtils.ConstructTileData(3, 0, "RED"),
-        };
-
-        StageList[8] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 3, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(1, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(2, 3, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTileData(0, 2, "0"),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Blank, ToD.Null, 0),
-            MyUtils.ConstructTileData(3, 2, "2"),
-            MyUtils.ConstructTileData(0, 1, "RED"),
-            MyUtils.ConstructTileData(1, 1, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(2, 1, "BLUE"),
-            MyUtils.ConstructTileData(3, 1, "DEVIL"),
-            MyUtils.ConstructTileData(0, 0, "GATE"),
-            MyUtils.ConstructTileData(1, 0, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Blank, ToD.Null, 0),
-            MyUtils.ConstructTileData(3, 0, "MAP"),
-        };
-
-        StageList[9] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 4, "GATE"),
-            MyUtils.ConstructTileData(1, 4, "BLUE"),
-            MyUtils.ConstructTileData(2, 4, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(0, 3, "WHITE"),
-            MyUtils.ConstructTileData(1, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(2, 3, "2"),
-            MyUtils.ConstructTileData(3, 3, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(0, 2, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(1, 2, "1"),
-            MyUtils.ConstructTileData(2, 2, "GREEN"),
-            MyUtils.ConstructTileData(3, 2, "1"),
-            MyUtils.ConstructTileData(4, 2, "RED"),
-            MyUtils.ConstructTileData(1, 1, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(2, 1, "1"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Truth, 2),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Gate, ToD.Truth, 3),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Gate, ToD.Devil, 4),
-        };
-
-        StageList[10] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(2, 4, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(4, 4, "0"),
-            MyUtils.ConstructTileData(0, 3, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 3, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(2, 3, "MAP"),
-            MyUtils.ConstructTileData(3, 3, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(4, 3, "GREEN"),
-            MyUtils.ConstructTileData(0, 2, "1"),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(2, 2, "DEVIL"),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(4, 2, "GATE"),
-            MyUtils.ConstructTileData(0, 1, "WHITE"),
-            MyUtils.ConstructTileData(1, 1, WhiteData.Gate, ToD.Devil, 4),
-            MyUtils.ConstructTileData(2, 1, "1"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Eye, ToD.Devil, 2),
-            MyUtils.ConstructTileData(0, 0, "GATE"),
-        };
-
-        StageList[11] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(2, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(4, 3, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(0, 2, "2"),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(2, 2, "0"),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Gate, ToD.Truth, 1),
-            MyUtils.ConstructTileData(4, 2, "2"),
-            MyUtils.ConstructTileData(0, 1, "MAP"),
-            MyUtils.ConstructTileData(1, 1, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(2, 1, "MAP"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(4, 1, "GATE"),
-            MyUtils.ConstructTileData(0, 0, "ANGEL"),
-            MyUtils.ConstructTileData(1, 0, WhiteData.Eye, ToD.Truth, 2),
-            MyUtils.ConstructTileData(2, 0, "GREEN"),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(4, 0, "BLUE"),
-        };
-
-        StageList[12] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 4, "2"),
-            MyUtils.ConstructTileData(2, 4, "DEVIL"),
-            MyUtils.ConstructTileData(3, 4, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(4, 4, "DEVIL"),
-            MyUtils.ConstructTileData(5, 4, "RED"),
-            MyUtils.ConstructTileData(1, 3, "ANGEL"),
-            MyUtils.ConstructTileData(2, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(3, 3, "MAP"),
-            MyUtils.ConstructTileData(4, 3, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(5, 3, "GREEN"),
-            MyUtils.ConstructTileData(0, 2, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 2, "GATE"),
-            MyUtils.ConstructTileData(4, 2, "GATE"),
-            MyUtils.ConstructTileData(5, 2, WhiteData.Eye, ToD.Truth, 2),
-            MyUtils.ConstructTileData(1, 1, "2"),
-            MyUtils.ConstructTileData(2, 1, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(5, 1, "1"),
-            MyUtils.ConstructTileData(1, 0, "BLUE"),
-            MyUtils.ConstructTileData(2, 0, "2"),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Eye, ToD.Devil, 3),
-            MyUtils.ConstructTileData(4, 0, "3"),
-            MyUtils.ConstructTileData(5, 0, "2"),
-        };
-
-        //챕터 2
-        StageList[Ch1StageCount + 0] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 3, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(0, 2, "MAP"),
-            MyUtils.ConstructTileData(1, 2, "GATE"),
-            MyUtils.ConstructTileData(0, 1, "ANGEL"),
-            MyUtils.ConstructTileData(1, 1, "RED"),
-            MyUtils.ConstructTileData(0, 0, "2"),
-            MyUtils.ConstructTileData(1, 0, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Gate, ToD.Truth, 1),    
-        };
-
-        StageList[Ch1StageCount + 1] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 3, "MAP"),
-            MyUtils.ConstructTileData(1, 3, "DEVIL"),
-            MyUtils.ConstructTileData(2, 3, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(3, 3, "RED"),
-            MyUtils.ConstructTileData(4, 3, "MAP"),
-            MyUtils.ConstructTileData(0, 2, "GREEN"),
-            MyUtils.ConstructTileData(1, 2, "1"),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(3, 2, "0"),
-            MyUtils.ConstructTileData(4, 2, "ANGEL"),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(1, 1, "GATE"),
-            MyUtils.ConstructTileData(2, 1, "2"),
-            MyUtils.ConstructTileData(3, 1, "GATE"),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Eye, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(4, 0, WhiteData.Gate, ToD.Devil, 3),
-        };
-
-        StageList[Ch1StageCount + 2] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 4, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(2, 4, "2"),
-            MyUtils.ConstructTileData(3, 4, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(1, 3, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 3, "WHITE"),
-            MyUtils.ConstructTileData(3, 3, "GATE"),
-            MyUtils.ConstructTileData(1, 2, "MAP"),
-            MyUtils.ConstructTileData(2, 2, "ANGEL"),
-            MyUtils.ConstructTileData(3, 2, "1"),
-            MyUtils.ConstructTileData(4, 2, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(1, 1, "0"),
-            MyUtils.ConstructTileData(2, 1, "BLUE"),
-            MyUtils.ConstructTileData(3, 1, "GATE"),
-            MyUtils.ConstructTileData(4, 1, "3"),
-            MyUtils.ConstructTileData(0, 0, "MAP"),
-            MyUtils.ConstructTileData(1, 0, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Eye, ToD.Truth, 2),
-            MyUtils.ConstructTileData(4, 0, "DEVIL"),
-        };
-
-        StageList[Ch1StageCount + 3] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 5, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(2, 5, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(1, 4, "0"),
-            MyUtils.ConstructTileData(2, 4, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(3, 4, "MAP"),
-            MyUtils.ConstructTileData(4, 4, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(1, 3, "GATE"),
-            MyUtils.ConstructTileData(2, 3, "1"),
-            MyUtils.ConstructTileData(3, 3, "3"),
-            MyUtils.ConstructTileData(4, 3, "GATE"),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(2, 2, "MAP"),
-            MyUtils.ConstructTileData(3, 2, "ANGEL"),
-            MyUtils.ConstructTileData(4, 2, "2"),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Eye, ToD.Devil, 2),
-            MyUtils.ConstructTileData(1, 1, "RED"),
-            MyUtils.ConstructTileData(2, 1, "BLUE"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(4, 1, "DEVIL"),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(4, 0, WhiteData.Eye, ToD.Truth, 3),
-        };
-
-        StageList[Ch1StageCount + 4] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 3, WhiteData.Gate, ToD.Truth, 0),
-            MyUtils.ConstructTileData(1, 3, "RED"),
-            MyUtils.ConstructTileData(3, 3, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(1, 2, "GATE"),
-            MyUtils.ConstructTileData(2, 2, "8"),
-            MyUtils.ConstructTileData(3, 2, "BLUE"),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 1, "1"),
-            MyUtils.ConstructTileData(2, 1, "GATE"),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Gate, ToD.Devil, 2),
-        };
-
-        StageList[Ch1StageCount + 5] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(0, 2, "GREEN"),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(2, 2, "1"),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Gate, ToD.Truth, 1),
-            MyUtils.ConstructTileData(1, 1, "BLUE"),
-            MyUtils.ConstructTileData(2, 1, "GATE"),
-            MyUtils.ConstructTileData(3, 1, "0"),
-            MyUtils.ConstructTileData(1, 0, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(2, 0, "RED"),
-            MyUtils.ConstructTileData(3, 0, WhiteData.Blank, ToD.Null, 1),
-        };
-
-        StageList[Ch1StageCount + 6] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 5, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(0, 4, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 4, "2"),
-            MyUtils.ConstructTileData(2, 4, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(3, 4, "1"),
-            MyUtils.ConstructTileData(4, 4, WhiteData.Eye, ToD.Devil, 0),
-            MyUtils.ConstructTileData(0, 3, "1"),
-            MyUtils.ConstructTileData(1, 3, "DEVIL"),
-            MyUtils.ConstructTileData(2, 3, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(3, 3, "2"),
-            MyUtils.ConstructTileData(4, 3, "WHITE"),
-            MyUtils.ConstructTileData(0, 2, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(1, 2, "BLUE"),
-            MyUtils.ConstructTileData(2, 2, "GATE"),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Gate, ToD.Truth, 3),
-            MyUtils.ConstructTileData(4, 2, WhiteData.Gate, ToD.Devil, 4),
-            MyUtils.ConstructTileData(0, 1, "1"),
-            MyUtils.ConstructTileData(1, 1, "GREEN"),
-            MyUtils.ConstructTileData(2, 1, "2"),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Devil, 2),
-            MyUtils.ConstructTileData(4, 1, "RED"),
-            MyUtils.ConstructTileData(5, 1, WhiteData.Gate, ToD.Devil, 5),
-            MyUtils.ConstructTileData(0, 0, "RED"),
-            MyUtils.ConstructTileData(1, 0, "0"),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Gate, ToD.Devil, 6),
-            MyUtils.ConstructTileData(3, 0, "ANGEL"),
-            MyUtils.ConstructTileData(4, 0, "MAP"),
-        };
-
-        StageList[Ch1StageCount + 7] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(2, 4, "ANGEL", 3),
-            MyUtils.ConstructTileData(0, 3, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(1, 3, WhiteData.Gate, ToD.Devil, 1),
-            MyUtils.ConstructTileData(2, 3, "1"),
-            MyUtils.ConstructTileData(3, 3, WhiteData.Gate, ToD.Truth, 2),
-            MyUtils.ConstructTileData(0, 2, "GATE"),
-            MyUtils.ConstructTileData(1, 2, WhiteData.Eye, ToD.Truth, 0),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(3, 2, WhiteData.Eye, ToD.Truth, 2),
-            MyUtils.ConstructTileData(4, 2, "MAP"),
-            MyUtils.ConstructTileData(1, 1, "BLUE", 2),
-            MyUtils.ConstructTileData(2, 1, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(3, 1, "2"),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 0, "0"),
-            MyUtils.ConstructTileData(3, 0, "WHITE", 2),
-        };
-
-        StageList[Ch1StageCount + 8] = new List<TDTileData>
-        {
-            MyUtils.ConstructTileData(1, 2, "ANGEL"),
-            MyUtils.ConstructTileData(2, 2, WhiteData.Gate, ToD.Devil, 0),
-            MyUtils.ConstructTileData(3, 2, "RED"),
-            MyUtils.ConstructTileData(4, 2, "BLUE"),
-            MyUtils.ConstructTileData(6, 2, WhiteData.Gate, ToD.Truth, 1),
-            MyUtils.ConstructTileData(0, 1, WhiteData.Blank, ToD.Null, 1),
-            MyUtils.ConstructTileData(1, 1, "1"),
-            MyUtils.ConstructTileData(2, 1, WhiteData.Eye, ToD.Devil, 0, 4),
-            MyUtils.ConstructTileData(3, 1, WhiteData.Eye, ToD.Truth, 1),
-            MyUtils.ConstructTileData(4, 1, WhiteData.Eye, ToD.Truth, 2),
-            MyUtils.ConstructTileData(5, 1, WhiteData.Eye, ToD.Truth, 3),
-            MyUtils.ConstructTileData(6, 1, "DEVIL"),
-            MyUtils.ConstructTileData(1, 0, "MAP"),
-            MyUtils.ConstructTileData(2, 0, WhiteData.Gate, ToD.Devil, 2),
-            MyUtils.ConstructTileData(3, 0, "GREEN"),
-            MyUtils.ConstructTileData(4, 0, "WHITE"),
-            MyUtils.ConstructTileData(5, 0, WhiteData.Gate, ToD.Devil, 3),
-            MyUtils.ConstructTileData(6, 0, "GATE"),  
-        };
+        this.chapter = chapter;
+        this.stage = stage;
+        this.tiles = tiles;
     }
+}
+
+public readonly struct StageDataList
+{
+    public const int Chapter0 = 6;
+    public const int Chapter1 = 6;
+    public const int Chapter2 = 6;
+    public const int Chapter3 = 0;
+    public const int Chapter4 = 0;
+    public const int Chapter5 = 0;
+
+    public static int StageCount => Chapter0 + Chapter1 + Chapter2 + Chapter3 + Chapter4 + Chapter5;
+
+    public static List<StageData> stages = new List<StageData>()
+    {
+        new StageData(0, 1, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(2, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(4, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(2, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(4, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(1, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(2, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(4, 0, WhiteData.Blank, ToD.Null, 0),
+        }),
+
+        new StageData(0, 2, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, "EXIT"),
+            TileData.Construct(2, 2, "8"),
+            TileData.Construct(3, 2, "8"),
+            TileData.Construct(4, 2, "8"),
+            TileData.Construct(0, 1, "GREEN"),
+            TileData.Construct(2, 1, "8"),
+            TileData.Construct(3, 1, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(4, 1, "8"),
+            TileData.Construct(0, 0, "8"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 0, "8"),
+            TileData.Construct(3, 0, "8"),
+            TileData.Construct(4, 0, "8"),
+        }),
+
+        new StageData(0, 3, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, "EXIT"),
+            TileData.Construct(2, 2, "EXIT"),
+            TileData.Construct(3, 2, "EXIT"),
+            TileData.Construct(4, 2, "EXIT"),
+            TileData.Construct(0, 1, "GREEN"),
+            TileData.Construct(2, 1, "EXIT"),
+            TileData.Construct(3, 1, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(4, 1, "EXIT"),
+            TileData.Construct(0, 0, "8"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(2, 0, "EXIT"),
+            TileData.Construct(3, 0, "EXIT"),
+            TileData.Construct(4, 0, "EXIT"),
+        }),
+
+        new StageData(0, 4, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, "WHITE"),
+            TileData.Construct(2, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(4, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 1, "3"),
+            TileData.Construct(2, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, WhiteData.Gate, ToD.Truth, 1),
+            TileData.Construct(4, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 0, "EXIT"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 0, "BLUE"),
+            TileData.Construct(3, 0, "BLUE"),
+            TileData.Construct(4, 0, "BLUE"),
+        }),
+
+        new StageData(0, 5, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, "1"),
+            TileData.Construct(2, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(4, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 1, "EXIT"),
+            TileData.Construct(2, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(4, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 0, "GREEN"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 0, "8"),
+            TileData.Construct(4, 0, WhiteData.Blank, ToD.Null, 0),
+        }),
+
+        new StageData(0, 6, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(2, 2, "BLUE"),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(4, 2, "RED"),
+            TileData.Construct(0, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(2, 1, "EXIT"),
+            TileData.Construct(3, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(4, 1, "EXIT"),
+            TileData.Construct(0, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 0, "2"),
+            TileData.Construct(3, 0, WhiteData.Gate, ToD.Truth, 1),
+            TileData.Construct(4, 0, "8"),
+        }),
+        
+        new StageData(1, 1, new List<TileData>
+        {
+            TileData.Construct(1, 2, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(2, 2, "1"),
+            TileData.Construct(3, 2, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(0, 1, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(1, 1, "GARO"),
+            TileData.Construct(2, 1, "2"),
+            TileData.Construct(3, 1, "EXIT"),
+            TileData.Construct(1, 0, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(2, 0, "3"),
+            TileData.Construct(3, 0, WhiteData.Gate, ToD.Devil, 2),
+        }),
+
+        new StageData(1, 2, new List<TileData>
+        {
+            TileData.Construct(1, 3, WhiteData.Gate, ToD.Truth, 1),
+            TileData.Construct(3, 3, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(1, 2, "GARO"),
+            TileData.Construct(2, 2, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(3, 2, "2"),
+            TileData.Construct(4, 2, WhiteData.Gate, ToD.Devil, 3),
+            TileData.Construct(1, 1, "EXIT"),
+            TileData.Construct(3, 1, "1"),
+            TileData.Construct(1, 0, "SERO"),
+            TileData.Construct(2, 0, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(3, 0, "0"),
+        }),
+
+        new StageData(1, 3, new List<TileData>
+        {
+            TileData.Construct(1, 4, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(3, 4, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(0, 3, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(1, 3, "0"),
+            TileData.Construct(2, 3, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 3, "2"),
+            TileData.Construct(4, 3, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 2, "GARO"),
+            TileData.Construct(2, 2, "1"),
+            TileData.Construct(4, 2, "SERO"),
+            TileData.Construct(0, 1, WhiteData.Gate, ToD.Truth, 1),
+            TileData.Construct(1, 1, "EXIT"),
+            TileData.Construct(2, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, "EXIT"),
+            TileData.Construct(4, 1, WhiteData.Eye, ToD.Devil, 1),
+            TileData.Construct(1, 0, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(3, 0, WhiteData.Blank, ToD.Null, 0),
+        }),
+
+        new StageData(1, 4, new List<TileData>
+        {
+            TileData.Construct(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(1, 2, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(2, 2, "1"),
+            TileData.Construct(0, 1, "EXIT"),
+            TileData.Construct(1, 1, "GARO", true),
+            TileData.Construct(2, 1, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(0, 0, WhiteData.Gate, ToD.Truth, 2),
+            TileData.Construct(1, 0, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(2, 0, "2"),
+        }),
+
+        new StageData(1, 5, new List<TileData>
+        {
+            TileData.Construct(0, 2, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(1, 2, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(4, 2, "1"),
+            TileData.Construct(5, 2, "EXIT"),
+            TileData.Construct(1, 1, "GARO"),
+            TileData.Construct(2, 1, "SERO"),
+            TileData.Construct(3, 1, "1", true),
+            TileData.Construct(4, 1, WhiteData.Eye, ToD.Truth, 1),
+            TileData.Construct(5, 1, "2"),
+            TileData.Construct(0, 0, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(1, 0, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(2, 0, WhiteData.Gate, ToD.Truth, 3),
+            TileData.Construct(4, 0, "3"),
+            TileData.Construct(5, 0, "EXIT"),
+        }),
+
+        new StageData(1, 6, new List<TileData>
+        {
+            TileData.Construct(0, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(1, 2, "EXIT"),
+            TileData.Construct(3, 2, "EXIT"),
+            TileData.Construct(4, 2, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(0, 1, "GARO"),
+            TileData.Construct(1, 1, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(2, 1, "2", true),
+            TileData.Construct(3, 1, WhiteData.Eye, ToD.Devil, 1),
+            TileData.Construct(4, 1, "SERO"),
+            TileData.Construct(0, 0, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(1, 0, "1"),
+            TileData.Construct(2, 0, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(3, 0, "3"),
+            TileData.Construct(4, 0, WhiteData.Gate, ToD.Truth, 3),
+        }),
+
+        new StageData(2, 1, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, "MAP"),
+            TileData.Construct(2, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(4, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 1, "DEVIL"),
+            TileData.Construct(2, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(4, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 0, "3"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 0, WhiteData.Eye, ToD.Devil, 1),
+            TileData.Construct(3, 0, WhiteData.Eye, ToD.Devil, 2),
+            TileData.Construct(4, 0, WhiteData.Eye, ToD.Devil, 3),
+        }),
+
+        new StageData(2, 2, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(0, 2, "MAP"),
+            TileData.Construct(2, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(4, 2, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 1, "DEVIL"),
+            TileData.Construct(2, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(4, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(0, 0, "3"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(2, 0, "1"),
+            TileData.Construct(3, 0, "BLUE"),
+            TileData.Construct(4, 0, "EXIT"),
+        }),
+
+        new StageData(2, 3, new List<TileData>
+        {
+            TileData.Construct(1, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(3, 3, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(1, 2, "MAP"),
+            TileData.Construct(2, 2, "ANGEL"),
+            TileData.Construct(3, 2, "1"),
+            TileData.Construct(1, 1, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 1, WhiteData.Eye, ToD.Truth, 1),
+            TileData.Construct(0, 0, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(1, 0, "EXIT"),
+            TileData.Construct(2, 0, "GREEN"),
+            TileData.Construct(3, 0, "1"),
+            TileData.Construct(4, 0, WhiteData.Gate, ToD.Truth, 1),
+        }),
+
+        new StageData(2, 4, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(2, 3, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(4, 3, WhiteData.Eye, ToD.Truth, 1),
+            TileData.Construct(0, 2, "2"),
+            TileData.Construct(2, 2, "1"),
+            TileData.Construct(3, 2, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(0, 1, "DEVIL"),
+            TileData.Construct(2, 1, "GARO"),
+            TileData.Construct(3, 1, "2"),
+            TileData.Construct(4, 1, WhiteData.Gate, ToD.Truth, 2),
+            TileData.Construct(0, 0, "EXIT"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(2, 0, "MAP"),
+            TileData.Construct(3, 0, "GARO"),
+            TileData.Construct(4, 0, "3"),
+        }),
+
+        new StageData(2, 5, new List<TileData>
+        {
+            TileData.Construct(0, 2, "1"),
+            TileData.Construct(1, 2, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(3, 2, "MAP"),
+            TileData.Construct(4, 2, WhiteData.Eye, ToD.Devil, 2),
+            TileData.Construct(5, 2, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(6, 2, "2"),
+            TileData.Construct(0, 1, "GARO"),
+            TileData.Construct(1, 1, WhiteData.Gate, ToD.Truth, 1),
+            TileData.Construct(3, 1, "ANGEL"),
+            TileData.Construct(5, 1, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(6, 1, "SERO"),
+            TileData.Construct(0, 0, "EXIT"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(2, 0, WhiteData.Eye, ToD.Devil, 1),
+            TileData.Construct(3, 0, "2"),
+            TileData.Construct(5, 0, WhiteData.Gate, ToD.Devil, 3),
+            TileData.Construct(6, 0, "EXIT"),
+        }),
+
+        new StageData(2, 6, new List<TileData>
+        {
+            TileData.Construct(0, 3, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(2, 3, WhiteData.Gate, ToD.Truth, 0),
+            TileData.Construct(3, 3, WhiteData.Gate, ToD.Devil, 1),
+            TileData.Construct(4, 3, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(0, 2, "MAP"),
+            TileData.Construct(2, 2, "WHITE"),
+            TileData.Construct(3, 2, "1"),
+            TileData.Construct(4, 2, "EXIT"),
+            TileData.Construct(0, 1, "0"),
+            TileData.Construct(2, 1, WhiteData.Eye, ToD.Devil, 1),
+            TileData.Construct(3, 1, "ANGEL", true),
+            TileData.Construct(4, 1, "2"),
+            TileData.Construct(0, 0, "BLUE"),
+            TileData.Construct(1, 0, WhiteData.Eye, ToD.Devil, 0),
+            TileData.Construct(2, 0, WhiteData.Blank, ToD.Null, 0),
+            TileData.Construct(3, 0, WhiteData.Eye, ToD.Devil, 2),
+            TileData.Construct(4, 0, "WHITE"),
+        }),
+    };
 }

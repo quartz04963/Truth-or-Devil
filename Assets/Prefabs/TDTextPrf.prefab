@@ -44,10 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c31023a6f6d6704980ca39d7384e34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stack: 0
   pos: {x: 0, y: 0, z: 0}
   canvas: {fileID: 5065733079168430215}
-  tmp: {fileID: 8864713805511492394}
-  countText: {fileID: 7288362818394050913}
+  stackText: {fileID: 7288362818394050913}
+  text: {fileID: 8864713805511492394}
   tileBlock: {fileID: 1789248151169405703}
   highlightRim: {fileID: 3641740610368918195}
   highlightBG: {fileID: 2195524326448359378}
@@ -451,7 +452,7 @@ GameObject:
   - component: {fileID: 2722958427955530800}
   - component: {fileID: 7288362818394050913}
   m_Layer: 5
-  m_Name: Count (TMP)
+  m_Name: Stack (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

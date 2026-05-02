@@ -38,7 +38,7 @@ public class Hint : MonoBehaviour
 
     void Start()
     {
-        int hintIdx = GameManager.Instance.CurrentStage - 1;
+        int hintIdx = GameManager.Instance.currentStage - 1;
         
         if (hintIdx >= HintTexts.Length) return;
         

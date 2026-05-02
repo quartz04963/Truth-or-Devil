@@ -30,32 +30,35 @@ public class LogManager : MonoBehaviour
     public void InitEmptyCategoryLogs()
     {
         logList = new List<AnswerLog>();
-        
-        TDEye defaultEye = MapManager.instance.eyeList.Find(eye => eye.code == 0);
 
-        for (int i = 1; i < MapManager.instance.mapEyeCount.Sum(); i++)
+        for (int i = 0; i < MapManager.instance.mapEyeCount.Values.Sum(); i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TDEye tdEye = MapManager.instance.eyeList.Find(eye => eye.code == i);
-            log.Init(MyUtils.RedDataNull, MyUtils.BlueDataNull, MyUtils.GreenDataNull, tdEye);
+            TDEye tdEye = MapManager.instance.eyes.Find(eye => eye.code == i);
+            log.Init(TileData.Null, TileData.Null, TileData.Null, tdEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);
         }
 
-        for (int i = 1; i <= (int)TileColor.White; i++)
+        TDEye defaultEye = MapManager.instance.eyes.Find(eye => eye.code == 0);
+        if (defaultEye == null) return;
+
+        for (int i = (int)TileColor.Red; i <= (int)TileColor.White; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            log.Init(MyUtils.RedDataNull, new List<int>{(int)BlueData.Color, i}, MyUtils.GreenDataNull, defaultEye);
+            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Color, i}, false, -1);
+            log.Init(TileData.Null, blueData, TileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);
         }
 
-        for (int i = 2; i <= (int)ToD.Devil; i++)
+        for (int i = (int)ToD.Truth; i <= (int)ToD.Devil; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            log.Init(MyUtils.RedDataNull, new List<int>{(int)BlueData.Eye, i}, MyUtils.GreenDataNull, defaultEye);
+            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Eye, i}, false, -1);
+            log.Init(TileData.Null, blueData, TileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);
@@ -67,14 +70,14 @@ public class LogManager : MonoBehaviour
         foreach (AnswerLog log in logList)
         {
             if (log.tdEye == tdEye &&
-                log.redTileData.SequenceEqual(qustion.redBoxData) && 
-                log.blueTileData.SequenceEqual(qustion.blueBoxData) && 
-                log.greenTileData.SequenceEqual(qustion.greenBoxData)
+                log.redTileData.data.SequenceEqual(qustion.lastRedTile.tileData.data) && 
+                log.blueTileData.data.SequenceEqual(qustion.lastBlueTile.tileData.data) && 
+                log.greenTileData.data.SequenceEqual(qustion.lastGreenTile.tileData.data)
             ) return;
         }
 
         AnswerLog answerlog = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-        answerlog.Init(qustion.redBoxData, qustion.blueBoxData, qustion.greenBoxData, tdEye, ZString.Concat(answer));
+        answerlog.Init(qustion.lastRedTile.tileData, qustion.lastBlueTile.tileData, qustion.lastGreenTile.tileData, tdEye, ZString.Concat(answer));
         logList.Add(answerlog);
 
         OnDropdownChanged();
@@ -90,8 +93,8 @@ public class LogManager : MonoBehaviour
         {
             case 0: sortedLogList = logList; break;
             case 1: sortedLogList = logList.OrderBy(log => log.tdEye.code).ToList(); break;
-            case 2: sortedLogList = logList.OrderBy(log => log.blueTileData[1]).ToList(); break;
-            case 3: sortedLogList = logList.OrderBy(log => log.blueTileData[1]).ToList(); break;
+            case 2: sortedLogList = logList.OrderBy(log => log.blueTileData.data[1]).ToList(); break;
+            case 3: sortedLogList = logList.OrderBy(log => log.blueTileData.data[1]).ToList(); break;
         }
         
         for (int i = 0; i < sortedLogList.Count; i++)
