@@ -38,10 +38,10 @@ public class TDGate : TDObject
         gateColorCount[TileColor.Green] = 0;
         gateColorCount[TileColor.White] = 0;
 
-        foreach (TileData tile in MapManager.instance.tiles)
+        foreach (TDObject obj in MapManager.instance.map)
         {
-            if (Math.Abs(tile.pos.x - pos.x) <= 1 && Math.Abs(tile.pos.y - pos.y) <= 1) {
-                gateColorCount[tile.color]++;
+            if (Math.Abs(obj.pos.x - pos.x) <= 1 && Math.Abs(obj.pos.y - pos.y) <= 1) {
+                gateColorCount[obj.tileData.color]++;
             }
         }
         gateColorCount[TileColor.White]--;
@@ -89,7 +89,7 @@ public class TDGate : TDObject
     {
         if (!GamePlay.instance.IsRunning) return;
         
-        if (MapManager.instance.tiles.FindIndex(tile => tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color) != -1)
+        if (MapManager.instance.map.FindIndex(obj => obj.tileData.color == TileColor.Blue && obj.tileData.data[0] == (int)BlueData.Color) != -1)
             infoBox.SetActive(true);
     }
 

@@ -10,8 +10,6 @@ public class TDObject : MonoBehaviour
     public Vector3Int pos;
     public TileData tileData;
 
-    
-
     public Canvas canvas;
     public TextMeshProUGUI stackText;
     public TextMeshProUGUI text;
@@ -30,6 +28,7 @@ public class TDObject : MonoBehaviour
         pos = tileData.pos;
         stack = tileData.stack;
         if (stack > 0) stackText.SetText(ZString.Concat(stack));
+        else if (stack == 0) stackText.gameObject.SetActive(false);
     }
 
     public virtual void BlockTile(bool isBlocking)

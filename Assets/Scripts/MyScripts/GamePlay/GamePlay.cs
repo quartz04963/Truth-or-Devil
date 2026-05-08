@@ -65,7 +65,7 @@ public class GamePlay : MonoBehaviour
         ScenarioManager.instance.ActivateScenarios(true);
         ScenarioManager.instance.InitBaseScenario();
 
-        myCamera.SetOSizeByMap(MapManager.instance.tiles);
+        myCamera.InitOSize();
 
         SoundManager.Instance.StopBgm();
         SoundManager.Instance.PlayBGM("gameplay");
@@ -115,7 +115,7 @@ public class GamePlay : MonoBehaviour
         {
             if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
 
-            TileData nextTile = MapManager.instance.tiles.Find(tile => tile.pos == posOnMap + dir);
+            TileData nextTile = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
             if (nextTile.color == TileColor.White && nextTile.data[0] == (int)WhiteData.Gate)
             {
                 StartCoroutine(CheckEnteringGate(dir));
@@ -140,10 +140,10 @@ public class GamePlay : MonoBehaviour
     {
         if (dir == Vector3Int.zero) return false;
 
-        int idx = MapManager.instance.tiles.FindIndex(tile => tile.pos == posOnMap + dir);
+        int idx = MapManager.instance.map.FindIndex(obj => obj.pos == posOnMap + dir);
         if (idx == -1) return false;
 
-        TileData nextTile = MapManager.instance.tiles[idx];
+        TileData nextTile = MapManager.instance.map[idx].tileData;
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
 
         TDGate gate = MapManager.instance.gates.Find(gate => gate.pos == posOnMap + dir);
@@ -205,10 +205,10 @@ public class GamePlay : MonoBehaviour
         else if (movingRule == MovingRule.CantGoStraight)
         {
             //임시 음영 처리
-            TDObject prevObj = MapManager.instance.objects.Find(obj => obj.pos == prevBlockedPos);
+            TDObject prevObj = MapManager.instance.map.Find(obj => obj.pos == prevBlockedPos);
             if (prevObj != null) prevObj.BlockTile(false); 
 
-            TDObject frontObj = MapManager.instance.objects.Find(obj => obj.pos == posOnMap + dir);
+            TDObject frontObj = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir);
             if (frontObj != null)
             {
                 frontObj.BlockTile(true);
@@ -229,7 +229,7 @@ public class GamePlay : MonoBehaviour
             isChecking = true;
             enteringCheckWindow.SetActive(true);
             
-            TileData gate = MapManager.instance.tiles.Find(tile => tile.pos == posOnMap + dir);
+            TileData gate = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
             enteringCheckTMP.SetText(ZString.Format("정말 문 {0}(으)로\n진입하시겠습니까?", (char)('A' + gate.data[2])));
 
             yield return new WaitUntil(() => isYes || isNo);
@@ -246,7 +246,7 @@ public class GamePlay : MonoBehaviour
 
     void DataBoxUpdate(Vector3Int dir)
     {
-        TDObject obj = MapManager.instance.objects.Find(obj => obj.pos == posOnMap);
+        TDObject obj = MapManager.instance.map.Find(obj => obj.pos == posOnMap);
 
         switch (obj.tileData.color)
         {
@@ -270,9 +270,6 @@ public class GamePlay : MonoBehaviour
         // {
         //     questionBoxData.Highlight(tile.color);
         // }
-
-        
-        questionBoxData.UpdateLastTile(obj.tileData.color, obj);
 
         questionBoxData.ChangeBrightness();
         questionBoxData.SetAllText();
@@ -304,7 +301,7 @@ public class GamePlay : MonoBehaviour
 
     void CheckStageClear()
     {
-        TileData tile = MapManager.instance.tiles.Find(tile => tile.pos == posOnMap);
+        TileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
         if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth) {
             foreach(TDEye eye in MapManager.instance.eyes)
             {
@@ -328,7 +325,7 @@ public class GamePlay : MonoBehaviour
 
     void CheckGameOver()
     {
-        TileData tile = MapManager.instance.tiles.Find(tile => tile.pos == posOnMap);
+        TileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
         if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return;
 
         if(tile.data[1] == (int)ToD.Devil)

@@ -3746,7 +3746,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000030517578, y: 0.0000333786}
+  m_AnchoredPosition: {x: 0.9999695, y: 0.0000333786}
   m_SizeDelta: {x: -2.000002, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &397913073
@@ -7023,9 +7023,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e81d667596c6ba4fa58c3acbdc361b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  redBoxData: 
-  blueBoxData: 
-  greenBoxData: 
+  lastRedTile: {fileID: 0}
+  lastBlueTile: {fileID: 0}
+  lastGreenTile: {fileID: 0}
   redBoxText: {fileID: 1337712012}
   blueBoxText: {fileID: 478587020}
   greenBoxText: {fileID: 876422829}
@@ -14934,11 +14934,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb06d206c619026468ef0b98ebe45808, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 1726241562}
-  tileList: []
-  objectList: []
-  eyeList: []
-  gateList: []
+  tilemap: {fileID: 1726241562}
+  map:
+  - {fileID: 0}
+  eyes: []
+  gates: []
+  placeableObjects: []
   RedTile: {fileID: 11400000, guid: 093b2facdaa11694aa9d7b6629ade873, type: 2}
   BlueTile: {fileID: 11400000, guid: fe9872b1eedfa894fa61e763192f2588, type: 2}
   GreenTile: {fileID: 11400000, guid: d86fb5a4ba2a0fd4a843770558f07c3f, type: 2}
@@ -14947,8 +14948,7 @@ MonoBehaviour:
   TDTextPrf: {fileID: 224452755241986807, guid: 0b4c8842994190949a6de7d92fe51e5e, type: 3}
   TDEyePrf: {fileID: 5257850310718929578, guid: 5797a1d74aaae8a4fb6e63ea062870e3, type: 3}
   TDGatePrf: {fileID: 8931365846767689008, guid: ef5c44caab85bc8468bf093e73cfc6db, type: 3}
-  gateColorCount: 
-  mapEyeCount: 
+  TDPlaceableObjectPrf: {fileID: 7884121426773075418, guid: e462da39316e9d94f860c5e4dcf03f3a, type: 3}
   canAskRed: 0
   canAskBlue: 0
   canAskGreen: 0

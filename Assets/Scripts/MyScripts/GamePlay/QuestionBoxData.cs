@@ -154,16 +154,6 @@ public class QuestionBoxData : MonoBehaviour
         }
     }
 
-    public void UpdateLastTile(TileColor color, TDObject lastTile)
-    {
-        switch (color)
-        {
-            case TileColor.Red: lastRedTile = lastTile; break;
-            case TileColor.Blue: lastBlueTile = lastTile; break;
-            case TileColor.Green: lastGreenTile = lastTile; break;
-        }
-    }
-
     public void DecreaseCount(TDEye eye)
     {
         lastRedTile.DecreaseCount();

@@ -47,7 +47,7 @@ public class LogManager : MonoBehaviour
         for (int i = (int)TileColor.Red; i <= (int)TileColor.White; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Color, i}, false, -1);
+            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Color, i}, false, false, -1);
             log.Init(TileData.Null, blueData, TileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
@@ -57,7 +57,7 @@ public class LogManager : MonoBehaviour
         for (int i = (int)ToD.Truth; i <= (int)ToD.Devil; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Eye, i}, false, -1);
+            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Eye, i}, false, false, -1);
             log.Init(TileData.Null, blueData, TileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);

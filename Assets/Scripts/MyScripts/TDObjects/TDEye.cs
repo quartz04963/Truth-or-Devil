@@ -1,6 +1,4 @@
 using UnityEngine;
-using Cysharp.Text;
-using UnityEngine.UI;
 
 public class TDEye : TDObject
 {
@@ -19,6 +17,7 @@ public class TDEye : TDObject
     {
         code = tileData.data[2];
         trueID = (ToD)tileData.data[1];
+
         base.Init(tileData, MyUtils.ConvertToRoman(code + 1));
     }
 
