@@ -13,6 +13,10 @@ public class TDObject : MonoBehaviour
     public Canvas canvas;
     public TextMeshProUGUI stackText;
     public TextMeshProUGUI text;
+
+    public Image thorn;
+    public Sprite redThornSprite, blueThornSprite, greenThornSprite;
+
     public GameObject tileBlock;
     public GameObject highlightRim;
     public Image highlightBG;
@@ -27,8 +31,21 @@ public class TDObject : MonoBehaviour
 
         pos = tileData.pos;
         stack = tileData.stack;
+
+        switch (this.tileData.color)
+        {
+            case TileColor.Red: thorn.sprite = redThornSprite; break;
+            case TileColor.Blue: thorn.sprite = blueThornSprite; break;
+            case TileColor.Green: thorn.sprite = greenThornSprite; break;
+        }
+
         if (stack > 0) stackText.SetText(ZString.Concat(stack));
-        else if (stack == 0) stackText.gameObject.SetActive(false);
+        else if (stack == 0) {
+            stackText.gameObject.SetActive(false);
+            if (this.tileData.color != TileColor.White) {
+                thorn.gameObject.SetActive(true);
+            }
+        }
     }
 
     public virtual void BlockTile(bool isBlocking)
@@ -60,6 +77,10 @@ public class TDObject : MonoBehaviour
             if (stack == 0)
             {
                 stackText.gameObject.SetActive(false);
+                if (tileData.color != TileColor.White)
+                {
+                    thorn.gameObject.SetActive(true);
+                }
             }
         }
     }

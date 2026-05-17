@@ -5,7 +5,7 @@ public readonly struct StageDataList
     public const int Chapter0 = 6;
     public const int Chapter1 = 6;
     public const int Chapter2 = 6;
-    public const int Chapter3 = 4;
+    public const int Chapter3 = 6;
     public const int Chapter4 = 0;
     public const int Chapter5 = 0;
 
@@ -445,6 +445,30 @@ public readonly struct StageDataList
         }, new List<TileData>
         {
             TileData.Construct(-1, -1, WhiteData.Blank, ToD.Null, 0, false, true),
-        })
+        }),
+
+        new StageData(3, 6, new List<TileData>
+        {
+            TileData.Construct(1, 5, WhiteData.Gate, ToD.Devil, 0),
+            TileData.Construct(3, 5, WhiteData.Gate, ToD.Truth, 1),
+            TileData.Construct(0, 4, "EXIT"),
+            TileData.Construct(2, 4, "RED"),
+            TileData.Construct(4, 4, "1"),
+            TileData.Construct(1, 3, WhiteData.Gate, ToD.Devil, 2),
+            TileData.Construct(2, 3, "RED", false, false, 0),
+            TileData.Construct(3, 3, WhiteData.Gate, ToD.Devil, 3),
+            TileData.Construct(0, 2, WhiteData.Eye, ToD.Truth, 0),
+            TileData.Construct(2, 2, WhiteData.Eye, ToD.Devil, 1),
+            TileData.Construct(4, 2, WhiteData.Eye, ToD.Truth, 2),
+            TileData.Construct(0, 0, "MAP"),
+            TileData.Construct(1, 0, "ANGEL"),
+            TileData.Construct(2, 0, WhiteData.Blank, ToD.Null, 1),
+            TileData.Construct(3, 0, "DEVIL"),
+            TileData.Construct(4, 0, "MAP"),
+        }, new List<TileData>
+        {
+            TileData.Construct(-1, -1, "WHITE", true, true),
+            TileData.Construct(-1, -1, "0", true, true),
+        }),
     };
 }
