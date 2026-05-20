@@ -143,8 +143,16 @@ public class GamePlay : MonoBehaviour
         int idx = MapManager.instance.map.FindIndex(obj => obj.pos == posOnMap + dir);
         if (idx == -1) return false;
 
+        if (MapManager.instance.map[idx] is TDPlaceableObject pobj && pobj.IsDragging)
+        {
+            return false;
+        }
+
         TileData nextTile = MapManager.instance.map[idx].tileData;
-        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) return CheckGoingstraight(dir);
+        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) 
+        {
+            return CheckGoingstraight(dir);
+        }
 
         TDGate gate = MapManager.instance.gates.Find(gate => gate.pos == posOnMap + dir);
         if (gate.isMarked) return false;

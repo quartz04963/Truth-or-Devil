@@ -9,6 +9,7 @@ public class TDPlaceableObject : TDText
     private Vector3 returnPos;
     private Vector3 offset;
     private bool isDragging = false;
+    public bool IsDragging => isDragging;
     private bool isPlaced = false;
 
     public void Init(Vector3 palettePos, TileData tileData, string text)
@@ -69,14 +70,14 @@ public class TDPlaceableObject : TDText
 
     public void Place()
     {
-        foreach (TDPlaceableObject pobj in MapManager.instance.placeableObjects)
-        {
-            if (pobj != this && pobj.isPlaced) pobj.Remove();
-        }
-
         pos = Vector3Int.FloorToInt(transform.position);
         returnPos = pos + MyUtils.Offset;
         transform.position = returnPos;
+
+        foreach (TDPlaceableObject pobj in MapManager.instance.placeableObjects)
+        {
+            if (pobj != this && pobj.pos == pos && pobj.isPlaced) pobj.Remove();
+        }
 
         isPlaced = true;
         isDragging = false;

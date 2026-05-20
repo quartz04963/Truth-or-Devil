@@ -26,8 +26,6 @@ public class TDGate : TDObject
     {
         code = tileData.data[2];
         base.Init(tileData, ZString.Format("{0}", (char)('A' + code)));
-        
-        SetInfoBox();
     }
 
     public void SetInfoBox()
@@ -38,10 +36,10 @@ public class TDGate : TDObject
         gateColorCount[TileColor.Green] = 0;
         gateColorCount[TileColor.White] = 0;
 
-        foreach (TDObject obj in MapManager.instance.map)
+        foreach (TileData tile in MapManager.instance.currentStageData.tiles)
         {
-            if (Math.Abs(obj.pos.x - pos.x) <= 1 && Math.Abs(obj.pos.y - pos.y) <= 1) {
-                gateColorCount[obj.tileData.color]++;
+            if (Math.Abs(tile.pos.x - pos.x) <= 1 && Math.Abs(tile.pos.y - pos.y) <= 1) {
+                gateColorCount[tile.color]++;
             }
         }
         gateColorCount[TileColor.White]--;
@@ -89,7 +87,7 @@ public class TDGate : TDObject
     {
         if (!GamePlay.instance.IsRunning) return;
         
-        if (MapManager.instance.map.FindIndex(obj => obj.tileData.color == TileColor.Blue && obj.tileData.data[0] == (int)BlueData.Color) != -1)
+        if (MapManager.instance.map.Find(obj => obj.tileData.color == TileColor.Blue && obj.tileData.data[0] == (int)BlueData.Color) != null)
             infoBox.SetActive(true);
     }
 

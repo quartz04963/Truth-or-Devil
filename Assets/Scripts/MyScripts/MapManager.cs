@@ -45,24 +45,10 @@ public class MapManager : MonoBehaviour
         map = new List<TDObject>();
         eyes = new List<TDEye>();
         gates = new List<TDGate>();
-
-        canAskRed = canAskBlue = canAskGreen = canAskWhite = false;
-        foreach(TileData tile in currentStageData.tiles)
-        {
-            if (tile.color == TileColor.Blue && tile.data[0] == (int)BlueData.Color)
-            {
-                switch ((TileColor)tile.data[1])
-                {
-                    case TileColor.Red: canAskRed = true; break;
-                    case TileColor.Blue: canAskBlue = true; break;
-                    case TileColor.Green: canAskGreen = true; break;
-                    case TileColor.White: canAskWhite = true; break;
-                }
-            }
-        }
         
         CreateTilesAndObjects();
         SetAnswer();
+        SetAskable();
     }
 
     public void CreateTilesAndObjects()
@@ -124,8 +110,8 @@ public class MapManager : MonoBehaviour
             TDPlaceableObject tdPobj = Instantiate(TDPlaceableObjectPrf).GetComponent<TDPlaceableObject>();
 
             float width = 1.5f;
-            float startPoint = (currentStageData.minX + 1 + currentStageData.maxX - width * (currentStageData.placeableTiles.Count - 1)) / 2f;
-            Vector3 palettePos = new Vector3(startPoint + width * i, currentStageData.minY - 1, 0);
+            float startPoint = (currentStageData.minY + 1 + currentStageData.maxY - width * (currentStageData.placeableTiles.Count - 1)) / 2f;
+            Vector3 palettePos = new Vector3(currentStageData.minX - 1, startPoint + width * i, 0);
 
             TileData tileData = currentStageData.placeableTiles[i];
             tdPobj.Init(palettePos, tileData, TileData.GetText(tileData));
@@ -170,5 +156,36 @@ public class MapManager : MonoBehaviour
         exitGaroSero = new Dictionary<GaroSero, int>();
         exitGaroSero[GaroSero.Garo] = currentStageData.maxY - exit.pos.y + 1;
         exitGaroSero[GaroSero.Sero] = exit.pos.x - currentStageData.minX + 1;
+    }
+
+    public void SetAskable()
+    {
+        canAskRed = canAskBlue = canAskGreen = canAskWhite = false;
+
+        foreach(TDObject obj in map)
+        {
+            if (obj.tileData.color == TileColor.Blue)
+            {
+                if (obj.tileData.isHiding)
+                {
+                    canAskRed = canAskBlue = canAskGreen = canAskWhite = true;
+                    break;
+                }
+                if (obj.tileData.data[0] != (int)BlueData.Color) 
+                {
+                    continue;
+                }
+
+                switch ((TileColor)obj.tileData.data[1])
+                {
+                    case TileColor.Red: canAskRed = true; break;
+                    case TileColor.Blue: canAskBlue = true; break;
+                    case TileColor.Green: canAskGreen = true; break;
+                    case TileColor.White: canAskWhite = true; break;
+                }
+            }
+        }
+
+        gates.ForEach(gate => gate.SetInfoBox());
     }
 }
