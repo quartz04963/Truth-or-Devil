@@ -29,7 +29,6 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] Image picture;
     [SerializeField] TextMeshProUGUI nameTMP;
     [SerializeField] TextMeshProUGUI dialogTMP;
-    [SerializeField] GameObject nameBox;
     [SerializeField] GameObject dialogBox;
     [SerializeField] GameObject reviewButton;
     [SerializeField] GameObject reviewInGamePlayButton;
@@ -136,7 +135,6 @@ public class DialogSystem : MonoBehaviour
     public IEnumerator SayLine(TDLine tdLine)
     {
         videl.enabled = nagel.enabled = true;
-        nameBox.SetActive(true);
         dialogBox.SetActive(true);
         picture.enabled = false;
 
@@ -186,7 +184,6 @@ public class DialogSystem : MonoBehaviour
     {
         videl.enabled = nagel.enabled = false;
 
-        nameBox.SetActive(false);
         dialogBox.SetActive(false);
 
         picture.enabled = true;
