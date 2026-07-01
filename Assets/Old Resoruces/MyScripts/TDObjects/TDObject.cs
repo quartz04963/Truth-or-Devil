@@ -8,7 +8,7 @@ public class TDObject : MonoBehaviour
 {
     public int stack;
     public Vector3Int pos;
-    public TileData tileData;
+    public TDTileData tileData;
 
     public Canvas canvas;
     public TextMeshProUGUI stackText;
@@ -22,7 +22,7 @@ public class TDObject : MonoBehaviour
     public Image highlightBG;
 
 
-    public virtual void Init(TileData tileData, string text)
+    public virtual void Init(TDTileData tileData, string text)
     {
         this.tileData = tileData;
         gameObject.transform.position = tileData.pos + MyUtils.Offset;

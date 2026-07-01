@@ -1,6 +1,6 @@
 public class TDText : TDObject
 {
-    public override void Init(TileData tileData, string text)
+    public override void Init(TDTileData tileData, string text)
     {
         base.Init(tileData, text);
 

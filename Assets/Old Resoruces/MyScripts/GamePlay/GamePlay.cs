@@ -115,7 +115,7 @@ public class GamePlay : MonoBehaviour
         {
             if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
 
-            TileData nextTile = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
+            TDTileData nextTile = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
             if (nextTile.color == TileColor.White && nextTile.data[0] == (int)WhiteData.Gate)
             {
                 StartCoroutine(CheckEnteringGate(dir));
@@ -148,7 +148,7 @@ public class GamePlay : MonoBehaviour
             return false;
         }
 
-        TileData nextTile = MapManager.instance.map[idx].tileData;
+        TDTileData nextTile = MapManager.instance.map[idx].tileData;
         if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) 
         {
             return CheckGoingstraight(dir);
@@ -237,7 +237,7 @@ public class GamePlay : MonoBehaviour
             isChecking = true;
             enteringCheckWindow.SetActive(true);
             
-            TileData gate = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
+            TDTileData gate = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
             enteringCheckTMP.SetText(ZString.Format("정말 문 {0}(으)로\n진입하시겠습니까?", (char)('A' + gate.data[2])));
 
             yield return new WaitUntil(() => isYes || isNo);
@@ -294,10 +294,10 @@ public class GamePlay : MonoBehaviour
         char answer = questionBoxData.GetAnswer();
         if (answer == '?') return;
 
-        if (eye.trueID == ToD.Devil) answer = answer == 'O' ? 'X' : 'O'; 
+        if (eye.trueID == Species.Devil) answer = answer == 'O' ? 'X' : 'O'; 
         
         answerBox.SetActive(true);
-        eyeBoxImage.sprite = eye.guessedID == ToD.Null ? defaultSprite : eye.guessedID == ToD.Truth ? angelSprite : devilSprite;
+        eyeBoxImage.sprite = eye.guessedID == Species.Null ? defaultSprite : eye.guessedID == Species.Angel ? angelSprite : devilSprite;
         eyeIndexText.SetText(MyUtils.ConvertToRoman(eye.code + 1));
         answerBoxText.SetText(answer);
 
@@ -309,8 +309,8 @@ public class GamePlay : MonoBehaviour
 
     void CheckStageClear()
     {
-        TileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
-        if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)ToD.Truth) {
+        TDTileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
+        if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)Species.Angel) {
             foreach(TDEye eye in MapManager.instance.eyes)
             {
                 if (eye.trueID != eye.guessedID) return;
@@ -333,10 +333,10 @@ public class GamePlay : MonoBehaviour
 
     void CheckGameOver()
     {
-        TileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
+        TDTileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
         if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return;
 
-        if(tile.data[1] == (int)ToD.Devil)
+        if(tile.data[1] == (int)Species.Devil)
         {
             isOver = true;
             DialogSystem.instance.StartDialog(DialogData.GameOver);

@@ -9,9 +9,9 @@ public class AnswerLog : MonoBehaviour
 {
     public bool isEmptyCategory;
     public TDEye tdEye;
-    public TileData redTileData;
-    public TileData blueTileData;
-    public TileData greenTileData;
+    public TDTileData redTileData;
+    public TDTileData blueTileData;
+    public TDTileData greenTileData;
 
     public GameObject ring;
     public GameObject background;
@@ -24,16 +24,16 @@ public class AnswerLog : MonoBehaviour
     public TextMeshProUGUI redDataTMP, blueDataTMP, greenDataTMP, eyeIndexTMP, answerTMP;
     
 
-    public void Init(TileData redTileData, TileData blueTileData, TileData greenTileData, TDEye _tdEye, string answer = "")
+    public void Init(TDTileData redTileData, TDTileData blueTileData, TDTileData greenTileData, TDEye _tdEye, string answer = "")
     {
         this.redTileData = redTileData;
         this.blueTileData = blueTileData;
         this.greenTileData = greenTileData;
         tdEye = _tdEye;
 
-        redDataTMP.SetText(TileData.GetText(redTileData));
-        blueDataTMP.SetText(TileData.GetText(blueTileData));
-        greenDataTMP.SetText(TileData.GetText(greenTileData));
+        redDataTMP.SetText(TDTileData.GetText(redTileData));
+        blueDataTMP.SetText(TDTileData.GetText(blueTileData));
+        greenDataTMP.SetText(TDTileData.GetText(greenTileData));
         eyeIndexTMP.SetText(MyUtils.ConvertToRoman(tdEye.code + 1));
         answerTMP.SetText(answer);
 
@@ -42,7 +42,7 @@ public class AnswerLog : MonoBehaviour
 
     public void UpdateEyeImage()
     {
-        eyeImg.sprite = tdEye.guessedID == ToD.Null ? defaultSprite : tdEye.guessedID == ToD.Truth ? angelSprite : devilSprite;
+        eyeImg.sprite = tdEye.guessedID == Species.Null ? defaultSprite : tdEye.guessedID == Species.Angel ? angelSprite : devilSprite;
     }
 
     public void UpdateByDropdown(int value)
@@ -73,7 +73,7 @@ public class AnswerLog : MonoBehaviour
                     break;
 
                 case 3: 
-                    if (blueTileData.data[0] == (int)BlueData.Eye)
+                    if (blueTileData.data[0] == (int)BlueData.Species)
                     {
                         gameObject.SetActive(true);
                         // category.SetActive(true);
@@ -132,14 +132,14 @@ public class AnswerLog : MonoBehaviour
                     break;
 
                 case 3: 
-                    if (blueTileData.data[0] == (int)BlueData.Eye)
+                    if (blueTileData.data[0] == (int)BlueData.Species)
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(
-                            log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.Eye && log.blueTileData.data[1] < blueTileData.data[1]);
+                            log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.Species && log.blueTileData.data[1] < blueTileData.data[1]);
                         if (answerLog != null) 
                         {
                             answerLog = LogManager.instance.logList.Find(
-                                log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.Eye && log.blueTileData.data[1] == blueTileData.data[1]);
+                                log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.Species && log.blueTileData.data[1] == blueTileData.data[1]);
                             if (answerLog != null)
                             {
                                 gameObject.SetActive(true);

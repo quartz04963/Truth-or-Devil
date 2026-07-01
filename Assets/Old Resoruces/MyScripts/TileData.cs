@@ -5,9 +5,9 @@ using Cysharp.Text;
 
 
 [Serializable]
-public readonly struct TileData
+public readonly struct TDTileData
 {
-    public static TileData Null = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{0, 0, 0}, false, false, -1);
+    public static TDTileData Null = new TDTileData(Vector3Int.zero, TileColor.Null, new List<int>{0, 0, 0}, false, false, -1);
 
     public readonly Vector3Int pos;
     public readonly TileColor color;
@@ -16,7 +16,7 @@ public readonly struct TileData
     public readonly bool isHiding;
     public readonly bool isPlaceable;
 
-    public TileData(Vector3Int pos, TileColor color, List<int> data, bool isHiding, bool isPlaceable, int stack)
+    public TDTileData(Vector3Int pos, TileColor color, List<int> data, bool isHiding, bool isPlaceable, int stack)
     {
         this.pos = pos;
         this.color = color; 
@@ -26,47 +26,47 @@ public readonly struct TileData
         this.isPlaceable = isPlaceable;
     }
 
-    public static TileData Construct(int x, int y, string str, bool isHiding = false, bool isPlaceable = false, int stack = -1)
+    public static TDTileData Construct(int x, int y, string str, bool isHiding = false, bool isPlaceable = false, int stack = -1)
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         switch (str)
         {
-            case "EXIT": return new TileData(pos, TileColor.Red, new List<int>{(int)RedData.Exit}, isHiding, isPlaceable, stack);
-            case "MAP": return new TileData(pos, TileColor.Red, new List<int>{(int)RedData.Map}, isHiding, isPlaceable, stack);
-            case "RED": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}, isHiding, isPlaceable, stack);
-            case "BLUE": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Blue}, isHiding, isPlaceable, stack);
-            case "GREEN": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Green}, isHiding, isPlaceable, stack);
-            case "WHITE": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}, isHiding, isPlaceable, stack);
-            case "GARO": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.GaroSero, (int)GaroSero.Garo}, isHiding, isPlaceable, stack);
-            case "SERO": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.GaroSero, (int)GaroSero.Sero}, isHiding, isPlaceable, stack);
-            case "ANGEL": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Truth}, isHiding, isPlaceable, stack);
-            case "DEVIL": return new TileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Eye, (int)ToD.Devil}, isHiding, isPlaceable, stack);
-            case "0" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 0}, isHiding, isPlaceable, stack);
-            case "1" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 1}, isHiding, isPlaceable, stack);
-            case "2" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 2}, isHiding, isPlaceable, stack);
-            case "3" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 3}, isHiding, isPlaceable, stack);
-            case "4" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 4}, isHiding, isPlaceable, stack);
-            case "5" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 5}, isHiding, isPlaceable, stack);
-            case "6" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 6}, isHiding, isPlaceable, stack);
-            case "7" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 7}, isHiding, isPlaceable, stack);
-            case "8" : return new TileData(pos, TileColor.Green, new List<int>{(int)GreenData.Equal, 8}, isHiding, isPlaceable, stack);
+            case "EXIT": return new TDTileData(pos, TileColor.Red, new List<int>{(int)RedData.Exit}, isHiding, isPlaceable, stack);
+            case "MAP": return new TDTileData(pos, TileColor.Red, new List<int>{(int)RedData.Map}, isHiding, isPlaceable, stack);
+            case "RED": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Red}, isHiding, isPlaceable, stack);
+            case "BLUE": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Blue}, isHiding, isPlaceable, stack);
+            case "GREEN": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.Green}, isHiding, isPlaceable, stack);
+            case "WHITE": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Color, (int)TileColor.White}, isHiding, isPlaceable, stack);
+            case "GARO": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Position, (int)Position.Row}, isHiding, isPlaceable, stack);
+            case "SERO": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Position, (int)Position.Col}, isHiding, isPlaceable, stack);
+            case "ANGEL": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Species, (int)Species.Angel}, isHiding, isPlaceable, stack);
+            case "DEVIL": return new TDTileData(pos, TileColor.Blue, new List<int>{(int)BlueData.Species, (int)Species.Devil}, isHiding, isPlaceable, stack);
+            case "0" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 0}, isHiding, isPlaceable, stack);
+            case "1" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 1}, isHiding, isPlaceable, stack);
+            case "2" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 2}, isHiding, isPlaceable, stack);
+            case "3" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 3}, isHiding, isPlaceable, stack);
+            case "4" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 4}, isHiding, isPlaceable, stack);
+            case "5" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 5}, isHiding, isPlaceable, stack);
+            case "6" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 6}, isHiding, isPlaceable, stack);
+            case "7" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 7}, isHiding, isPlaceable, stack);
+            case "8" : return new TDTileData(pos, TileColor.Green, new List<int>{(int)GreenData.EQ, 8}, isHiding, isPlaceable, stack);
             default: return Null;
         }
     }
 
-    public static TileData Construct(int x, int y, WhiteData whitedata, ToD toD, int index, bool isHiding = false, bool isPlaceable = false, int count = -1)
+    public static TDTileData Construct(int x, int y, WhiteData whitedata, Species toD, int index, bool isHiding = false, bool isPlaceable = false, int count = -1)
     {
         Vector3Int pos = new Vector3Int(x, y, 0);
         switch (whitedata)
         {
-            case WhiteData.Blank: return new TileData(pos, TileColor.White, new List<int>{(int)WhiteData.Blank, index}, isHiding, isPlaceable, count);
-            case WhiteData.Eye: return new TileData(pos, TileColor.White, new List<int>{(int)WhiteData.Eye, (int)toD, index}, isHiding, false, count);
-            case WhiteData.Gate: return new TileData(pos, TileColor.White, new List<int>{(int)WhiteData.Gate, (int)toD, index}, isHiding, false, count);
+            case WhiteData.Null: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Null, index}, isHiding, isPlaceable, count);
+            case WhiteData.Eye: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Eye, (int)toD, index}, isHiding, false, count);
+            case WhiteData.Gate: return new TDTileData(pos, TileColor.White, new List<int>{(int)WhiteData.Gate, (int)toD, index}, isHiding, false, count);
             default: return Null;
         }
     }
 
-    public static string GetText(TileData tile)
+    public static string GetText(TDTileData tile)
     {
         if (tile.isHiding) return "???";
 
@@ -93,18 +93,18 @@ public readonly struct TileData
                             case TileColor.White: return "WHITE";
                             default: return "Error";
                         }
-                    case BlueData.GaroSero:
-                        switch ((GaroSero)tile.data[1])
+                    case BlueData.Position:
+                        switch ((Position)tile.data[1])
                         {
-                            case GaroSero.Garo: return "GARO";
-                            case GaroSero.Sero: return "SERO";
+                            case Position.Row: return "GARO";
+                            case Position.Col: return "SERO";
                             default: return "Error";
                         }
-                    case BlueData.Eye:
-                        switch ((ToD)tile.data[1])
+                    case BlueData.Species:
+                        switch ((Species)tile.data[1])
                         {
-                            case ToD.Truth: return "ANGEL";
-                            case ToD.Devil: return "DEVIL";
+                            case Species.Angel: return "ANGEL";
+                            case Species.Devil: return "DEVIL";
                             default: return "Error";
                         }
                     default: return "Error";
@@ -114,54 +114,48 @@ public readonly struct TileData
                 switch ((GreenData)tile.data[0])
                 {
                     case GreenData.Null: return "";
-                    case GreenData.Equal: return ZString.Concat("", tile.data[1]);
-                    case GreenData.NotEqual: return ZString.Concat("!= ", tile.data[1]);
-                    case GreenData.Greater: return ZString.Concat("> ", tile.data[1]);
-                    case GreenData.Less: return ZString.Concat("< ", tile.data[1]);
-                    case GreenData.GreaterOrEqual: return ZString.Concat(">= ", tile.data[1]);
-                    case GreenData.LessOrEqual: return ZString.Concat("<= ", tile.data[1]);
+                    case GreenData.EQ: return ZString.Concat("", tile.data[1]);
+                    case GreenData.NE: return ZString.Concat("!= ", tile.data[1]);
+                    case GreenData.GT: return ZString.Concat("> ", tile.data[1]);
+                    case GreenData.LT: return ZString.Concat("< ", tile.data[1]);
+                    case GreenData.GE: return ZString.Concat(">= ", tile.data[1]);
+                    case GreenData.LE: return ZString.Concat("<= ", tile.data[1]);
                     default: return "Error";
                 }
 
             case TileColor.White:
-                return (WhiteData)tile.data[0] == WhiteData.Blank ? "" : "Error";
+                return (WhiteData)tile.data[0] == WhiteData.Null ? "" : "Error";
 
             default: return "Error";
         }
     }
 }
 
-public enum TileColor
-{
-    Null, Red, Blue, Green, White, Black,
-}
-
-public enum ToD
-{
-    Null, Truth , Devil,
-}
-
 public enum RedData
 {
     Null, Exit, Map,
 }
-
 public enum BlueData
 {
-    Null, Color, GaroSero, Eye,
+    Null, Color, Position, Species,
 }
-
+public enum TileColor
+{
+    Null, Red, Blue, Green, White, Black,
+}
+public enum Position
+{
+    Null, Row, Col,
+}
+public enum Species
+{
+    Null, Angel, Devil,
+}
 public enum GreenData
 {
-    Null, Equal, NotEqual, Greater, Less, GreaterOrEqual, LessOrEqual,
+    Null, EQ, NE, GT, LT, GE, LE,
 }
-
 public enum WhiteData
 {
-    Blank, Eye, Gate,
-}
-
-public enum GaroSero
-{
-    Null, Garo, Sero
+    Null, Eye, Gate,
 }

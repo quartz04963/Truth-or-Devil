@@ -5,10 +5,10 @@ public readonly struct StageData
 {
     public readonly int chapter;
     public readonly int stage;
-    public readonly List<TileData> tiles;
-    public readonly List<TileData> placeableTiles;
+    public readonly List<TDTileData> tiles;
+    public readonly List<TDTileData> placeableTiles;
 
-    public StageData(int chapter, int stage, List<TileData> tiles, List<TileData> placeableTiles = null)
+    public StageData(int chapter, int stage, List<TDTileData> tiles, List<TDTileData> placeableTiles = null)
     {
         this.chapter = chapter;
         this.stage = stage;
@@ -21,7 +21,7 @@ public readonly struct StageData
         get
         {
             int maxX = 0;
-            foreach (TileData tile in tiles)
+            foreach (TDTileData tile in tiles)
             {
                 if (tile.pos.x > maxX) maxX = tile.pos.x;
             }
@@ -34,7 +34,7 @@ public readonly struct StageData
         get
         {
             int minX = 8;
-            foreach (TileData tile in tiles)
+            foreach (TDTileData tile in tiles)
             {
                 if (tile.pos.x < minX) minX = tile.pos.x;
             }
@@ -47,7 +47,7 @@ public readonly struct StageData
         get
         {
             int maxY = 0;
-            foreach (TileData tile in tiles)
+            foreach (TDTileData tile in tiles)
             {
                 if (tile.pos.y > maxY) maxY = tile.pos.y;
             }
@@ -60,7 +60,7 @@ public readonly struct StageData
         get
         {
             int minY = 8;
-            foreach (TileData tile in tiles)
+            foreach (TDTileData tile in tiles)
             {
                 if (tile.pos.y < minY) minY = tile.pos.y;
             }

@@ -27,8 +27,8 @@ public class MapManager : MonoBehaviour
     public GameObject TDPlaceableObjectPrf;
  
     public Dictionary<TileColor, int> exitColorCount;
-    public Dictionary<ToD, int> mapEyeCount;
-    public Dictionary<GaroSero, int> exitGaroSero;
+    public Dictionary<Species, int> mapEyeCount;
+    public Dictionary<Position, int> exitGaroSero;
     public bool canAskRed;
     public bool canAskBlue;
     public bool canAskGreen;
@@ -53,9 +53,9 @@ public class MapManager : MonoBehaviour
 
     public void CreateTilesAndObjects()
     {
-        foreach(TileData tile in currentStageData.tiles)
+        foreach(TDTileData tile in currentStageData.tiles)
         {
-            if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Blank && tile.data[1] == 1)
+            if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Null && tile.data[1] == 1)
             {
                 GamePlay.instance.player.transform.position = tile.pos + MyUtils.Offset;
                 GamePlay.instance.posOnMap = tile.pos;
@@ -76,7 +76,7 @@ public class MapManager : MonoBehaviour
             {
                 case TileColor.Red: case TileColor.Blue: case TileColor.Green:
                     TDText tdText = Instantiate(TDTextPrf).GetComponent<TDText>();
-                    tdText.Init(tile, TileData.GetText(tile));
+                    tdText.Init(tile, TDTileData.GetText(tile));
                     map.Add(tdText);
                     break;
             
@@ -93,7 +93,7 @@ public class MapManager : MonoBehaviour
                         map.Add(tdGate);
                         gates.Add(tdGate);
                     }
-                    else if ((WhiteData)tile.data[0] == WhiteData.Blank) //임시 음영 처리를 위한 코드
+                    else if ((WhiteData)tile.data[0] == WhiteData.Null) //임시 음영 처리를 위한 코드
                     {
                         TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
                         emptyText.Init(tile, "");
@@ -113,8 +113,8 @@ public class MapManager : MonoBehaviour
             float startPoint = (currentStageData.minY + 1 + currentStageData.maxY - width * (currentStageData.placeableTiles.Count - 1)) / 2f;
             Vector3 palettePos = new Vector3(currentStageData.minX - 1, startPoint + width * i, 0);
 
-            TileData tileData = currentStageData.placeableTiles[i];
-            tdPobj.Init(palettePos, tileData, TileData.GetText(tileData));
+            TDTileData tileData = currentStageData.placeableTiles[i];
+            tdPobj.Init(palettePos, tileData, TDTileData.GetText(tileData));
             switch (tileData.color)
             {
                 case TileColor.Red: tdPobj.text.color = Color.red; break;
@@ -129,33 +129,33 @@ public class MapManager : MonoBehaviour
 
     public void SetAnswer()
     {
-        TileData exit = gates.Find(gate => gate.tileData.data[1] == (int)ToD.Truth).tileData;
+        TDTileData exit = gates.Find(gate => gate.tileData.data[1] == (int)Species.Angel).tileData;
         
         exitColorCount = new Dictionary<TileColor, int>();
         exitColorCount[TileColor.Red] = 0;
         exitColorCount[TileColor.Blue] = 0;
         exitColorCount[TileColor.Green] = 0;
         exitColorCount[TileColor.White] = -1;
-        foreach (TileData tile in currentStageData.tiles)
+        foreach (TDTileData tile in currentStageData.tiles)
         {
             if (Math.Abs(tile.pos.x - exit.pos.x) <= 1 && Math.Abs(tile.pos.y - exit.pos.y) <= 1) {
                 exitColorCount[tile.color]++;
             }
         }
 
-        mapEyeCount = new Dictionary<ToD, int>();
-        mapEyeCount[ToD.Truth] = 0;
-        mapEyeCount[ToD.Devil] = 0;
-        foreach (TileData tile in currentStageData.tiles)
+        mapEyeCount = new Dictionary<Species, int>();
+        mapEyeCount[Species.Angel] = 0;
+        mapEyeCount[Species.Devil] = 0;
+        foreach (TDTileData tile in currentStageData.tiles)
         {
             if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Eye) {
-                mapEyeCount[(ToD)tile.data[1]]++;
+                mapEyeCount[(Species)tile.data[1]]++;
             }
         }
 
-        exitGaroSero = new Dictionary<GaroSero, int>();
-        exitGaroSero[GaroSero.Garo] = currentStageData.maxY - exit.pos.y + 1;
-        exitGaroSero[GaroSero.Sero] = exit.pos.x - currentStageData.minX + 1;
+        exitGaroSero = new Dictionary<Position, int>();
+        exitGaroSero[Position.Row] = currentStageData.maxY - exit.pos.y + 1;
+        exitGaroSero[Position.Col] = exit.pos.x - currentStageData.minX + 1;
     }
 
     public void SetAskable()

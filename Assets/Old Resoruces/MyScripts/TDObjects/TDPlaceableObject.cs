@@ -12,7 +12,7 @@ public class TDPlaceableObject : TDText
     public bool IsDragging => isDragging;
     private bool isPlaced = false;
 
-    public void Init(Vector3 palettePos, TileData tileData, string text)
+    public void Init(Vector3 palettePos, TDTileData tileData, string text)
     {
         this.palettePos = palettePos;
         returnPos = palettePos;

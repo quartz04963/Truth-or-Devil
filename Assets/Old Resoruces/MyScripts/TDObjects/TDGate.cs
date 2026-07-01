@@ -22,7 +22,7 @@ public class TDGate : TDObject
     public SpriteRenderer spriteRenderer;
     public Sprite defaultSprite, heavenSprite, hellSprite;
 
-    public void Init(TileData tileData)
+    public void Init(TDTileData tileData)
     {
         code = tileData.data[2];
         base.Init(tileData, ZString.Format("{0}", (char)('A' + code)));
@@ -36,7 +36,7 @@ public class TDGate : TDObject
         gateColorCount[TileColor.Green] = 0;
         gateColorCount[TileColor.White] = 0;
 
-        foreach (TileData tile in MapManager.instance.currentStageData.tiles)
+        foreach (TDTileData tile in MapManager.instance.currentStageData.tiles)
         {
             if (Math.Abs(tile.pos.x - pos.x) <= 1 && Math.Abs(tile.pos.y - pos.y) <= 1) {
                 gateColorCount[tile.color]++;
@@ -55,13 +55,13 @@ public class TDGate : TDObject
         whiteCountText.gameObject.SetActive(MapManager.instance.canAskWhite);
     }
 
-    public void SetSprite(ToD tod)
+    public void SetSprite(Species tod)
     {
         switch (tod)
         {
-            case ToD.Null: spriteRenderer.sprite = defaultSprite; break;
-            case ToD.Truth: spriteRenderer.sprite = heavenSprite; break;
-            case ToD.Devil: spriteRenderer.sprite = hellSprite; break;
+            case Species.Null: spriteRenderer.sprite = defaultSprite; break;
+            case Species.Angel: spriteRenderer.sprite = heavenSprite; break;
+            case Species.Devil: spriteRenderer.sprite = hellSprite; break;
         }
     }
 

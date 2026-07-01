@@ -35,7 +35,7 @@ public class LogManager : MonoBehaviour
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
             TDEye tdEye = MapManager.instance.eyes.Find(eye => eye.code == i);
-            log.Init(TileData.Null, TileData.Null, TileData.Null, tdEye);
+            log.Init(TDTileData.Null, TDTileData.Null, TDTileData.Null, tdEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);
@@ -47,18 +47,18 @@ public class LogManager : MonoBehaviour
         for (int i = (int)TileColor.Red; i <= (int)TileColor.White; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Color, i}, false, false, -1);
-            log.Init(TileData.Null, blueData, TileData.Null, defaultEye);
+            TDTileData blueData = new TDTileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Color, i}, false, false, -1);
+            log.Init(TDTileData.Null, blueData, TDTileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);
         }
 
-        for (int i = (int)ToD.Truth; i <= (int)ToD.Devil; i++)
+        for (int i = (int)Species.Angel; i <= (int)Species.Devil; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TileData blueData = new TileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Eye, i}, false, false, -1);
-            log.Init(TileData.Null, blueData, TileData.Null, defaultEye);
+            TDTileData blueData = new TDTileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Species, i}, false, false, -1);
+            log.Init(TDTileData.Null, blueData, TDTileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);

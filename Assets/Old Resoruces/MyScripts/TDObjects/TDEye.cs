@@ -4,8 +4,8 @@ public class TDEye : TDObject
 {
     public int code;
     public bool isMarked;
-    public ToD trueID;
-    public ToD guessedID = ToD.Null;
+    public Species trueID;
+    public Species guessedID = Species.Null;
     public SpriteRenderer spriteRenderer;
     public Sprite defaultSprite, angelSprite, devilSprite;
 
@@ -13,22 +13,22 @@ public class TDEye : TDObject
     public GameObject button;
     public GameObject selectingButtons;
 
-    public void Init(TileData tileData)
+    public void Init(TDTileData tileData)
     {
         code = tileData.data[2];
-        trueID = (ToD)tileData.data[1];
+        trueID = (Species)tileData.data[1];
 
         base.Init(tileData, MyUtils.ConvertToRoman(code + 1));
     }
 
-    public static void SetTDEyeState(TDEye eye, ToD guessedID)
+    public static void SetTDEyeState(TDEye eye, Species guessedID)
     {
         eye.guessedID = guessedID;
         switch (guessedID)
         {
-            case ToD.Null: eye.isMarked = false; eye.spriteRenderer.sprite = eye.defaultSprite; break;
-            case ToD.Truth: eye.isMarked = true; eye.spriteRenderer.sprite = eye.angelSprite; break;
-            case ToD.Devil: eye.isMarked = true; eye.spriteRenderer.sprite = eye.devilSprite; break;
+            case Species.Null: eye.isMarked = false; eye.spriteRenderer.sprite = eye.defaultSprite; break;
+            case Species.Angel: eye.isMarked = true; eye.spriteRenderer.sprite = eye.angelSprite; break;
+            case Species.Devil: eye.isMarked = true; eye.spriteRenderer.sprite = eye.devilSprite; break;
         }
 
         foreach (AnswerLog log in LogManager.instance.logList)
@@ -56,7 +56,7 @@ public class TDEye : TDObject
 
     public void OnSelectingButtonClicked(int guessedID)
     {
-        SetTDEyeState(this, (ToD)guessedID);
+        SetTDEyeState(this, (Species)guessedID);
         OnClicked();
     }
 
