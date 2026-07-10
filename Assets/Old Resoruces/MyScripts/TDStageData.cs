@@ -1,14 +1,14 @@
 using System.Collections.Generic;
 
 
-public readonly struct StageData
+public readonly struct TDStageData
 {
     public readonly int chapter;
     public readonly int stage;
     public readonly List<TDTileData> tiles;
     public readonly List<TDTileData> placeableTiles;
 
-    public StageData(int chapter, int stage, List<TDTileData> tiles, List<TDTileData> placeableTiles = null)
+    public TDStageData(int chapter, int stage, List<TDTileData> tiles, List<TDTileData> placeableTiles = null)
     {
         this.chapter = chapter;
         this.stage = stage;

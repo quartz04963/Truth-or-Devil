@@ -9,7 +9,7 @@ public class MapManager : MonoBehaviour
     
     public Tilemap tilemap;
 
-    public StageData currentStageData;
+    public TDStageData currentStageData;
 
     public List<TDObject> map;
     public List<TDEye> eyes;
@@ -55,7 +55,7 @@ public class MapManager : MonoBehaviour
     {
         foreach(TDTileData tile in currentStageData.tiles)
         {
-            if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Null && tile.data[1] == 1)
+            if (tile.color == TileColor.WHITE && tile.data[0] == (int)WhiteData.NULL && tile.data[1] == 1)
             {
                 GamePlay.instance.player.transform.position = tile.pos + MyUtils.Offset;
                 GamePlay.instance.posOnMap = tile.pos;
@@ -63,37 +63,37 @@ public class MapManager : MonoBehaviour
 
             switch (tile.color)
             {
-                case TileColor.Red: tilemap.SetTile(tile.pos, RedTile); break;
-                case TileColor.Blue: tilemap.SetTile(tile.pos, BlueTile); break;
-                case TileColor.Green: tilemap.SetTile(tile.pos, GreenTile); break;
-                case TileColor.White: 
-                    if ((WhiteData)tile.data[0] == WhiteData.Gate) tilemap.SetTile(tile.pos, RoundWhiteTile);
+                case TileColor.RED: tilemap.SetTile(tile.pos, RedTile); break;
+                case TileColor.BLUE: tilemap.SetTile(tile.pos, BlueTile); break;
+                case TileColor.GREEN: tilemap.SetTile(tile.pos, GreenTile); break;
+                case TileColor.WHITE: 
+                    if ((WhiteData)tile.data[0] == WhiteData.GATE) tilemap.SetTile(tile.pos, RoundWhiteTile);
                     else tilemap.SetTile(tile.pos, WhiteTile); 
                     break;
             }
 
             switch (tile.color)
             {
-                case TileColor.Red: case TileColor.Blue: case TileColor.Green:
+                case TileColor.RED: case TileColor.BLUE: case TileColor.GREEN:
                     TDText tdText = Instantiate(TDTextPrf).GetComponent<TDText>();
                     tdText.Init(tile, TDTileData.GetText(tile));
                     map.Add(tdText);
                     break;
             
-                case TileColor.White:
-                    if ((WhiteData)tile.data[0] == WhiteData.Eye) {
+                case TileColor.WHITE:
+                    if ((WhiteData)tile.data[0] == WhiteData.EYE) {
                         TDEye tdEye = Instantiate(TDEyePrf).GetComponent<TDEye>();
                         tdEye.Init(tile);
                         map.Add(tdEye);
                         eyes.Add(tdEye);
                     }
-                    else if ((WhiteData)tile.data[0] == WhiteData.Gate) {
+                    else if ((WhiteData)tile.data[0] == WhiteData.GATE) {
                         TDGate tdGate = Instantiate(TDGatePrf).GetComponent<TDGate>();
                         tdGate.Init(tile);
                         map.Add(tdGate);
                         gates.Add(tdGate);
                     }
-                    else if ((WhiteData)tile.data[0] == WhiteData.Null) //임시 음영 처리를 위한 코드
+                    else if ((WhiteData)tile.data[0] == WhiteData.NULL) //임시 음영 처리를 위한 코드
                     {
                         TDText emptyText = Instantiate(TDTextPrf).GetComponent<TDText>();
                         emptyText.Init(tile, "");
@@ -117,9 +117,9 @@ public class MapManager : MonoBehaviour
             tdPobj.Init(palettePos, tileData, TDTileData.GetText(tileData));
             switch (tileData.color)
             {
-                case TileColor.Red: tdPobj.text.color = Color.red; break;
-                case TileColor.Blue: tdPobj.text.color = Color.blue; break;
-                case TileColor.Green: tdPobj.text.color = Color.green; break;
+                case TileColor.RED: tdPobj.text.color = Color.red; break;
+                case TileColor.BLUE: tdPobj.text.color = Color.blue; break;
+                case TileColor.GREEN: tdPobj.text.color = Color.green; break;
 
             }
             map.Add(tdPobj);
@@ -129,13 +129,13 @@ public class MapManager : MonoBehaviour
 
     public void SetAnswer()
     {
-        TDTileData exit = gates.Find(gate => gate.tileData.data[1] == (int)Species.Angel).tileData;
+        TDTileData exit = gates.Find(gate => gate.tileData.data[1] == (int)Species.ANGEL).tileData;
         
         exitColorCount = new Dictionary<TileColor, int>();
-        exitColorCount[TileColor.Red] = 0;
-        exitColorCount[TileColor.Blue] = 0;
-        exitColorCount[TileColor.Green] = 0;
-        exitColorCount[TileColor.White] = -1;
+        exitColorCount[TileColor.RED] = 0;
+        exitColorCount[TileColor.BLUE] = 0;
+        exitColorCount[TileColor.GREEN] = 0;
+        exitColorCount[TileColor.WHITE] = -1;
         foreach (TDTileData tile in currentStageData.tiles)
         {
             if (Math.Abs(tile.pos.x - exit.pos.x) <= 1 && Math.Abs(tile.pos.y - exit.pos.y) <= 1) {
@@ -144,18 +144,18 @@ public class MapManager : MonoBehaviour
         }
 
         mapEyeCount = new Dictionary<Species, int>();
-        mapEyeCount[Species.Angel] = 0;
-        mapEyeCount[Species.Devil] = 0;
+        mapEyeCount[Species.ANGEL] = 0;
+        mapEyeCount[Species.DEVIL] = 0;
         foreach (TDTileData tile in currentStageData.tiles)
         {
-            if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Eye) {
+            if (tile.color == TileColor.WHITE && tile.data[0] == (int)WhiteData.EYE) {
                 mapEyeCount[(Species)tile.data[1]]++;
             }
         }
 
         exitGaroSero = new Dictionary<Position, int>();
-        exitGaroSero[Position.Row] = currentStageData.maxY - exit.pos.y + 1;
-        exitGaroSero[Position.Col] = exit.pos.x - currentStageData.minX + 1;
+        exitGaroSero[Position.ROW] = currentStageData.maxY - exit.pos.y + 1;
+        exitGaroSero[Position.COL] = exit.pos.x - currentStageData.minX + 1;
     }
 
     public void SetAskable()
@@ -164,24 +164,24 @@ public class MapManager : MonoBehaviour
 
         foreach(TDObject obj in map)
         {
-            if (obj.tileData.color == TileColor.Blue)
+            if (obj.tileData.color == TileColor.BLUE)
             {
                 if (obj.tileData.isHiding)
                 {
                     canAskRed = canAskBlue = canAskGreen = canAskWhite = true;
                     break;
                 }
-                if (obj.tileData.data[0] != (int)BlueData.Color) 
+                if (obj.tileData.data[0] != (int)BlueData.COLOR) 
                 {
                     continue;
                 }
 
                 switch ((TileColor)obj.tileData.data[1])
                 {
-                    case TileColor.Red: canAskRed = true; break;
-                    case TileColor.Blue: canAskBlue = true; break;
-                    case TileColor.Green: canAskGreen = true; break;
-                    case TileColor.White: canAskWhite = true; break;
+                    case TileColor.RED: canAskRed = true; break;
+                    case TileColor.BLUE: canAskBlue = true; break;
+                    case TileColor.GREEN: canAskGreen = true; break;
+                    case TileColor.WHITE: canAskWhite = true; break;
                 }
             }
         }

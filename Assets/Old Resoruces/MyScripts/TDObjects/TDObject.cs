@@ -34,15 +34,15 @@ public class TDObject : MonoBehaviour
 
         switch (this.tileData.color)
         {
-            case TileColor.Red: thorn.sprite = redThornSprite; break;
-            case TileColor.Blue: thorn.sprite = blueThornSprite; break;
-            case TileColor.Green: thorn.sprite = greenThornSprite; break;
+            case TileColor.RED: thorn.sprite = redThornSprite; break;
+            case TileColor.BLUE: thorn.sprite = blueThornSprite; break;
+            case TileColor.GREEN: thorn.sprite = greenThornSprite; break;
         }
 
         if (stack > 0) stackText.SetText(ZString.Concat(stack));
         else if (stack == 0) {
             stackText.gameObject.SetActive(false);
-            if (this.tileData.color != TileColor.White) {
+            if (this.tileData.color != TileColor.WHITE) {
                 thorn.gameObject.SetActive(true);
             }
         }
@@ -77,7 +77,7 @@ public class TDObject : MonoBehaviour
             if (stack == 0)
             {
                 stackText.gameObject.SetActive(false);
-                if (tileData.color != TileColor.White)
+                if (tileData.color != TileColor.WHITE)
                 {
                     thorn.gameObject.SetActive(true);
                 }

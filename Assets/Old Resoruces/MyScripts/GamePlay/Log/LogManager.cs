@@ -44,20 +44,20 @@ public class LogManager : MonoBehaviour
         TDEye defaultEye = MapManager.instance.eyes.Find(eye => eye.code == 0);
         if (defaultEye == null) return;
 
-        for (int i = (int)TileColor.Red; i <= (int)TileColor.White; i++)
+        for (int i = (int)TileColor.RED; i <= (int)TileColor.WHITE; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TDTileData blueData = new TDTileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Color, i}, false, false, -1);
+            TDTileData blueData = new TDTileData(Vector3Int.zero, TileColor.NULL, new List<int>{(int)BlueData.COLOR, i}, false, false, -1);
             log.Init(TDTileData.Null, blueData, TDTileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);
             logList.Add(log);
         }
 
-        for (int i = (int)Species.Angel; i <= (int)Species.Devil; i++)
+        for (int i = (int)Species.ANGEL; i <= (int)Species.DEVIL; i++)
         {
             AnswerLog log = Instantiate(answerLogPrf, content).GetComponent<AnswerLog>();
-            TDTileData blueData = new TDTileData(Vector3Int.zero, TileColor.Null, new List<int>{(int)BlueData.Species, i}, false, false, -1);
+            TDTileData blueData = new TDTileData(Vector3Int.zero, TileColor.NULL, new List<int>{(int)BlueData.SPECIES, i}, false, false, -1);
             log.Init(TDTileData.Null, blueData, TDTileData.Null, defaultEye);
             log.SetAsEmptyCategory();
             log.UpdateByDropdown(dropdown.value);

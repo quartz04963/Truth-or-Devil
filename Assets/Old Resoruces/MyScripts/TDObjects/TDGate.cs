@@ -31,10 +31,10 @@ public class TDGate : TDObject
     public void SetInfoBox()
     {
         Dictionary<TileColor, int> gateColorCount = new Dictionary<TileColor, int>();
-        gateColorCount[TileColor.Red] = 0;
-        gateColorCount[TileColor.Blue] = 0;
-        gateColorCount[TileColor.Green] = 0;
-        gateColorCount[TileColor.White] = 0;
+        gateColorCount[TileColor.RED] = 0;
+        gateColorCount[TileColor.BLUE] = 0;
+        gateColorCount[TileColor.GREEN] = 0;
+        gateColorCount[TileColor.WHITE] = 0;
 
         foreach (TDTileData tile in MapManager.instance.currentStageData.tiles)
         {
@@ -42,12 +42,12 @@ public class TDGate : TDObject
                 gateColorCount[tile.color]++;
             }
         }
-        gateColorCount[TileColor.White]--;
+        gateColorCount[TileColor.WHITE]--;
 
-        redCountText.SetText(ZString.Concat("RED : ", gateColorCount[TileColor.Red]));
-        blueCountText.SetText(ZString.Concat("BLUE : ", gateColorCount[TileColor.Blue]));
-        greenCountText.SetText(ZString.Concat("GREEN : ", gateColorCount[TileColor.Green]));
-        whiteCountText.SetText(ZString.Concat("WHITE : ", gateColorCount[TileColor.White]));
+        redCountText.SetText(ZString.Concat("RED : ", gateColorCount[TileColor.RED]));
+        blueCountText.SetText(ZString.Concat("BLUE : ", gateColorCount[TileColor.BLUE]));
+        greenCountText.SetText(ZString.Concat("GREEN : ", gateColorCount[TileColor.GREEN]));
+        whiteCountText.SetText(ZString.Concat("WHITE : ", gateColorCount[TileColor.WHITE]));
         
         redCountText.gameObject.SetActive(MapManager.instance.canAskRed); 
         blueCountText.gameObject.SetActive(MapManager.instance.canAskBlue);
@@ -59,9 +59,9 @@ public class TDGate : TDObject
     {
         switch (tod)
         {
-            case Species.Null: spriteRenderer.sprite = defaultSprite; break;
-            case Species.Angel: spriteRenderer.sprite = heavenSprite; break;
-            case Species.Devil: spriteRenderer.sprite = hellSprite; break;
+            case Species.NULL: spriteRenderer.sprite = defaultSprite; break;
+            case Species.ANGEL: spriteRenderer.sprite = heavenSprite; break;
+            case Species.DEVIL: spriteRenderer.sprite = hellSprite; break;
         }
     }
 
@@ -87,7 +87,7 @@ public class TDGate : TDObject
     {
         if (!GamePlay.instance.IsRunning) return;
         
-        if (MapManager.instance.map.Find(obj => obj.tileData.color == TileColor.Blue && obj.tileData.data[0] == (int)BlueData.Color) != null)
+        if (MapManager.instance.map.Find(obj => obj.tileData.color == TileColor.BLUE && obj.tileData.data[0] == (int)BlueData.COLOR) != null)
             infoBox.SetActive(true);
     }
 

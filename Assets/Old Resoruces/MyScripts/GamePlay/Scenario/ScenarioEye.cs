@@ -15,7 +15,7 @@ public class ScenarioEye : MonoBehaviour
     public void Init(TDEye _tdEye)
     {
         tdEye = _tdEye;
-        tdEye.guessedID = Species.Null;
+        tdEye.guessedID = Species.NULL;
         image.sprite = defaultSprite;
         tmp.SetText(MyUtils.ConvertToRoman(tdEye.code + 1));
     }
@@ -27,9 +27,9 @@ public class ScenarioEye : MonoBehaviour
         guessedID = (Species)(((int)guessedID + 1) % 3);
         switch (guessedID)
         {
-            case Species.Null: image.sprite = defaultSprite; break;
-            case Species.Angel: image.sprite = angelSprite; break;
-            case Species.Devil: image.sprite = devilSprite; break;
+            case Species.NULL: image.sprite = defaultSprite; break;
+            case Species.ANGEL: image.sprite = angelSprite; break;
+            case Species.DEVIL: image.sprite = devilSprite; break;
         }
         // TDEye.SetTDEyeState(tdEye, guessedID);
     }

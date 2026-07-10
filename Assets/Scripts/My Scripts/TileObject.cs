@@ -18,15 +18,7 @@ abstract public class TileObject : MonoBehaviour
     public bool IsPlaceable => isPlaceable;
     public bool IsThorn => isThorn;
 
-    public virtual void Init(
-        Vector3Int pos, 
-        TileColor color, 
-        List<int> data,
-        bool isHiding = false, 
-        bool isPlaceable = false, 
-        bool isThorn = false, 
-        Sprite thornSprite = null
-        )
+    public virtual void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false, Sprite thornSprite = null)
     {
         this.pos = pos;
         this.color = color;

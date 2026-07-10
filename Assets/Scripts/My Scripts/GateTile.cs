@@ -22,15 +22,7 @@ public class GateTile : TileObject
     public bool IsExit => isExit;
     public bool IsMarked => isMarked;
 
-    public override void Init(
-        Vector3Int pos, 
-        TileColor color, 
-        List<int> data, 
-        bool isHiding = false, 
-        bool isPlaceable = false, 
-        bool isThorn = false, 
-        Sprite thornSprite = null
-        )
+    public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false, Sprite thornSprite = null)
     {
         base.Init(pos, color, data, isHiding, isPlaceable, isThorn, thornSprite);
         isExit = data[1] == 1 ? true : false;

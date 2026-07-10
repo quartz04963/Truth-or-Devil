@@ -24,8 +24,8 @@ public class QuestionBoxData : MonoBehaviour
             if (lastRedTile == null || lastBlueTile == null) return false;
             RedData redData = (RedData)lastRedTile.tileData.data[0];
             BlueData blueData = (BlueData)lastBlueTile.tileData.data[0];
-            return (redData == RedData.Exit && blueData == BlueData.Species) || 
-                   (redData == RedData.Map && (blueData == BlueData.Color || blueData == BlueData.Position));
+            return (redData == RedData.EXIT && blueData == BlueData.SPECIES) || 
+                   (redData == RedData.MAP && (blueData == BlueData.COLOR || blueData == BlueData.POSITION));
         }
     }
     
@@ -58,10 +58,10 @@ public class QuestionBoxData : MonoBehaviour
     {
         switch (color)
         {
-            case TileColor.Red: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(-260, 0); break;
-            case TileColor.Blue: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(0, 0); break;
-            case TileColor.Green: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(260, 0); break;
-            case TileColor.White: highlightRimRT.gameObject.SetActive(false); break;
+            case TileColor.RED: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(-260, 0); break;
+            case TileColor.BLUE: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(0, 0); break;
+            case TileColor.GREEN: highlightRimRT.gameObject.SetActive(true); highlightRimRT.anchoredPosition = new Vector2(260, 0); break;
+            case TileColor.WHITE: highlightRimRT.gameObject.SetActive(false); break;
         }
     }
 
@@ -100,7 +100,7 @@ public class QuestionBoxData : MonoBehaviour
         List<int> redBoxData = lastRedTile.tileData.data;
         List<int> blueBoxData = lastBlueTile.tileData.data;
         List<int> greenBoxData = lastGreenTile.tileData.data;
-        if (redBoxData[0] == (int)RedData.Exit && blueBoxData[0] == (int)BlueData.Color)
+        if (redBoxData[0] == (int)RedData.EXIT && blueBoxData[0] == (int)BlueData.COLOR)
         {
             TileColor color = (TileColor)blueBoxData[1];
             switch ((GreenData)greenBoxData[0])
@@ -114,7 +114,7 @@ public class QuestionBoxData : MonoBehaviour
                 default: return '?';
             }
         }
-        else if (redBoxData[0] == (int)RedData.Exit && blueBoxData[0] == (int)BlueData.Position)
+        else if (redBoxData[0] == (int)RedData.EXIT && blueBoxData[0] == (int)BlueData.POSITION)
         {
             Position garoSero = (Position)blueBoxData[1];
             switch ((GreenData)greenBoxData[0])
@@ -128,7 +128,7 @@ public class QuestionBoxData : MonoBehaviour
                 default: return '?';
             }
         }
-        else if (redBoxData[0] == (int)RedData.Map && blueBoxData[0] == (int)BlueData.Species)
+        else if (redBoxData[0] == (int)RedData.MAP && blueBoxData[0] == (int)BlueData.SPECIES)
         {
             Species eye = (Species)blueBoxData[1];
             switch ((GreenData)greenBoxData[0])

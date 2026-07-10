@@ -5,7 +5,7 @@ using UnityEngine;
 public class EyeTile : TileObject
 {
     [SerializeField] Species trueSpecies;
-    [SerializeField] Species markedSpecies = Species.Null;
+    [SerializeField] Species markedSpecies = Species.NULL;
     [SerializeField] TextMeshProUGUI codeText;
     [SerializeField] SpriteRenderer eyeSR;
     [SerializeField] Sprite defaultSprite;
@@ -15,15 +15,7 @@ public class EyeTile : TileObject
     public Species TureSpecies => trueSpecies;
     public Species MarkedSpecies => markedSpecies;
 
-    public override void Init(
-        Vector3Int pos, 
-        TileColor color, 
-        List<int> data, 
-        bool isHiding = false, 
-        bool isPlaceable = false, 
-        bool isThorn = false, 
-        Sprite thornSprite = null
-        )
+    public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false, Sprite thornSprite = null)
     {
         base.Init(pos, color, data, isHiding, isPlaceable, isThorn, thornSprite);
         trueSpecies = (Species)data[1];
@@ -40,9 +32,9 @@ public class EyeTile : TileObject
 
         switch ((Species)species)
         {
-            case Species.Null: eyeSR.sprite = defaultSprite; break;
-            case Species.Angel: eyeSR.sprite = angelSprite; break;
-            case Species.Devil: eyeSR.sprite = devilSprite; break;
+            case Species.NULL: eyeSR.sprite = defaultSprite; break;
+            case Species.ANGEL: eyeSR.sprite = angelSprite; break;
+            case Species.DEVIL: eyeSR.sprite = devilSprite; break;
         }
     }
 }

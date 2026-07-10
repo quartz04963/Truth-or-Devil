@@ -22,8 +22,8 @@ public class Tutorial : MonoBehaviour
         if (GameManager.Instance.currentStage == 1)
         {
             MapManager.instance.gates.ForEach(gate => gate.button.gameObject.SetActive(false));
-            MapManager.instance.gates[0].SetSprite(Species.Angel);
-            MapManager.instance.gates[1].SetSprite(Species.Devil);
+            MapManager.instance.gates[0].SetSprite(Species.ANGEL);
+            MapManager.instance.gates[1].SetSprite(Species.DEVIL);
 
             // ScenarioManager.instance.scenarioScrollView.SetActive(false);
             // ScenarioManager.instance.showScenarioRT.gameObject.SetActive(false);
@@ -35,31 +35,31 @@ public class Tutorial : MonoBehaviour
         else if (GameManager.Instance.currentStage == 2)
         {
             MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
-            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.Angel);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.ANGEL);
         }
 
         else if (GameManager.Instance.currentStage == 3)
         {
             MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
-            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.Devil);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.DEVIL);
         }
 
         else if (GameManager.Instance.currentStage == 4)
         {
             MapManager.instance.eyes.ForEach(eye => eye.button.SetActive(false));
-            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.Angel);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.ANGEL);
         }
 
         else if (GameManager.Instance.currentStage == StageDataList.Chapter0 + 5)
         {
             MapManager.instance.eyes[0].button.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.Angel);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.ANGEL);
         }
 
         else if (GameManager.Instance.currentStage == StageDataList.Chapter0 + StageDataList.Chapter1 + 1)
         {
             MapManager.instance.eyes[0].button.SetActive(false);
-            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.Angel);
+            TDEye.SetTDEyeState(MapManager.instance.eyes[0], Species.ANGEL);
         }
 
         if (GameManager.Instance.currentStage == StageDataList.StageCount)

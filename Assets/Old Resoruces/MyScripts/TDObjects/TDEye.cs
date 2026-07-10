@@ -5,7 +5,7 @@ public class TDEye : TDObject
     public int code;
     public bool isMarked;
     public Species trueID;
-    public Species guessedID = Species.Null;
+    public Species guessedID = Species.NULL;
     public SpriteRenderer spriteRenderer;
     public Sprite defaultSprite, angelSprite, devilSprite;
 
@@ -26,9 +26,9 @@ public class TDEye : TDObject
         eye.guessedID = guessedID;
         switch (guessedID)
         {
-            case Species.Null: eye.isMarked = false; eye.spriteRenderer.sprite = eye.defaultSprite; break;
-            case Species.Angel: eye.isMarked = true; eye.spriteRenderer.sprite = eye.angelSprite; break;
-            case Species.Devil: eye.isMarked = true; eye.spriteRenderer.sprite = eye.devilSprite; break;
+            case Species.NULL: eye.isMarked = false; eye.spriteRenderer.sprite = eye.defaultSprite; break;
+            case Species.ANGEL: eye.isMarked = true; eye.spriteRenderer.sprite = eye.angelSprite; break;
+            case Species.DEVIL: eye.isMarked = true; eye.spriteRenderer.sprite = eye.devilSprite; break;
         }
 
         foreach (AnswerLog log in LogManager.instance.logList)

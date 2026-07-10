@@ -42,7 +42,7 @@ public class AnswerLog : MonoBehaviour
 
     public void UpdateEyeImage()
     {
-        eyeImg.sprite = tdEye.guessedID == Species.Null ? defaultSprite : tdEye.guessedID == Species.Angel ? angelSprite : devilSprite;
+        eyeImg.sprite = tdEye.guessedID == Species.NULL ? defaultSprite : tdEye.guessedID == Species.ANGEL ? angelSprite : devilSprite;
     }
 
     public void UpdateByDropdown(int value)
@@ -62,7 +62,7 @@ public class AnswerLog : MonoBehaviour
                     // categoryText.enabled = false;
                     break;
                 case 2:
-                    if (blueTileData.data[0] == (int)BlueData.Color)
+                    if (blueTileData.data[0] == (int)BlueData.COLOR)
                     {
                         gameObject.SetActive(true);
                         // category.SetActive(true);
@@ -73,7 +73,7 @@ public class AnswerLog : MonoBehaviour
                     break;
 
                 case 3: 
-                    if (blueTileData.data[0] == (int)BlueData.Species)
+                    if (blueTileData.data[0] == (int)BlueData.SPECIES)
                     {
                         gameObject.SetActive(true);
                         // category.SetActive(true);
@@ -94,7 +94,7 @@ public class AnswerLog : MonoBehaviour
                     break;
 
                 case 1: 
-                    if (blueTileData.data[0] == (int)BlueData.Null)
+                    if (blueTileData.data[0] == (int)BlueData.NULL)
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(log => !log.isEmptyCategory && log.tdEye.code < tdEye.code);
                         if (answerLog != null) 
@@ -112,14 +112,14 @@ public class AnswerLog : MonoBehaviour
                     break;
                     
                 case 2: 
-                    if (blueTileData.data[0] == (int)BlueData.Color)
+                    if (blueTileData.data[0] == (int)BlueData.COLOR)
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(
-                            log => !log.isEmptyCategory && log.blueTileData.data[0] == (int)BlueData.Color && log.blueTileData.data[1] < blueTileData.data[1]);
+                            log => !log.isEmptyCategory && log.blueTileData.data[0] == (int)BlueData.COLOR && log.blueTileData.data[1] < blueTileData.data[1]);
                         if (answerLog != null) 
                         {
                             answerLog = LogManager.instance.logList.Find(
-                                log => !log.isEmptyCategory && log.blueTileData.data[0] == (int)BlueData.Color && log.blueTileData.data[1] == blueTileData.data[1]);
+                                log => !log.isEmptyCategory && log.blueTileData.data[0] == (int)BlueData.COLOR && log.blueTileData.data[1] == blueTileData.data[1]);
                             if (answerLog != null) 
                             {
                                 gameObject.SetActive(true);
@@ -132,14 +132,14 @@ public class AnswerLog : MonoBehaviour
                     break;
 
                 case 3: 
-                    if (blueTileData.data[0] == (int)BlueData.Species)
+                    if (blueTileData.data[0] == (int)BlueData.SPECIES)
                     {
                         AnswerLog answerLog = LogManager.instance.logList.Find(
-                            log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.Species && log.blueTileData.data[1] < blueTileData.data[1]);
+                            log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.SPECIES && log.blueTileData.data[1] < blueTileData.data[1]);
                         if (answerLog != null) 
                         {
                             answerLog = LogManager.instance.logList.Find(
-                                log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.Species && log.blueTileData.data[1] == blueTileData.data[1]);
+                                log => !log.isEmptyCategory && log.blueTileData.data[0] == (int) BlueData.SPECIES && log.blueTileData.data[1] == blueTileData.data[1]);
                             if (answerLog != null)
                             {
                                 gameObject.SetActive(true);

@@ -78,7 +78,7 @@ public class GamePlay : MonoBehaviour
 
     void Init()
     {
-        StageData currentStage = StageDataList.stages[GameManager.Instance.currentStage - 1];
+        TDStageData currentStage = StageDataList.stages[GameManager.Instance.currentStage - 1];
         stageNumberText.SetText(ZString.Concat(currentStage.chapter, " - ", currentStage.stage));
 
         // if (14 <= GameManager.Instance.CurrentStage && GameManager.Instance.CurrentStage <= 17) 
@@ -116,7 +116,7 @@ public class GamePlay : MonoBehaviour
             if (Tutorial.instance.BreakEnteringPos(posOnMap + dir)) return;
 
             TDTileData nextTile = MapManager.instance.map.Find(obj => obj.pos == posOnMap + dir).tileData;
-            if (nextTile.color == TileColor.White && nextTile.data[0] == (int)WhiteData.Gate)
+            if (nextTile.color == TileColor.WHITE && nextTile.data[0] == (int)WhiteData.GATE)
             {
                 StartCoroutine(CheckEnteringGate(dir));
             }
@@ -149,7 +149,7 @@ public class GamePlay : MonoBehaviour
         }
 
         TDTileData nextTile = MapManager.instance.map[idx].tileData;
-        if (nextTile.color != TileColor.White || nextTile.data[0] != (int)WhiteData.Gate) 
+        if (nextTile.color != TileColor.WHITE || nextTile.data[0] != (int)WhiteData.GATE) 
         {
             return CheckGoingstraight(dir);
         }
@@ -258,12 +258,12 @@ public class GamePlay : MonoBehaviour
 
         switch (obj.tileData.color)
         {
-            case TileColor.Red: questionBoxData.lastRedTile = obj.stack != 0 ? obj : null; break;
-            case TileColor.Blue: questionBoxData.lastBlueTile = obj.stack != 0 ? obj : null; break;
-            case TileColor.Green: questionBoxData.lastGreenTile = obj.stack != 0 ? obj : null; break;
-            case TileColor.White:
+            case TileColor.RED: questionBoxData.lastRedTile = obj.stack != 0 ? obj : null; break;
+            case TileColor.BLUE: questionBoxData.lastBlueTile = obj.stack != 0 ? obj : null; break;
+            case TileColor.GREEN: questionBoxData.lastGreenTile = obj.stack != 0 ? obj : null; break;
+            case TileColor.WHITE:
                 if (obj.stack == 0) questionBoxData.ResetData();
-                else if (obj.tileData.data[0] == (int)WhiteData.Eye)
+                else if (obj.tileData.data[0] == (int)WhiteData.EYE)
                 {
                     if (movingRule != MovingRule.CantStop || !CanMove(dir) || CheckFrontTileIsGate(dir)) 
                     {
@@ -284,7 +284,7 @@ public class GamePlay : MonoBehaviour
         
         // Tutorial.instance.HighlightTiles(questionBoxData.redBoxData, questionBoxData.blueBoxData);
 
-        if (obj.tileData.color != TileColor.White || obj.tileData.data[0] != (int) WhiteData.Eye) answerBox.SetActive(false);
+        if (obj.tileData.color != TileColor.WHITE || obj.tileData.data[0] != (int) WhiteData.EYE) answerBox.SetActive(false);
     }
 
     void Answer(TDEye eye)
@@ -294,10 +294,10 @@ public class GamePlay : MonoBehaviour
         char answer = questionBoxData.GetAnswer();
         if (answer == '?') return;
 
-        if (eye.trueID == Species.Devil) answer = answer == 'O' ? 'X' : 'O'; 
+        if (eye.trueID == Species.DEVIL) answer = answer == 'O' ? 'X' : 'O'; 
         
         answerBox.SetActive(true);
-        eyeBoxImage.sprite = eye.guessedID == Species.Null ? defaultSprite : eye.guessedID == Species.Angel ? angelSprite : devilSprite;
+        eyeBoxImage.sprite = eye.guessedID == Species.NULL ? defaultSprite : eye.guessedID == Species.ANGEL ? angelSprite : devilSprite;
         eyeIndexText.SetText(MyUtils.ConvertToRoman(eye.code + 1));
         answerBoxText.SetText(answer);
 
@@ -310,7 +310,7 @@ public class GamePlay : MonoBehaviour
     void CheckStageClear()
     {
         TDTileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
-        if (tile.color == TileColor.White && tile.data[0] == (int)WhiteData.Gate && tile.data[1] == (int)Species.Angel) {
+        if (tile.color == TileColor.WHITE && tile.data[0] == (int)WhiteData.GATE && tile.data[1] == (int)Species.ANGEL) {
             foreach(TDEye eye in MapManager.instance.eyes)
             {
                 if (eye.trueID != eye.guessedID) return;
@@ -334,9 +334,9 @@ public class GamePlay : MonoBehaviour
     void CheckGameOver()
     {
         TDTileData tile = MapManager.instance.map.Find(obj => obj.pos == posOnMap).tileData;
-        if (tile.color != TileColor.White || tile.data[0] != (int)WhiteData.Gate) return;
+        if (tile.color != TileColor.WHITE || tile.data[0] != (int)WhiteData.GATE) return;
 
-        if(tile.data[1] == (int)Species.Devil)
+        if(tile.data[1] == (int)Species.DEVIL)
         {
             isOver = true;
             DialogSystem.instance.StartDialog(DialogData.GameOver);
