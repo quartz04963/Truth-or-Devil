@@ -286,6 +286,7 @@ MonoBehaviour:
   isPlaceable: 0
   isThorn: 0
   thornSR: {fileID: 4171875113742627816}
+  spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
   text: {fileID: 4171875111928662993}
 --- !u!1 &4171875113742627818
 GameObject:

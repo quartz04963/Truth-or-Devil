@@ -8,18 +8,17 @@ public class EyeTile : TileObject
     [SerializeField] Species markedSpecies = Species.NULL;
     [SerializeField] TextMeshProUGUI codeText;
     [SerializeField] SpriteRenderer eyeSR;
-    [SerializeField] Sprite defaultSprite;
-    [SerializeField] Sprite angelSprite;
-    [SerializeField] Sprite devilSprite;
 
     public Species TureSpecies => trueSpecies;
     public Species MarkedSpecies => markedSpecies;
 
-    public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false, Sprite thornSprite = null)
+    public override void Init(Vector3 pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
-        base.Init(pos, color, data, isHiding, isPlaceable, isThorn, thornSprite);
+        base.Init(pos, color, data, isHiding, isPlaceable, isThorn);
         trueSpecies = (Species)data[1];
     }
+
+    public override void ActivateThorn() { }
 
     public void SetCode(int num)
     {
@@ -32,9 +31,9 @@ public class EyeTile : TileObject
 
         switch ((Species)species)
         {
-            case Species.NULL: eyeSR.sprite = defaultSprite; break;
-            case Species.ANGEL: eyeSR.sprite = angelSprite; break;
-            case Species.DEVIL: eyeSR.sprite = devilSprite; break;
+            case Species.NULL: eyeSR.sprite = spriteSource.defaultSprite; break;
+            case Species.ANGEL: eyeSR.sprite = spriteSource.angelSprite; break;
+            case Species.DEVIL: eyeSR.sprite = spriteSource.devilSprite; break;
         }
     }
 }

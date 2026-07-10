@@ -1686,6 +1686,7 @@ MonoBehaviour:
   isPlaceable: 0
   isThorn: 0
   thornSR: {fileID: 6677353205918223450}
+  spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
   isExit: 0
   isMarked: 0
   codeText: {fileID: 6677353205048063075}

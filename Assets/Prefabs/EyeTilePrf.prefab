@@ -1005,13 +1005,11 @@ MonoBehaviour:
   isPlaceable: 0
   isThorn: 0
   thornSR: {fileID: 7392660633663584091}
+  spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
   trueSpecies: 0
   markedSpecies: 0
   codeText: {fileID: 7392660634404310882}
   eyeSR: {fileID: 5920829538622003159}
-  defaultSprite: {fileID: 21300000, guid: d2f4877a82e4ece41961d0fad8d7fd83, type: 3}
-  angelSprite: {fileID: 21300000, guid: 6ef2a5356af48ab4d9d62a9daad4ce81, type: 3}
-  devilSprite: {fileID: 21300000, guid: 6c1fe88d19093ab4e84495be92f1a37d, type: 3}
 --- !u!1 &7392660633320886244
 GameObject:
   m_ObjectHideFlags: 0
