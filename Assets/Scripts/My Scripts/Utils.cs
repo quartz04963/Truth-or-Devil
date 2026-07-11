@@ -14,7 +14,7 @@ public static class Utils
             case 6: return "VI";
             case 7: return "VII";
             case 8: return "VIII";
-            default: Debug.LogWarning("Too big. Got " + num); return null;
+            default: return null;
         }
     }
 

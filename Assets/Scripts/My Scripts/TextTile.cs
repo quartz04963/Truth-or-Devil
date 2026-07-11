@@ -19,6 +19,7 @@ public class TextTile : TileObject
     public override void ActivateThorn()
     {
         base.ActivateThorn();
+        
         text.gameObject.SetActive(false);
     }
 

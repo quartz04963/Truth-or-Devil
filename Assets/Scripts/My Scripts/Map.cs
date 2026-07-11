@@ -15,14 +15,11 @@ public class Map : MonoBehaviour
     [SerializeField] GameObject eyeTilePrf;
     [SerializeField] GameObject gateTilePrf;
 
-    void Start()
-    {
-        SetMap(StageData.stages[0][5]);
-    }
-
-    void SetMap(Stage stage)
+    public void SetMap(Stage stage)
     {
         int eyeCount = 1, gateCount = 1;
+
+        mapDict.Clear();
 
         foreach (TileData tileData in stage.tiles)
         {
@@ -41,6 +38,8 @@ public class Map : MonoBehaviour
                 if (text.TryGetComponent(out TextTile textTile))
                 {
                     textTile.Init(tileData.pos, tileData.color, tileData.data, tileData.isHiding, tileData.isPlaceable, tileData.isThorn);
+
+                    mapDict.Add(tileData.pos, textTile);
                 }
             }
             else
@@ -53,6 +52,8 @@ public class Map : MonoBehaviour
                     {
                         eyeTile.Init(tileData.pos, tileData.color, tileData.data, tileData.isHiding, tileData.isPlaceable, tileData.isThorn);
                         eyeTile.SetCode(eyeCount++);
+
+                        mapDict.Add(tileData.pos, eyeTile);
                     }
                 }
                 else if (tileData.data[0] == (int)WhiteData.GATE)
@@ -63,6 +64,8 @@ public class Map : MonoBehaviour
                     {
                         gateTile.Init(tileData.pos, tileData.color, tileData.data, tileData.isHiding, tileData.isPlaceable, tileData.isThorn);
                         gateTile.SetCode(gateCount++);
+
+                        mapDict.Add(tileData.pos, gateTile);
                     } 
                 }
             }
