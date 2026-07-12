@@ -102,7 +102,7 @@ public class Question : MonoBehaviour
 
         if (result == null) 
         {
-            Debug.LogWarning("invalid question.");
+            Debug.LogWarning("question error.");
             return null;
         }
 

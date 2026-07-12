@@ -152,8 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bd5096f96f51344b1ad78e8db18f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: 0
-  stage: 4
+  chapter: 2
+  stage: 6
+  isPaused: 0
   map: {fileID: 1747947540}
   player: {fileID: 1542169079}
   question: {fileID: 261887701}
