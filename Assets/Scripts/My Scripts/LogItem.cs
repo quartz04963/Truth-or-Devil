@@ -19,6 +19,11 @@ public class LogItem : MonoBehaviour
     [SerializeField] TextMeshProUGUI greenDataTmp;
     [SerializeField] TextMeshProUGUI answerTmp;
 
+    public EyeTile EyeTile => eyeTile;
+    public TileObject RedTileObj => redTileObj;
+    public TileObject BlueTileObj => blueTileObj;
+    public TileObject GreenTileObj => greenTileObj;
+
     public void Init(EyeTile eyeTile, TileObject redTileObj, TileObject blueTileObj, TileObject greenTileObj, string answerText)
     {
         this.eyeTile = eyeTile;

@@ -51,7 +51,7 @@ public class PuzzleManager : MonoBehaviour
             string answerText = question.getAnswer(eyeTile, map.answer);
             eyeTile.Answer(answerText);
 
-            log.AddLog(eyeTile, question, answerText);
+            log.AddItem(eyeTile, question, answerText);
             question.ClearQuestion();
         }
         else

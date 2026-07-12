@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bd5096f96f51344b1ad78e8db18f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: 2
-  stage: 6
+  chapter: 1
+  stage: 4
   isPaused: 0
   map: {fileID: 1747947540}
   player: {fileID: 1542169079}
@@ -979,9 +979,23 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: "MAP + \uCC9C\uC0AC/\uC545\uB9C8"
       m_Image: {fileID: 0}
+    - m_Text: "\uB208\uC54C \uBCC4"
+      m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1347018477}
+        m_TargetAssemblyTypeName: Log, Assembly-CSharp
+        m_MethodName: SortItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!114 &215644327
 MonoBehaviour:
@@ -3665,6 +3679,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 795872994}
   logItemPrf: {fileID: 3781245222541445175, guid: 2d44f594d6e83be459b8aa6daf0569f6, type: 3}
+  dropdown: {fileID: 215644326}
 --- !u!1 &1389489770
 GameObject:
   m_ObjectHideFlags: 0
