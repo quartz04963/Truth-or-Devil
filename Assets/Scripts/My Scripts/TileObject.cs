@@ -5,7 +5,7 @@ abstract public class TileObject : MonoBehaviour
 { 
     public readonly Vector3 offset = new Vector3(0.5f, 0.5f, 0);
 
-    [SerializeField] protected Vector3 pos;
+    [SerializeField] protected Vector3Int pos;
     [SerializeField] protected TileColor color;
     [SerializeField] protected List<int> data;
     [SerializeField] protected bool isHiding = false;
@@ -15,14 +15,14 @@ abstract public class TileObject : MonoBehaviour
     [SerializeField] protected SpriteRenderer thornSR;
     [SerializeField] protected SpriteSource spriteSource;
 
-    public Vector3 Pos => pos;
+    public Vector3Int Pos => pos;
     public TileColor Color => color;
     public List<int> Data => data;
     public bool IsHiding => isHiding;
     public bool IsPlaceable => isPlaceable;
     public bool IsThorn => isThorn;
 
-    public virtual void Init(Vector3 pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
+    public virtual void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
         this.pos = pos;
         this.color = color;

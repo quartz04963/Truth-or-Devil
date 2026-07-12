@@ -6,6 +6,9 @@ public class Map : MonoBehaviour
 {
     public Tilemap tilemap;
     public Dictionary<Vector3Int, TileObject> mapDict = new Dictionary<Vector3Int, TileObject>();
+    public List<EyeTile> eyes = new List<EyeTile>();
+    public List<GateTile> gates = new List<GateTile>();
+    public Answer answer;
 
     [SerializeField] Tile redTile;
     [SerializeField] Tile blueTile;
@@ -15,11 +18,31 @@ public class Map : MonoBehaviour
     [SerializeField] GameObject eyeTilePrf;
     [SerializeField] GameObject gateTilePrf;
 
+    private readonly Vector3Int[] neighborsPos = new Vector3Int[]
+    {
+        new Vector3Int(-1, 1, 0), 
+        new Vector3Int(0, 1, 0), 
+        new Vector3Int(1, 1, 0), 
+        new Vector3Int(-1, 0, 0), 
+        new Vector3Int(1, 0, 0), 
+        new Vector3Int(-1, -1, 0), 
+        new Vector3Int(0, -1, 0), 
+        new Vector3Int(1, -1, 0)
+    };
+
+    public void Init(Stage stage)
+    {
+        SetMap(stage);
+        SetAnswer(stage);
+    }
+
     public void SetMap(Stage stage)
     {
         int eyeCount = 1, gateCount = 1;
 
         mapDict.Clear();
+        eyes.Clear();
+        gates.Clear();
 
         foreach (TileData tileData in stage.tiles)
         {
@@ -54,6 +77,7 @@ public class Map : MonoBehaviour
                         eyeTile.SetCode(eyeCount++);
 
                         mapDict.Add(tileData.pos, eyeTile);
+                        eyes.Add(eyeTile);
                     }
                 }
                 else if (tileData.data[0] == (int)WhiteData.GATE)
@@ -66,9 +90,40 @@ public class Map : MonoBehaviour
                         gateTile.SetCode(gateCount++);
 
                         mapDict.Add(tileData.pos, gateTile);
+                        gates.Add(gateTile);
                     } 
                 }
             }
+        }
+    }
+
+    public void SetAnswer(Stage stage)
+    {
+        answer = default;
+
+        GateTile exitTile = gates.Find(gate => gate.IsExit);
+
+        foreach (Vector3Int delta in neighborsPos)
+        {
+            if (mapDict.TryGetValue(exitTile.Pos + delta, out TileObject neighbor))
+            {
+                switch (neighbor.Color)
+                {
+                    case TileColor.RED: answer.exitRedCount++; break;
+                    case TileColor.BLUE: answer.exitBlueCount++; break;
+                    case TileColor.GREEN: answer.exitGreenCount++; break;
+                    case TileColor.WHITE: answer.exitWhiteCount++; break;
+                }
+            } 
+        }
+
+        answer.exitRow = stage.range.top - exitTile.Pos.y + 1;
+        answer.exitCol = exitTile.Pos.x - stage.range.left + 1;
+
+        foreach (EyeTile eye in eyes)
+        {
+            if (eye.TureSpecies == Species.ANGEL) answer.mapAngelCount++;
+            else answer.mapDevilCount++;
         }
     }
 }

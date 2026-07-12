@@ -1,18 +1,24 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using PrimeTween;
 using TMPro;
 using UnityEngine;
 
 public class EyeTile : TileObject
 {
+    [SerializeField] int code;
     [SerializeField] Species trueSpecies;
     [SerializeField] Species markedSpecies = Species.NULL;
-    [SerializeField] TextMeshProUGUI codeText;
     [SerializeField] SpriteRenderer eyeSR;
+    [SerializeField] TextMeshProUGUI codeTmp;
+    [SerializeField] TextMeshProUGUI answerTmp;
+    [SerializeField] CanvasGroup answerBallon;
 
+    public int Code => code;
     public Species TureSpecies => trueSpecies;
     public Species MarkedSpecies => markedSpecies;
 
-    public override void Init(Vector3 pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
+    public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
         base.Init(pos, color, data, isHiding, isPlaceable, isThorn);
         trueSpecies = (Species)data[1];
@@ -20,9 +26,10 @@ public class EyeTile : TileObject
 
     public override void ActivateThorn() { }
 
-    public void SetCode(int num)
+    public void SetCode(int code)
     {
-        codeText.SetText(Utils.ConvertToRoman(num));
+        this.code = code;
+        codeTmp.SetText(Utils.ConvertToRoman(code));
     }
 
     public void SetMarkedSpecies(int species)
@@ -31,9 +38,26 @@ public class EyeTile : TileObject
 
         switch ((Species)species)
         {
-            case Species.NULL: eyeSR.sprite = spriteSource.defaultSprite; break;
-            case Species.ANGEL: eyeSR.sprite = spriteSource.angelSprite; break;
-            case Species.DEVIL: eyeSR.sprite = spriteSource.devilSprite; break;
+            case Species.NULL: eyeSR.sprite = spriteSource.defaultEye; break;
+            case Species.ANGEL: eyeSR.sprite = spriteSource.angelEye; break;
+            case Species.DEVIL: eyeSR.sprite = spriteSource.devilEye; break;
         }
+    }
+
+    public async void Answer(string answerText)
+    {
+        Tween.StopAll(answerBallon);
+
+        answerTmp.SetText(answerText);
+        answerBallon.alpha = 0.8f;
+
+        await Task.Delay(100);
+    
+        while (!Utils.GetDirectionKeyDown())
+        {
+            await Task.Yield();
+        }
+
+        await Tween.Alpha(answerBallon, 0, 1.0f);
     }
 }

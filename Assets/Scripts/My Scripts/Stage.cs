@@ -33,8 +33,8 @@ public readonly struct Range
         }
 
         this.left = left;
-        this.right = right + 1;
-        this.top = top + 1;
+        this.right = right;
+        this.top = top;
         this.bottom = bottom;
     }
 }

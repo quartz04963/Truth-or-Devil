@@ -8,11 +8,15 @@ public class PuzzleManager : MonoBehaviour
 
     [SerializeField] int chapter;
     [SerializeField] int stage;
+    [SerializeField] bool isPaused;
     
     [SerializeField] Map map;
     [SerializeField] Player player;
     [SerializeField] Question question;
-    [SerializeField] TextMeshProUGUI stageNumberText;
+    [SerializeField] Log log;
+    [SerializeField] TextMeshProUGUI stageNumberTmp;
+
+    public bool IsPaused => isPaused;
     
     void Awake()
     {
@@ -24,31 +28,35 @@ public class PuzzleManager : MonoBehaviour
     {
         Stage currentStage = StageData.stages[chapter][stage - 1];
 
-        map.SetMap(currentStage);
+        map.Init(currentStage);
         player.Init(currentStage.startPos);
 
-        stageNumberText.SetText(ZString.Concat(chapter, "-", stage));
+        stageNumberTmp.SetText(ZString.Concat(chapter, "-", stage));
 
         CameraManager.instance.SetCenter(currentStage);
     }
 
     void Update()
     {
+        if (isPaused) return;
+
         if (!player.HandleMove(map)) return;
 
-        TileObject currentTile = map.mapDict[player.Pos];
+        TileObject currentTileObj = map.mapDict[player.Pos];
 
-        if (currentTile is EyeTile eyeTile)
+        if (currentTileObj is EyeTile eyeTile)
         {
             if (!question.IsComplete || !question.IsValid) return;
+            
+            string answerText = question.getAnswer(eyeTile, map.answer);
+            eyeTile.Answer(answerText);
 
-            // TODO: 눈알 답변하기
-
+            log.AddLog(eyeTile, question, answerText);
             question.ClearQuestion();
         }
         else
         {
-            question.UpdateQuestion(currentTile);
+            question.UpdateQuestion(currentTileObj);
         }
     }
 }

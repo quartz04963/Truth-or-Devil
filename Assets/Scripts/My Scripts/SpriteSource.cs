@@ -9,7 +9,7 @@ public class SpriteSource : ScriptableObject
     public Sprite greenThorn;
 
     [Header("눈알")]
-    public Sprite defaultSprite;
-    public Sprite angelSprite;
-    public Sprite devilSprite;
+    public Sprite defaultEye;
+    public Sprite angelEye;
+    public Sprite devilEye;
 }

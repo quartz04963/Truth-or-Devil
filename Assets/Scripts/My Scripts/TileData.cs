@@ -54,7 +54,7 @@ public readonly struct TileData
 
             case "": color = TileColor.WHITE; data = new List<int>{(int)WhiteData.NULL, 0}; break;
 
-            default: color = TileColor.NULL; data = null; Debug.Log("argument error"); break;
+            default: color = TileColor.NULL; data = null; Debug.Log("argument error. datasString: " + dataString); break;
         }
 
         this.isHiding = isHiding;

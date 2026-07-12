@@ -1687,13 +1687,14 @@ MonoBehaviour:
   isThorn: 0
   thornSR: {fileID: 6677353205918223450}
   spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
+  code: 0
   isExit: 0
   isMarked: 0
-  codeText: {fileID: 6677353205048063075}
-  redCountText: {fileID: 4193617549504603659}
-  blueCountText: {fileID: 4193617550402299943}
-  greenCountText: {fileID: 4193617549602145489}
-  whiteCountText: {fileID: 4193617549408840019}
+  codeTmp: {fileID: 6677353205048063075}
+  redCountTmp: {fileID: 4193617549504603659}
+  blueCountTmp: {fileID: 4193617550402299943}
+  greenCountTmp: {fileID: 4193617549602145489}
+  whiteCountTmp: {fileID: 4193617549408840019}
   redCount: {fileID: 4193617549303010699}
   blueCount: {fileID: 4193617548545654707}
   greenCount: {fileID: 4193617550342521701}

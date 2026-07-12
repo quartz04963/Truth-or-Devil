@@ -5,24 +5,28 @@ using UnityEngine;
 
 public class GateTile : TileObject
 {
+    [SerializeField] int code;
     [SerializeField] bool isExit;
     [SerializeField] bool isMarked = false;
-    [SerializeField] TextMeshProUGUI codeText;
-    [SerializeField] TextMeshProUGUI redCountText;
-    [SerializeField] TextMeshProUGUI blueCountText;
-    [SerializeField] TextMeshProUGUI greenCountText;
-    [SerializeField] TextMeshProUGUI whiteCountText;
+
+    [SerializeField] TextMeshProUGUI codeTmp;
+    [SerializeField] TextMeshProUGUI redCountTmp;
+    [SerializeField] TextMeshProUGUI blueCountTmp;
+    [SerializeField] TextMeshProUGUI greenCountTmp;
+    [SerializeField] TextMeshProUGUI whiteCountTmp;
     [SerializeField] GameObject redCount;
     [SerializeField] GameObject blueCount;
     [SerializeField] GameObject greenCount;
     [SerializeField] GameObject whiteCount;
     [SerializeField] GameObject colorInfo;
+
     [SerializeField] GameObject xMark;
 
+    public int Code => code;
     public bool IsExit => isExit;
     public bool IsMarked => isMarked;
 
-    public override void Init(Vector3 pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
+    public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
         base.Init(pos, color, data, isHiding, isPlaceable, isThorn);
         isExit = data[1] == 1 ? true : false;
@@ -30,9 +34,10 @@ public class GateTile : TileObject
 
     public override void ActivateThorn() { }
 
-    public void SetCode(int num)
+    public void SetCode(int code)
     {
-        codeText.SetText(ZString.Concat((char)('A' + num - 1)));
+        this.code = code;
+        codeTmp.SetText(ZString.Concat((char)('A' + code - 1)));
     }
 
     public void SetCountTexts()

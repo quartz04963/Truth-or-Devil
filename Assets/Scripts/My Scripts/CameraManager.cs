@@ -14,14 +14,14 @@ public class CameraManager : MonoBehaviour
 
     public void SetCenter(Stage stage)
     {
-        float centerX = (stage.range.right + stage.range.left) / 2f;
-        float centerY = (stage.range.top + stage.range.bottom) / 2f;
+        float centerX = (stage.range.right + stage.range.left + 1) / 2f;
+        float centerY = (stage.range.top + stage.range.bottom + 1) / 2f;
 
         transform.position = new Vector3(centerX, centerY, -10);
 
 
-        int width = stage.range.right - stage.range.left;
-        int height = stage.range.top - stage.range.bottom;
+        int width = stage.range.right - stage.range.left + 1;
+        int height = stage.range.top - stage.range.bottom + 1;
 
         float newUnitLength = Math.Max(width, height) / 6f;
 

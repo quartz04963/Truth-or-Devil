@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class TextTile : TileObject
 {
-    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] TextMeshProUGUI tmp;
 
-    public override void Init(Vector3 pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
+    public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
         base.Init(pos, color, data, isHiding, isPlaceable, isThorn);
 
@@ -20,11 +20,11 @@ public class TextTile : TileObject
     {
         base.ActivateThorn();
         
-        text.gameObject.SetActive(false);
+        tmp.gameObject.SetActive(false);
     }
 
     public void SetText(string text)
     {
-        this.text.SetText(text);
+        tmp.SetText(text);
     }
 }

@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
     bool CanMove(Map map, Vector3Int nextPos)
     {
-        return map.mapDict.TryGetValue(nextPos, out TileObject tileObject);
+        return map.mapDict.TryGetValue(nextPos, out TileObject tileObj);
     }
 
 }

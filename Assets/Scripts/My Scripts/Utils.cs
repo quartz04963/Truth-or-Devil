@@ -28,6 +28,7 @@ public static class Utils
                 result = tileData.data[0] == (int)RedData.EXIT ? "EXIT" : 
                         tileData.data[0] == (int)RedData.MAP ? "MAP" : null;
                 break;
+
             case TileColor.BLUE:
                 switch ((BlueData)tileData.data[0])
                 {
@@ -48,6 +49,7 @@ public static class Utils
                     default: result = null; break;
                 }
                 break;
+
             case TileColor.GREEN:
                 switch ((GreenData)tileData.data[0])
                 {
@@ -55,9 +57,11 @@ public static class Utils
                     default: result = null; break;
                 }
                 break;
+
             case TileColor.WHITE:
                 result = tileData.data[0] == (int)WhiteData.NULL ? "" : null; 
                 break;
+                
             default: result = null; break;
         }
 
@@ -71,5 +75,11 @@ public static class Utils
         TileData tileData = new TileData(Vector3Int.zero, tileObj.Color, tileObj.Data, tileObj.IsHiding);
         
         return GetText(tileData);
+    }
+
+    public static bool GetDirectionKeyDown()
+    {
+        return Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || 
+               Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow);
     }
 }
