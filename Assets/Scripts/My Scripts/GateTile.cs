@@ -10,17 +10,12 @@ public class GateTile : TileObject
     [SerializeField] bool isMarked = false;
 
     [SerializeField] TextMeshProUGUI codeTmp;
+    [SerializeField] GameObject xMark;
+    [SerializeField] GameObject colorInfo;
     [SerializeField] TextMeshProUGUI redCountTmp;
     [SerializeField] TextMeshProUGUI blueCountTmp;
     [SerializeField] TextMeshProUGUI greenCountTmp;
     [SerializeField] TextMeshProUGUI whiteCountTmp;
-    [SerializeField] GameObject redCount;
-    [SerializeField] GameObject blueCount;
-    [SerializeField] GameObject greenCount;
-    [SerializeField] GameObject whiteCount;
-    [SerializeField] GameObject colorInfo;
-
-    [SerializeField] GameObject xMark;
 
     public int Code => code;
     public bool IsExit => isExit;
@@ -40,9 +35,28 @@ public class GateTile : TileObject
         codeTmp.SetText(ZString.Concat((char)('A' + code - 1)));
     }
 
-    public void SetCountTexts()
+    public void SetColorCount(Map map)
     {
+        int red = 0, blue = 0, green = 0, white = 0;
+
+        foreach (Vector3Int delta in map.neighborsPos)
+        {
+            if (map.mapDict.TryGetValue(pos + delta, out TileObject neighbor) && !neighbor.IsPlaceable)
+            {
+                switch (neighbor.Color)
+                {
+                    case TileColor.RED: red++; break;
+                    case TileColor.BLUE: blue++; break;
+                    case TileColor.GREEN: green++; break;
+                    case TileColor.WHITE: white++; break;
+                }
+            } 
+        }
         
+        redCountTmp.SetText(red);
+        blueCountTmp.SetText(blue);
+        greenCountTmp.SetText(green);
+        whiteCountTmp.SetText(white);
     }
 
     public void Mark()

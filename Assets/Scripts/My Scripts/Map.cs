@@ -4,6 +4,18 @@ using UnityEngine.Tilemaps;
 
 public class Map : MonoBehaviour
 {
+    public readonly Vector3Int[] neighborsPos = new Vector3Int[]
+    {
+        new Vector3Int(-1, 1, 0), 
+        new Vector3Int(0, 1, 0), 
+        new Vector3Int(1, 1, 0), 
+        new Vector3Int(-1, 0, 0), 
+        new Vector3Int(1, 0, 0), 
+        new Vector3Int(-1, -1, 0), 
+        new Vector3Int(0, -1, 0), 
+        new Vector3Int(1, -1, 0)
+    };
+
     public Tilemap tilemap;
     public Dictionary<Vector3Int, TileObject> mapDict = new Dictionary<Vector3Int, TileObject>();
     public List<EyeTile> eyes = new List<EyeTile>();
@@ -18,22 +30,11 @@ public class Map : MonoBehaviour
     [SerializeField] GameObject eyeTilePrf;
     [SerializeField] GameObject gateTilePrf;
 
-    private readonly Vector3Int[] neighborsPos = new Vector3Int[]
-    {
-        new Vector3Int(-1, 1, 0), 
-        new Vector3Int(0, 1, 0), 
-        new Vector3Int(1, 1, 0), 
-        new Vector3Int(-1, 0, 0), 
-        new Vector3Int(1, 0, 0), 
-        new Vector3Int(-1, -1, 0), 
-        new Vector3Int(0, -1, 0), 
-        new Vector3Int(1, -1, 0)
-    };
-
     public void Init(Stage stage)
     {
         SetMap(stage);
         SetAnswer(stage);
+        SetGatesColorCount();
     }
 
     public void SetMap(Stage stage)
@@ -105,7 +106,7 @@ public class Map : MonoBehaviour
 
         foreach (Vector3Int delta in neighborsPos)
         {
-            if (mapDict.TryGetValue(exitTile.Pos + delta, out TileObject neighbor))
+            if (mapDict.TryGetValue(exitTile.Pos + delta, out TileObject neighbor) && !neighbor.IsPlaceable)
             {
                 switch (neighbor.Color)
                 {
@@ -124,6 +125,14 @@ public class Map : MonoBehaviour
         {
             if (eye.TureSpecies == Species.ANGEL) answer.mapAngelCount++;
             else answer.mapDevilCount++;
+        }
+    }
+
+    public void SetGatesColorCount()
+    {
+        foreach (GateTile gate in gates)
+        {
+            gate.SetColorCount(this);
         }
     }
 }

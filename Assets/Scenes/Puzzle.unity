@@ -153,7 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chapter: 1
-  stage: 4
+  stage: 5
   isPaused: 0
   map: {fileID: 1747947540}
   player: {fileID: 1542169079}

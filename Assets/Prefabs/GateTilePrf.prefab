@@ -369,7 +369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.78431374}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1691,16 +1691,12 @@ MonoBehaviour:
   isExit: 0
   isMarked: 0
   codeTmp: {fileID: 6677353205048063075}
+  xMark: {fileID: 4193617549631987990}
+  colorInfo: {fileID: 4193617549190238101}
   redCountTmp: {fileID: 4193617549504603659}
   blueCountTmp: {fileID: 4193617550402299943}
   greenCountTmp: {fileID: 4193617549602145489}
   whiteCountTmp: {fileID: 4193617549408840019}
-  redCount: {fileID: 4193617549303010699}
-  blueCount: {fileID: 4193617548545654707}
-  greenCount: {fileID: 4193617550342521701}
-  whiteCount: {fileID: 4193617549414826056}
-  colorInfo: {fileID: 4193617549190238101}
-  xMark: {fileID: 4193617549631987990}
 --- !u!61 &6677353206091957436
 BoxCollider2D:
   m_ObjectHideFlags: 0
