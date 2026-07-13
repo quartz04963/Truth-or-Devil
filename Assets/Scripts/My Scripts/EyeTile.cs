@@ -42,6 +42,8 @@ public class EyeTile : TileObject
             case Species.ANGEL: eyeSR.sprite = spriteSource.angelEye; break;
             case Species.DEVIL: eyeSR.sprite = spriteSource.devilEye; break;
         }
+
+        PuzzleManager.instance.Log.UpdateEyeImages();
     }
 
     public async void Answer(string answerText)

@@ -18,6 +18,7 @@ public class PuzzleManager : MonoBehaviour
 
     public bool IsPaused => isPaused;
     public int Chapter => chapter;
+    public Log Log => log;
     
     void Awake()
     {

@@ -13,12 +13,29 @@ public class Log : MonoBehaviour
 
     private bool isMapAvailable = true;
     private EyeTile dummyEyeTile;
-    private List<LogItem> logItemList = new List<LogItem>();
+    private List<LogItem> logItems = new List<LogItem>();
 
     public void Init(Map map)
     {
         InitSeparators(map);
         InitDropdown();
+    }
+
+    void InitDropdown()
+    {
+        if (PuzzleManager.instance.Chapter < 1)
+        {
+            dropdown.options.RemoveAt(3);
+            dropdown.options[1] = new TMP_Dropdown.OptionData("EXIT + 색깔");
+        }
+
+        if (PuzzleManager.instance.Chapter < 2)
+        {
+            isMapAvailable = false;
+            dropdown.options.RemoveAt(2);
+        }
+        
+        dropdown.RefreshShownValue();
     }
 
     public void InitSeparators(Map map)
@@ -65,23 +82,6 @@ public class Log : MonoBehaviour
         SortItem(dropdown.value);
     }
 
-    void InitDropdown()
-    {
-        if (PuzzleManager.instance.Chapter < 1)
-        {
-            dropdown.options.RemoveAt(3);
-            dropdown.options[1] = new TMP_Dropdown.OptionData("EXIT + 색깔");
-        }
-
-        if (PuzzleManager.instance.Chapter < 2)
-        {
-            isMapAvailable = false;
-            dropdown.options.RemoveAt(2);
-        }
-        
-        dropdown.RefreshShownValue();
-    }
-
     void AddSeparator(EyeTile eyeTile, TileObject redTileObj, TileObject blueTileObj, TileObject greenTileObj, string separatorText = null)
     {
         GameObject logSeparator = separatorText == null ? Instantiate(logSeparatorLinePrf, content) : Instantiate(logSeparatorPrf, content);
@@ -89,7 +89,7 @@ public class Log : MonoBehaviour
 
         logItem.InitAsSeparator(eyeTile, redTileObj, blueTileObj, greenTileObj, separatorText);
         
-        if (!logItemList.Contains(logItem)) logItemList.Add(logItem);
+        if (!logItems.Contains(logItem)) logItems.Add(logItem);
         else Destroy(logSeparator);
     }
 
@@ -100,7 +100,7 @@ public class Log : MonoBehaviour
 
         logItem.Init(eyeTile, redTileObj, blueTileObj, greenTileObj, answerText);
 
-        if (!logItemList.Contains(logItem)) logItemList.Add(logItem);
+        if (!logItems.Contains(logItem)) logItems.Add(logItem);
         else Destroy(logItemObj);
 
         SortItem(dropdown.value);
@@ -122,15 +122,15 @@ public class Log : MonoBehaviour
         
         if (criteria == latest)
         {
-            for (int i = 0; i < logItemList.Count; i++)
+            for (int i = 0; i < logItems.Count; i++)
             {
-                logItemList[i].transform.SetSiblingIndex(i);
-                logItemList[i].gameObject.SetActive(!logItemList[i].IsSeparator);
+                logItems[i].transform.SetSiblingIndex(i);
+                logItems[i].gameObject.SetActive(!logItems[i].IsSeparator);
             }
         }
         else if (criteria == exit)
         {
-            sorted = logItemList.OrderByDescending(item => item.BlueTileObj.IsHiding)
+            sorted = logItems.OrderByDescending(item => item.BlueTileObj.IsHiding)
                                 .ThenBy(item => item.BlueTileObj.Data[0])
                                 .ThenBy(item => item.BlueTileObj.Data[1]).ToList();
             for (int i = 0; i < sorted.Count; i++)
@@ -141,7 +141,7 @@ public class Log : MonoBehaviour
         }
         else if (criteria == map)
         {
-            sorted = logItemList.OrderByDescending(item => item.BlueTileObj.IsHiding)
+            sorted = logItems.OrderByDescending(item => item.BlueTileObj.IsHiding)
                                 .ThenBy(item => item.BlueTileObj.Data[1]).ToList();
             for (int i = 0; i < sorted.Count; i++)
             {
@@ -151,12 +151,20 @@ public class Log : MonoBehaviour
         }
         else if (criteria == eye)
         {
-            sorted = logItemList.OrderBy(item => item.EyeTile.Code).ToList();
+            sorted = logItems.OrderBy(item => item.EyeTile.Code).ToList();
             for (int i = 0; i < sorted.Count; i++)
             {
                 sorted[i].transform.SetSiblingIndex(i);
                 sorted[i].gameObject.SetActive(sorted[i].EyeTile != dummyEyeTile);
             }
         }   
+    }
+
+    public void UpdateEyeImages()
+    {
+        foreach (LogItem item in logItems)
+        {
+            item.UpdateEyeImage();
+        }
     }
 }

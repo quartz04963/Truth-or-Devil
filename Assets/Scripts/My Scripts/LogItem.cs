@@ -58,7 +58,7 @@ public class LogItem : MonoBehaviour
 
     public void UpdateEyeImage()
     {
-        if (eyeTile == null) return;
+        if (eyeTile == null || isSeparator) return;
 
         switch (eyeTile.MarkedSpecies)
         {
