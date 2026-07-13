@@ -44,6 +44,13 @@ abstract public class TileObject : MonoBehaviour
         transform.position = pos + offset;
     }
 
+    public virtual void InitAsDummy(TileColor color, List<int> data, bool isHiding = false)
+    {
+        this.color = color;
+        this.data = data;
+        this.isHiding = isHiding;
+    }
+
     public virtual void ActivateThorn()
     {
         isThorn = true;

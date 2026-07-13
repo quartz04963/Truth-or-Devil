@@ -17,6 +17,7 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] TextMeshProUGUI stageNumberTmp;
 
     public bool IsPaused => isPaused;
+    public int Chapter => chapter;
     
     void Awake()
     {
@@ -30,6 +31,7 @@ public class PuzzleManager : MonoBehaviour
 
         map.Init(currentStage);
         player.Init(currentStage.startPos);
+        log.Init(map);
 
         stageNumberTmp.SetText(ZString.Concat(chapter, "-", stage));
 

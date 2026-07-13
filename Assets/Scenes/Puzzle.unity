@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bd5096f96f51344b1ad78e8db18f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: 1
-  stage: 5
+  chapter: 2
+  stage: 6
   isPaused: 0
   map: {fileID: 1747947540}
   player: {fileID: 1542169079}
@@ -3679,6 +3679,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   content: {fileID: 795872994}
   logItemPrf: {fileID: 3781245222541445175, guid: 2d44f594d6e83be459b8aa6daf0569f6, type: 3}
+  logSeparatorPrf: {fileID: 279977127379749935, guid: b5d6e323e7b9f504ab68570d6c143fb4, type: 3}
+  logSeparatorLinePrf: {fileID: 8156150357113813183, guid: 22c7216406c800846b161b58179c1edc, type: 3}
   dropdown: {fileID: 215644326}
 --- !u!1 &1389489770
 GameObject:
@@ -3757,6 +3759,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389489770}
   m_CullTransparentMesh: 1
+--- !u!1 &1438047685
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1438047686}
+  m_Layer: 0
+  m_Name: Dummy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1438047686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1438047685}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1747947541}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1445110703
 GameObject:
   m_ObjectHideFlags: 0
@@ -5344,6 +5376,7 @@ MonoBehaviour:
   tilemap: {fileID: 71125301}
   eyes: []
   gates: []
+  blueTiles: []
   answer:
     exitRedCount: 0
     exitBlueCount: 0
@@ -5360,6 +5393,7 @@ MonoBehaviour:
   textTilePrf: {fileID: 4171875113032284940, guid: 8cbef5876f9ae0348a54d8556cc3bb0c, type: 3}
   eyeTilePrf: {fileID: 7392660633301761983, guid: 87aa6750a8c53594aaee73371eb4275b, type: 3}
   gateTilePrf: {fileID: 6677353206091957438, guid: 6f759424c2d989440a7cc2e1edd84fd8, type: 3}
+  dummyTransform: {fileID: 0}
 --- !u!4 &1747947541
 Transform:
   m_ObjectHideFlags: 0
@@ -5373,6 +5407,7 @@ Transform:
   m_Children:
   - {fileID: 279873340}
   - {fileID: 1542169077}
+  - {fileID: 1438047686}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

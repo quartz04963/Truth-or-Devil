@@ -29,7 +29,7 @@ public class EyeTile : TileObject
     public void SetCode(int code)
     {
         this.code = code;
-        codeTmp.SetText(Utils.ConvertToRoman(code));
+        codeTmp?.SetText(Utils.ConvertToRoman(code));
     }
 
     public void SetMarkedSpecies(int species)

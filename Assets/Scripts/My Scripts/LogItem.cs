@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class LogItem : MonoBehaviour
 {
+    [SerializeField] bool isSeparator = false;
     [SerializeField] EyeTile eyeTile;
     [SerializeField] TileObject redTileObj;
     [SerializeField] TileObject blueTileObj;
@@ -19,6 +20,7 @@ public class LogItem : MonoBehaviour
     [SerializeField] TextMeshProUGUI greenDataTmp;
     [SerializeField] TextMeshProUGUI answerTmp;
 
+    public bool IsSeparator => isSeparator;
     public EyeTile EyeTile => eyeTile;
     public TileObject RedTileObj => redTileObj;
     public TileObject BlueTileObj => blueTileObj;
@@ -42,6 +44,18 @@ public class LogItem : MonoBehaviour
         answerTmp.SetText(answerText);
     }
 
+    public void InitAsSeparator(EyeTile eyeTile, TileObject redTileObj, TileObject blueTileObj, TileObject greenTileObj, string separatorText)
+    {
+        isSeparator = true;
+
+        this.eyeTile = eyeTile;
+        this.redTileObj = redTileObj;
+        this.blueTileObj = blueTileObj;
+        this.greenTileObj = greenTileObj;
+        
+        answerTmp?.SetText(separatorText);
+    }
+
     public void UpdateEyeImage()
     {
         if (eyeTile == null) return;
@@ -58,7 +72,7 @@ public class LogItem : MonoBehaviour
     {
         if (other is LogItem item)
         {
-            return eyeTile == item.eyeTile && 
+            return eyeTile == item.eyeTile && isSeparator == item.isSeparator && 
                    redTileObj.Data.SequenceEqual(item.redTileObj.Data) && redTileObj.IsHiding == item.redTileObj.IsHiding &&
                    blueTileObj.Data.SequenceEqual(item.blueTileObj.Data) && blueTileObj.IsHiding == item.blueTileObj.IsHiding &&
                    greenTileObj.Data.SequenceEqual(item.greenTileObj.Data) && greenTileObj.IsHiding == item.greenTileObj.IsHiding;
