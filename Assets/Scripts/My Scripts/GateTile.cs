@@ -2,16 +2,19 @@ using System.Collections.Generic;
 using Cysharp.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GateTile : TileObject
 {
     [SerializeField] int code;
     [SerializeField] bool isExit;
     [SerializeField] bool isMarked = false;
+    [SerializeField] GraphicRaycaster raycaster;
 
     [SerializeField] TextMeshProUGUI codeTmp;
     [SerializeField] GameObject xMark;
-    [SerializeField] GameObject colorInfo;
+    [SerializeField] GameObject entranceCheck;
+    [SerializeField] GameObject colorCount;
     [SerializeField] TextMeshProUGUI redCountTmp;
     [SerializeField] TextMeshProUGUI blueCountTmp;
     [SerializeField] TextMeshProUGUI greenCountTmp;
@@ -20,6 +23,21 @@ public class GateTile : TileObject
     public int Code => code;
     public bool IsExit => isExit;
     public bool IsMarked => isMarked;
+
+    void Update()
+    {
+        if (entranceCheck.activeSelf)
+        {
+            if (!PuzzleManager.instance.Player.IsEntering)
+            {
+                entranceCheck.SetActive(false);
+            }
+            if (Input.GetMouseButtonDown(0) && !Utils.IsClicked(raycaster, entranceCheck))
+            {
+                entranceCheck.SetActive(false);
+            } 
+        }
+    }
 
     public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
@@ -61,17 +79,34 @@ public class GateTile : TileObject
 
     public void Mark()
     {
+        if (entranceCheck.activeSelf) return;
+
         isMarked = !isMarked;
         xMark.SetActive(isMarked);
     }
 
+    public void CheckEntrance()
+    {
+        entranceCheck.SetActive(true);
+        colorCount.SetActive(false);
+    }
+
+    public void Enter(bool isEntering)
+    {
+        entranceCheck.SetActive(false);
+
+        if (isEntering) PuzzleManager.instance.CheckResult(this);
+    }
+
     public void OnMouseEnter()
     {
-        colorInfo.SetActive(true);
+        if (entranceCheck.activeSelf) return;
+
+        colorCount.SetActive(true);
     }
 
     public void OnMouseExit()
     {
-        colorInfo.SetActive(false);
+        colorCount.SetActive(false);
     }
 }

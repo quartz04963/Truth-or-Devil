@@ -57,8 +57,7 @@ public class Log : MonoBehaviour
         bool isAngel = map.blueTiles.Exists(tile => !tile.IsHiding && tile.Data[0] == (int)BlueData.SPECIES && tile.Data[1] == (int)Species.ANGEL);
         bool isDevil = map.blueTiles.Exists(tile => !tile.IsHiding && tile.Data[0] == (int)BlueData.SPECIES && tile.Data[1] == (int)Species.DEVIL);
 
-        bool isExitHidden = map.blueTiles.Exists(tile => tile.IsHiding && (tile.Data[0] == (int)BlueData.POSITION || tile.Data[0] == (int)BlueData.COLOR));
-        bool isMapHidden = map.blueTiles.Exists(tile => tile.IsHiding && tile.Data[0] == (int)BlueData.SPECIES);
+        bool isHidden = map.blueTiles.Exists(tile => tile.IsHiding);
 
         if (isPosition) AddSeparator(dummyEyeTile, dummyExit, map.dummyDict["POSITION"], dummyGreenTileObj, "<위치>");
         if (isColor) AddSeparator(dummyEyeTile, dummyExit, map.dummyDict["COLOR"], dummyGreenTileObj, "<색깔>");
@@ -71,8 +70,11 @@ public class Log : MonoBehaviour
         if (isAngel) AddSeparator(dummyEyeTile, dummyMap, map.dummyDict["ANGEL"], dummyGreenTileObj, "천사");
         if (isDevil) AddSeparator(dummyEyeTile, dummyMap, map.dummyDict["DEVIL"], dummyGreenTileObj, "악마");
 
-        if (isExitHidden) AddSeparator(dummyEyeTile, dummyExit, map.dummyDict["EXIT???"], dummyGreenTileObj, "???");
-        if (isMapHidden) AddSeparator(dummyEyeTile, dummyMap, map.dummyDict["MAP???"], dummyGreenTileObj, "???");
+        if (isHidden) 
+        {
+            AddSeparator(dummyEyeTile, dummyExit, map.dummyDict["???"], dummyGreenTileObj, "???");
+            AddSeparator(dummyEyeTile, dummyMap, map.dummyDict["???"], dummyGreenTileObj, "???");
+        }
 
         foreach (EyeTile eye in map.eyes) // 눈알 타일은 이동 불가능 전제
         {

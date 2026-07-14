@@ -1,4 +1,7 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public static class Utils
 {
@@ -81,5 +84,27 @@ public static class Utils
     {
         return Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.D) || 
                Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.RightArrow);
+    }
+
+    public static bool IsClicked(GraphicRaycaster raycaster, GameObject target)
+    {
+        PointerEventData pointerData = new PointerEventData(EventSystem.current);
+        pointerData.position = Input.mousePosition;
+
+        List<RaycastResult> results = new List<RaycastResult>();
+        raycaster.Raycast(pointerData, results);
+
+        bool clicked = false;
+
+        foreach (var result in results)
+        {
+            if (result.gameObject == target || result.gameObject.transform.IsChildOf(target.transform))
+            {
+                clicked = true;
+                break;
+            }
+        }
+
+        return clicked;
     }
 }

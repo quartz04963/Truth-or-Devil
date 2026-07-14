@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -31,6 +32,8 @@ public class Map : MonoBehaviour
     [SerializeField] GameObject textTilePrf;
     [SerializeField] GameObject eyeTilePrf;
     [SerializeField] GameObject gateTilePrf;
+    
+    [SerializeField] Transform objectTransform;
     [SerializeField] Transform dummyTransform;
 
     private Stage stage;
@@ -52,69 +55,46 @@ public class Map : MonoBehaviour
     {
         mapDict.Clear();
 
-        TileObject dummyExit = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyExit.InitAsDummy(TileColor.RED, new List<int>{(int)RedData.EXIT});
-        dummyDict["EXIT"] = dummyExit;
-
-        TileObject dummyMap = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyMap.InitAsDummy(TileColor.RED, new List<int>{(int)RedData.MAP});
-        dummyDict["MAP"] = dummyMap;
-
-        TileObject dummyExitHidden = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyExitHidden.InitAsDummy(TileColor.BLUE, new List<int>{0, 0}, true);
-        dummyDict["EXIT???"] = dummyExitHidden;
-
-        TileObject dummyMapHidden = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyMapHidden.InitAsDummy(TileColor.BLUE, new List<int>{0, 0}, true);
-        dummyDict["MAP???"] = dummyMapHidden;
-
-        TileObject dummyPosition = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyPosition.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.POSITION, (int)Position.NULL});
-        dummyDict["POSITION"] = dummyPosition;
-
-        TileObject dummyColor = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyColor.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.COLOR, (int)TileColor.NULL});
-        dummyDict["COLOR"] = dummyColor;
-
-        TileObject dummyRed = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyRed.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.COLOR, (int)TileColor.RED});
-        dummyDict["RED"] = dummyRed;
-
-        TileObject dummyBlue = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyBlue.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.COLOR, (int)TileColor.BLUE});
-        dummyDict["BLUE"] = dummyBlue;
-
-        TileObject dummyGreen = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyGreen.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.COLOR, (int)TileColor.GREEN});
-        dummyDict["GREEN"] = dummyGreen;
-
-        TileObject dummyWhite = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyWhite.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.COLOR, (int)TileColor.WHITE});
-        dummyDict["WHITE"] = dummyWhite;
-
-        TileObject dummyAngel = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyAngel.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.SPECIES, (int)Species.ANGEL});
-        dummyDict["ANGEL"] = dummyAngel;
-
-        TileObject dummyDevil = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyDevil.InitAsDummy(TileColor.BLUE, new List<int>{(int)BlueData.SPECIES, (int)Species.DEVIL});
-        dummyDict["DEVIL"] = dummyDevil;
-
-        TileObject dummyRedTileObj = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyRedTileObj.InitAsDummy(TileColor.RED, new List<int>{0});
-        dummyDict["dummyRedTileObj"] = dummyRedTileObj;
-
-        TileObject dummyGreenTileObj = Instantiate(textTilePrf, dummyTransform).GetComponent<TextTile>();
-        dummyGreenTileObj.InitAsDummy(TileColor.GREEN, new List<int>{0, 0});
-        dummyDict["dummyGreenTileObj"] = dummyGreenTileObj;
-
-        EyeTile dummyEyeTile = Instantiate(eyeTilePrf, dummyTransform).GetComponent<EyeTile>();
-        dummyEyeTile.InitAsDummy(TileColor.WHITE, new List<int>{0, 0});
-        dummyDict["dummyEyeTile"] = dummyEyeTile;
-
-        foreach (TileObject tileObject in dummyDict.Values)
+        foreach (Transform child in dummyTransform)
         {
-            tileObject.gameObject.SetActive(false);
+            if (child.TryGetComponent(out EyeTile eye))
+            {
+                dummyDict["dummyEyeTile"] = eye;
+                continue;
+            }
+
+            if (!child.TryGetComponent(out TextTile tile)) continue;
+
+            if (!tile.IsHiding)
+            {
+                switch (tile.Color)
+                {
+                    case TileColor.RED:
+                        if (tile.Data.SequenceEqual(new List<int> {(int)RedData.EXIT})) dummyDict["EXIT"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)RedData.MAP})) dummyDict["MAP"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{0})) dummyDict["dummyRedTileObj"] = tile;
+                        break;
+                    
+                    case TileColor.BLUE:
+                        if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.POSITION, (int)Position.NULL})) dummyDict["POSITION"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.COLOR, (int)TileColor.NULL})) dummyDict["COLOR"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.COLOR, (int)TileColor.RED})) dummyDict["RED"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.COLOR, (int)TileColor.BLUE})) dummyDict["BLUE"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.COLOR, (int)TileColor.GREEN})) dummyDict["GREEN"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.COLOR, (int)TileColor.WHITE})) dummyDict["WHITE"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.SPECIES, (int)Species.ANGEL})) dummyDict["ANGEL"] = tile;
+                        else if (tile.Data.SequenceEqual(new List<int>{(int)BlueData.SPECIES, (int)Species.DEVIL})) dummyDict["DEVIL"] = tile;
+                        break;
+
+                    case TileColor.GREEN:
+                        dummyDict["dummyGreenTileObj"] = tile;
+                        break;
+                }
+            }
+            else
+            {
+                dummyDict["???"] = tile;
+            }
         }
     }
 
@@ -140,7 +120,7 @@ public class Map : MonoBehaviour
 
             if (Utils.GetText(tileData) != null)
             {
-                GameObject text = Instantiate(textTilePrf, transform);
+                GameObject text = Instantiate(textTilePrf, objectTransform);
 
                 if (text.TryGetComponent(out TextTile textTile))
                 {
@@ -154,7 +134,7 @@ public class Map : MonoBehaviour
             {
                 if (tileData.data[0] == (int)WhiteData.EYE)
                 {
-                    GameObject eye = Instantiate(eyeTilePrf, transform);
+                    GameObject eye = Instantiate(eyeTilePrf, objectTransform);
 
                     if (eye.TryGetComponent(out EyeTile eyeTile)) 
                     {
@@ -167,7 +147,7 @@ public class Map : MonoBehaviour
                 }
                 else if (tileData.data[0] == (int)WhiteData.GATE)
                 {
-                    GameObject gate = Instantiate(gateTilePrf, transform);
+                    GameObject gate = Instantiate(gateTilePrf, objectTransform);
 
                     if (gate.TryGetComponent(out GateTile gateTile))
                     {

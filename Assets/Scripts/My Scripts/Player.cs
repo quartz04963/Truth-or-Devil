@@ -8,10 +8,12 @@ public class Player : MonoBehaviour
 
     [SerializeField] float moveInterval;
     [SerializeField] float inputDelay;
+    [SerializeField] bool isEntering = false;
 
     private float lastMoveTime;
     private Vector3Int nextInput;
 
+    public bool IsEntering => isEntering;
     public Vector3Int Pos => pos;
 
     public void Init(Vector3Int startPos)
@@ -52,7 +54,32 @@ public class Player : MonoBehaviour
 
     bool CanMove(Map map, Vector3Int nextPos)
     {
-        return map.mapDict.TryGetValue(nextPos, out TileObject tileObj);
+        bool result = map.mapDict.TryGetValue(nextPos, out TileObject tileObj);
+
+        if (tileObj is GateTile gate)
+        {
+            if (gate.IsMarked)
+            {
+                return false;
+            }
+
+            if (map.eyes.Exists(eye => eye.MarkedSpecies == Species.NULL))
+            {
+                return false;
+            }
+            
+            isEntering = true;
+            
+            gate.CheckEntrance();
+            
+            nextInput = Vector3Int.zero;
+            return false;
+        }
+        else 
+        {
+            isEntering = false;
+            return result;
+        }
     }
 
 }

@@ -184,7 +184,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 4086063869740986842}
         m_TargetAssemblyTypeName: EyeTile, Assembly-CSharp
-        m_MethodName: SetMarkedSpecies
+        m_MethodName: MarkSpecies
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -328,7 +328,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 4086063869740986842}
         m_TargetAssemblyTypeName: EyeTile, Assembly-CSharp
-        m_MethodName: SetMarkedSpecies
+        m_MethodName: MarkSpecies
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -792,7 +792,7 @@ GameObject:
   - component: {fileID: 5920829538814019826}
   - component: {fileID: 5920829538814019829}
   m_Layer: 0
-  m_Name: Selection
+  m_Name: Mark Species
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -992,7 +992,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 4086063869740986842}
         m_TargetAssemblyTypeName: EyeTile, Assembly-CSharp
-        m_MethodName: SetMarkedSpecies
+        m_MethodName: MarkSpecies
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1134,10 +1134,12 @@ MonoBehaviour:
   code: 0
   trueSpecies: 0
   markedSpecies: 0
-  eyeSR: {fileID: 5920829538622003159}
+  raycaster: {fileID: 7392660633320886246}
   codeTmp: {fileID: 7392660634404310882}
   answerTmp: {fileID: 8713369608372658092}
   answerBallon: {fileID: 3119222193498081717}
+  eyeSR: {fileID: 5920829538622003159}
+  speciesMark: {fileID: 5920829538814019831}
 --- !u!1 &7392660633320886244
 GameObject:
   m_ObjectHideFlags: 0

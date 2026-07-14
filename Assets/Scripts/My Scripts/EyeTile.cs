@@ -3,20 +3,32 @@ using System.Threading.Tasks;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EyeTile : TileObject
 {
     [SerializeField] int code;
     [SerializeField] Species trueSpecies;
     [SerializeField] Species markedSpecies = Species.NULL;
-    [SerializeField] SpriteRenderer eyeSR;
+    [SerializeField] GraphicRaycaster raycaster;
+
     [SerializeField] TextMeshProUGUI codeTmp;
     [SerializeField] TextMeshProUGUI answerTmp;
     [SerializeField] CanvasGroup answerBallon;
-
+    [SerializeField] SpriteRenderer eyeSR;
+    [SerializeField] GameObject speciesMark;
+    
     public int Code => code;
     public Species TureSpecies => trueSpecies;
     public Species MarkedSpecies => markedSpecies;
+
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0) && !Utils.IsClicked(raycaster, speciesMark))
+        {
+            speciesMark.SetActive(false);
+        }
+    }
 
     public override void Init(Vector3Int pos, TileColor color, List<int> data, bool isHiding = false, bool isPlaceable = false, bool isThorn = false)
     {
@@ -32,7 +44,7 @@ public class EyeTile : TileObject
         codeTmp?.SetText(Utils.ConvertToRoman(code));
     }
 
-    public void SetMarkedSpecies(int species)
+    public void MarkSpecies(int species)
     {
         markedSpecies = (Species)species;
 
@@ -55,7 +67,7 @@ public class EyeTile : TileObject
 
         await Task.Delay(100);
     
-        while (!Utils.GetDirectionKeyDown())
+        while (!(!PuzzleManager.instance.IsPaused && Utils.GetDirectionKeyDown()))
         {
             await Task.Yield();
         }

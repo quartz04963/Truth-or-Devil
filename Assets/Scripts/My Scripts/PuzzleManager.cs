@@ -1,5 +1,3 @@
-using Cysharp.Text;
-using TMPro;
 using UnityEngine;
 
 public class PuzzleManager : MonoBehaviour
@@ -14,10 +12,14 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Question question;
     [SerializeField] Log log;
-    [SerializeField] TextMeshProUGUI stageNumberTmp;
 
-    public bool IsPaused => isPaused;
+    public bool IsPaused
+    {
+        get => isPaused;
+        set => isPaused = value;
+    }
     public int Chapter => chapter;
+    public Player Player => player;
     public Log Log => log;
     
     void Awake()
@@ -34,9 +36,8 @@ public class PuzzleManager : MonoBehaviour
         player.Init(currentStage.startPos);
         log.Init(map);
 
-        stageNumberTmp.SetText(ZString.Concat(chapter, "-", stage));
-
         CameraManager.instance.SetCenter(currentStage);
+        UIManager.instance.SetStageNumberText(chapter, stage);
     }
 
     void Update()
@@ -60,6 +61,18 @@ public class PuzzleManager : MonoBehaviour
         else
         {
             question.UpdateQuestion(currentTileObj);
+        }
+    }
+
+    public void CheckResult(GateTile gate)
+    {
+        if (gate.IsExit && !map.eyes.Exists(eye => eye.MarkedSpecies != eye.TureSpecies))
+        {
+            UIManager.instance.EnableSuccessPopup();
+        } 
+        else
+        {
+            UIManager.instance.EnableFailPopup();
         }
     }
 }
