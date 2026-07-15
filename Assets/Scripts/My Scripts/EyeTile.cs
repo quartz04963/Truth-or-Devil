@@ -7,18 +7,18 @@ using UnityEngine.UI;
 
 public class EyeTile : TileObject
 {
-    [SerializeField] int code;
+    [SerializeField] int index;
     [SerializeField] Species trueSpecies;
     [SerializeField] Species markedSpecies = Species.NULL;
     [SerializeField] GraphicRaycaster raycaster;
 
-    [SerializeField] TextMeshProUGUI codeTmp;
+    [SerializeField] TextMeshProUGUI indexTmp;
     [SerializeField] TextMeshProUGUI answerTmp;
     [SerializeField] CanvasGroup answerBallon;
     [SerializeField] SpriteRenderer eyeSR;
     [SerializeField] GameObject speciesMark;
     
-    public int Code => code;
+    public int Index => index;
     public Species TureSpecies => trueSpecies;
     public Species MarkedSpecies => markedSpecies;
 
@@ -38,10 +38,10 @@ public class EyeTile : TileObject
 
     public override void ActivateThorn() { }
 
-    public void SetCode(int code)
+    public void SetIndex(int index)
     {
-        this.code = code;
-        codeTmp?.SetText(Utils.ConvertToRoman(code));
+        this.index = index;
+        indexTmp?.SetText(Utils.ConvertToRoman(index));
     }
 
     public void MarkSpecies(int species)

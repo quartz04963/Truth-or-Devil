@@ -1131,11 +1131,11 @@ MonoBehaviour:
   isThorn: 0
   thornSR: {fileID: 7392660633663584091}
   spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
-  code: 0
+  index: 0
   trueSpecies: 0
   markedSpecies: 0
   raycaster: {fileID: 7392660633320886246}
-  codeTmp: {fileID: 7392660634404310882}
+  indexTmp: {fileID: 7392660634404310882}
   answerTmp: {fileID: 8713369608372658092}
   answerBallon: {fileID: 3119222193498081717}
   eyeSR: {fileID: 5920829538622003159}
@@ -1337,7 +1337,7 @@ GameObject:
   - component: {fileID: 7392660634404310885}
   - component: {fileID: 7392660634404310882}
   m_Layer: 0
-  m_Name: Code (TMP)
+  m_Name: Index
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

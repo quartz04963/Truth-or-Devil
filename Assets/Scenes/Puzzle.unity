@@ -340,13 +340,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 82bd5096f96f51344b1ad78e8db18f1e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chapter: 1
-  stage: 6
+  chapter: 2
+  stage: 1
   isPaused: 0
   map: {fileID: 1747947540}
   player: {fileID: 1542169079}
   question: {fileID: 261887701}
   log: {fileID: 1347018477}
+  tab: {fileID: 1662661863}
 --- !u!4 &16581956
 Transform:
   m_ObjectHideFlags: 0
@@ -5611,7 +5612,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 602988918}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1662661863}
+        m_TargetAssemblyTypeName: Tab, Assembly-CSharp
+        m_MethodName: AddItem
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &602988918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8080,7 +8093,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: 5
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
@@ -10261,6 +10274,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac7c08446957d7a4bbde9a16c3935ede, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 1747947540}
   content: {fileID: 795872994}
   logItemPrf: {fileID: 3781245222541445175, guid: 2d44f594d6e83be459b8aa6daf0569f6, type: 3}
   logSeparatorPrf: {fileID: 279977127379749935, guid: b5d6e323e7b9f504ab68570d6c143fb4, type: 3}
@@ -12984,6 +12998,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1662661862}
+  - component: {fileID: 1662661863}
   m_Layer: 5
   m_Name: Tab
   m_TagString: Untagged
@@ -13011,6 +13026,26 @@ RectTransform:
   m_AnchoredPosition: {x: 175, y: 400}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1662661863
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1662661861}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8aad5a4dcc13e2a4ea9eb2bd091fe01c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  map: {fileID: 1747947540}
+  addButton: {fileID: 602988915}
+  content: {fileID: 1090436075}
+  contentRT: {fileID: 1090436075}
+  scrollRect: {fileID: 2113343477}
+  tabItemPrf: {fileID: 7322034358678146923, guid: 7001646d6dff8b748b0240f3e9dcc066, type: 3}
+  tabEyePrf: {fileID: 3376171918931568197, guid: 0c19aad88d31e464caf65e40eb52be1d, type: 3}
+  tabGatePrf: {fileID: 5794471450371804331, guid: 11f91b9a33a590846a7571571467e08d, type: 3}
 --- !u!1 &1663958404
 GameObject:
   m_ObjectHideFlags: 0
@@ -13770,11 +13805,11 @@ MonoBehaviour:
   isThorn: 0
   thornSR: {fileID: 465733156}
   spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
-  code: 0
+  index: 0
   trueSpecies: 0
   markedSpecies: 0
   raycaster: {fileID: 0}
-  codeTmp: {fileID: 2024239665}
+  indexTmp: {fileID: 0}
   answerTmp: {fileID: 1591505352}
   answerBallon: {fileID: 1435873567}
   eyeSR: {fileID: 1226270645}

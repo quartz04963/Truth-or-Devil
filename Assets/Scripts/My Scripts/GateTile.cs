@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class GateTile : TileObject
 {
-    [SerializeField] int code;
+    [SerializeField] int index;
     [SerializeField] bool isExit;
     [SerializeField] bool isMarked = false;
     [SerializeField] GraphicRaycaster raycaster;
 
-    [SerializeField] TextMeshProUGUI codeTmp;
+    [SerializeField] TextMeshProUGUI indexTmp;
     [SerializeField] GameObject xMark;
     [SerializeField] GameObject entranceCheck;
     [SerializeField] GameObject colorCount;
@@ -20,7 +20,7 @@ public class GateTile : TileObject
     [SerializeField] TextMeshProUGUI greenCountTmp;
     [SerializeField] TextMeshProUGUI whiteCountTmp;
 
-    public int Code => code;
+    public int Index => index;
     public bool IsExit => isExit;
     public bool IsMarked => isMarked;
 
@@ -47,10 +47,10 @@ public class GateTile : TileObject
 
     public override void ActivateThorn() { }
 
-    public void SetCode(int code)
+    public void SetIndex(int index)
     {
-        this.code = code;
-        codeTmp.SetText(ZString.Concat((char)('A' + code - 1)));
+        this.index = index;
+        indexTmp.SetText(ZString.Concat((char)('A' + index - 1)));
     }
 
     public void SetColorCount(Map map)

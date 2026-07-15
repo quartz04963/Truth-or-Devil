@@ -139,7 +139,7 @@ public class Map : MonoBehaviour
                     if (eye.TryGetComponent(out EyeTile eyeTile)) 
                     {
                         eyeTile.Init(tileData.pos, tileData.color, tileData.data, tileData.isHiding, tileData.isPlaceable, tileData.isThorn);
-                        eyeTile.SetCode(eyeCount++);
+                        eyeTile.SetIndex(eyeCount++);
 
                         mapDict.Add(tileData.pos, eyeTile);
                         eyes.Add(eyeTile);
@@ -152,7 +152,7 @@ public class Map : MonoBehaviour
                     if (gate.TryGetComponent(out GateTile gateTile))
                     {
                         gateTile.Init(tileData.pos, tileData.color, tileData.data, tileData.isHiding, tileData.isPlaceable, tileData.isThorn);
-                        gateTile.SetCode(gateCount++);
+                        gateTile.SetIndex(gateCount++);
 
                         mapDict.Add(tileData.pos, gateTile);
                         gates.Add(gateTile);

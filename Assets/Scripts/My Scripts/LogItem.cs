@@ -31,7 +31,7 @@ public class LogItem : MonoBehaviour
         this.eyeTile = eyeTile;
 
         UpdateEyeImage();
-        if (eyeTile != null) eyeCodeTmp.SetText(Utils.ConvertToRoman(eyeTile.Code));
+        if (eyeTile != null) eyeCodeTmp.SetText(Utils.ConvertToRoman(eyeTile.Index));
 
         this.redTileObj = redTileObj;
         this.blueTileObj = blueTileObj;

@@ -1788,7 +1788,7 @@ GameObject:
   - component: {fileID: 6677353205048063076}
   - component: {fileID: 6677353205048063075}
   m_Layer: 0
-  m_Name: Code (TMP)
+  m_Name: Index
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2047,11 +2047,11 @@ MonoBehaviour:
   isThorn: 0
   thornSR: {fileID: 6677353205918223450}
   spriteSource: {fileID: 11400000, guid: 89dde5695a348374286073568f2dc47c, type: 2}
-  code: 0
+  index: 0
   isExit: 0
   isMarked: 0
   raycaster: {fileID: 6677353206110057703}
-  codeTmp: {fileID: 6677353205048063075}
+  indexTmp: {fileID: 6677353205048063075}
   xMark: {fileID: 4193617549631987990}
   entranceCheck: {fileID: 5107940336018163574}
   colorCount: {fileID: 4193617549190238101}
@@ -2125,7 +2125,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.099998474}
+  m_AnchoredPosition: {x: 0, y: 0.1}
   m_SizeDelta: {x: 100, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6677353206110057705

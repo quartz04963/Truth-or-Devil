@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Log : MonoBehaviour
 {
+    [SerializeField] Map map;
     [SerializeField] Transform content;
     [SerializeField] GameObject logItemPrf;
     [SerializeField] GameObject logSeparatorPrf;
@@ -15,9 +16,9 @@ public class Log : MonoBehaviour
     private EyeTile dummyEyeTile;
     private List<LogItem> logItems = new List<LogItem>();
 
-    public void Init(Map map)
+    public void Init()
     {
-        InitSeparators(map);
+        InitSeparators();
         InitDropdown();
     }
 
@@ -38,7 +39,7 @@ public class Log : MonoBehaviour
         dropdown.RefreshShownValue();
     }
 
-    public void InitSeparators(Map map)
+    public void InitSeparators()
     {
         dummyEyeTile = (EyeTile)map.dummyDict["dummyEyeTile"];
 
@@ -153,7 +154,7 @@ public class Log : MonoBehaviour
         }
         else if (criteria == eye)
         {
-            sorted = logItems.OrderBy(item => item.EyeTile.Code).ToList();
+            sorted = logItems.OrderBy(item => item.EyeTile.Index).ToList();
             for (int i = 0; i < sorted.Count; i++)
             {
                 sorted[i].transform.SetSiblingIndex(i);

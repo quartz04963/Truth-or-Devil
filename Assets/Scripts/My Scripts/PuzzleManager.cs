@@ -12,6 +12,7 @@ public class PuzzleManager : MonoBehaviour
     [SerializeField] Player player;
     [SerializeField] Question question;
     [SerializeField] Log log;
+    [SerializeField] Tab tab;
 
     public bool IsPaused
     {
@@ -21,6 +22,7 @@ public class PuzzleManager : MonoBehaviour
     public int Chapter => chapter;
     public Player Player => player;
     public Log Log => log;
+    public Tab Tab => tab;
     
     void Awake()
     {
@@ -34,7 +36,7 @@ public class PuzzleManager : MonoBehaviour
 
         map.Init(currentStage);
         player.Init(currentStage.startPos);
-        log.Init(map);
+        log.Init();
 
         CameraManager.instance.SetCenter(currentStage);
         UIManager.instance.SetStageNumberText(chapter, stage);
