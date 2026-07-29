@@ -3355,8 +3355,8 @@ MonoBehaviour:
   cover: {fileID: 1969493989}
   currentChapter: 0
   currentStage: 0
-  maxChapter: 0
-  maxStage: 1
+  maxChapter: 2
+  maxStage: 6
 --- !u!4 &1578822245
 Transform:
   m_ObjectHideFlags: 0
