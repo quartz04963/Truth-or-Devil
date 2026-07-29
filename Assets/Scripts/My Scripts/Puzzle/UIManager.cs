@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] GameObject exitPopup;
     [SerializeField] GameObject failPopup;
     [SerializeField] GameObject successPopup;
+    [SerializeField] GameObject nextButton;
 
     [SerializeField] TextMeshProUGUI stageNumberTmp;
 
@@ -18,6 +19,17 @@ public class UIManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+    }
+
+    void Start()
+    {
+        int chapter = TransitionManager.instance.CurrentChapter;
+        int stage = TransitionManager.instance.CurrentStage;
+
+        if (chapter == StageData.stages.Length - 1 && stage == StageData.stages[chapter].Count)
+        {
+            nextButton.SetActive(false);
+        }
     }
 
     void Update()
@@ -110,17 +122,31 @@ public class UIManager : MonoBehaviour
 
     public void Exit()
     {
-        // TODO: 스테이지 선택 화면으로 나가기
+        TransitionManager.instance.Transit("Stages");
     }
 
     public void Retry()
     {
-        // TODO: 현재 스테이지 재시작
+        TransitionManager.instance.Transit("Puzzle");
     }
 
     public void Next()
     {
-        // TODO: 다음 스테이지로
+        int chapter = TransitionManager.instance.CurrentChapter;
+        int stage = TransitionManager.instance.CurrentStage;
+
+        if (stage < StageData.stages[chapter].Count)
+        {
+            stage++;
+        }
+        else if (chapter < StageData.stages.Length - 1)
+        {
+            chapter++;
+            stage = 1;
+        }
+        
+        TransitionManager.instance.SetCurrentChapterAndStage(chapter, stage);
+        TransitionManager.instance.Transit("Puzzle");
     }
 
     #endregion

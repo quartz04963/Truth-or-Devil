@@ -24,13 +24,13 @@ public class Log : MonoBehaviour
 
     void InitDropdown()
     {
-        if (PuzzleManager.instance.Chapter < 1)
+        if (TransitionManager.instance.CurrentChapter < 1)
         {
             dropdown.options.RemoveAt(3);
             dropdown.options[1] = new TMP_Dropdown.OptionData("EXIT + 색깔");
         }
 
-        if (PuzzleManager.instance.Chapter < 2)
+        if (TransitionManager.instance.CurrentChapter < 2)
         {
             isMapAvailable = false;
             dropdown.options.RemoveAt(2);

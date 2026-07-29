@@ -7,7 +7,7 @@ public static class StageData
 
     static StageData()
     {
-        stages = new List<Stage>[5];
+        stages = new List<Stage>[3];
         
         for (int i = 0; i < stages.Length; i++)
         {

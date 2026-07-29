@@ -1,6 +1,7 @@
+using PrimeTween;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class StagesPlayer : MonoBehaviour
 {
     public static readonly Vector3 playerOffset = new Vector3(0.5f, 0.9f, 0);
     
@@ -8,13 +9,10 @@ public class Player : MonoBehaviour
 
     [SerializeField] float moveInterval;
     [SerializeField] float inputDelay;
-    [SerializeField] bool isEntering = false;
 
     private float lastMoveTime;
     private Vector3Int nextInput;
-
-    public bool IsEntering => isEntering;
-    public Vector3Int Pos => pos;
+    private StageGateTile enteringGate;
 
     public void Init(Vector3Int startPos)
     {
@@ -22,7 +20,7 @@ public class Player : MonoBehaviour
         transform.position = startPos + playerOffset;
     }
 
-    public bool HandleMove(Map map)
+    public bool HandleMove()
     {
         if (Time.time < lastMoveTime + inputDelay) return false;
 
@@ -36,40 +34,32 @@ public class Player : MonoBehaviour
         if (nextInput == Vector3Int.zero) return false;
 
         lastMoveTime = Time.time;
-        return Move(map);
+        return Move();
     }
 
-    bool Move(Map map)
+    bool Move()
     {
         Vector3Int nextPos = pos + nextInput;
 
-        if (!CanMove(map, nextPos)) return false;
+        if (!CanMove(nextPos)) return false;
 
         pos = nextPos;
         transform.position = nextPos + playerOffset;
 
         nextInput = Vector3Int.zero;
+
+        MoveCamera(StagesManager.instance.Camera);
+
         return true;
     }
 
-    bool CanMove(Map map, Vector3Int nextPos)
+    bool CanMove(Vector3Int nextPos)
     {
-        bool result = map.mapDict.TryGetValue(nextPos, out TileObject tileObj);
+        bool result = StagesManager.instance.mapDict.TryGetValue(nextPos, out TileObject tileObj);
 
-        if (tileObj is GateTile gate)
-        {
-            if (gate.IsMarked)
-            {
-                return false;
-            }
-
-            if (map.eyes.Exists(eye => eye.MarkedSpecies == Species.NULL))
-            {
-                return false;
-            }
-            
-            isEntering = true;
-            
+        if (tileObj is StageGateTile gate)
+        {            
+            enteringGate = gate;
             gate.CheckEntrance();
             
             nextInput = Vector3Int.zero;
@@ -77,9 +67,23 @@ public class Player : MonoBehaviour
         }
         else 
         {
-            isEntering = false;
+            enteringGate = null;
             return result;
         }
     }
 
+    void MoveCamera(GameObject camera)
+    {
+        Vector3 destination = pos.x <= 5 ? new Vector3(0, 0, -10) :
+                              pos.x <= 17 ? new Vector3(12, 0, -10) :
+                              pos.x <= 29 ? new Vector3(24, 0, -10) : new Vector3(36, 0, -10);
+
+        Tween.CompleteAll(camera.transform);
+        Tween.Position(camera.transform, destination, 0.2f);
+    }
+
+    public bool IsEntering(StageGateTile gate)
+    {
+        return enteringGate == gate;
+    }
 }

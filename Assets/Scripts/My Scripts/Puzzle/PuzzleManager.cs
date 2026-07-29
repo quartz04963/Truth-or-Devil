@@ -4,8 +4,6 @@ public class PuzzleManager : MonoBehaviour
 {
     public static PuzzleManager instance;
 
-    [SerializeField] int chapter;
-    [SerializeField] int stage;
     [SerializeField] bool isPaused;
     
     [SerializeField] Map map;
@@ -19,7 +17,6 @@ public class PuzzleManager : MonoBehaviour
         get => isPaused;
         set => isPaused = value;
     }
-    public int Chapter => chapter;
     public Player Player => player;
     public Log Log => log;
     public Tab Tab => tab;
@@ -32,6 +29,9 @@ public class PuzzleManager : MonoBehaviour
 
     void Start()
     {
+        int chapter = TransitionManager.instance.CurrentChapter;
+        int stage = TransitionManager.instance.CurrentStage;
+
         Stage currentStage = StageData.stages[chapter][stage - 1];
 
         map.Init(currentStage);
@@ -71,6 +71,7 @@ public class PuzzleManager : MonoBehaviour
         if (gate.IsExit && !map.eyes.Exists(eye => eye.MarkedSpecies != eye.TureSpecies))
         {
             UIManager.instance.EnableSuccessPopup();
+            TransitionManager.instance.UpdateMaxStage();
         } 
         else
         {
